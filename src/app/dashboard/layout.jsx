@@ -40,27 +40,26 @@ const Layout = ({ children }) => {
                             <Link href={'/dashboard/videos'}>
                                 <HStack gap={4}>
                                     <AiFillYoutube size={20} />
-                                    <Text>Upload Videos</Text>
-                                    <BsFill1CircleFill size={12} />
+                                    <Text>Manage Videos</Text>
                                 </HStack>
                             </Link>
                             <Link href={'/dashboard/campaigns'}>
                                 <HStack gap={4}>
                                     <BsMegaphoneFill size={20} />
-                                    <Text>Approve Campaigns</Text>
+                                    <Text>Manage Campaigns</Text>
                                 </HStack>
                             </Link>
                             <br />
-                            <Link href={'/dashboard'}>
+                            <Link href={'/dashboard/transactions'}>
                                 <HStack gap={4}>
                                     <BsCurrencyRupee size={20} />
-                                    <Text>Campaign Collection</Text>
+                                    <Text>Transactions</Text>
                                 </HStack>
                             </Link>
-                            <Link href={'/dashboard'}>
+                            <Link href={'/dashboard/withdrawals'}>
                                 <HStack gap={4}>
                                     <BsCashCoin size={20} />
-                                    <Text>Withdrawal Requests</Text>
+                                    <Text>Withdrawals</Text>
                                 </HStack>
                             </Link>
                             <Link href={'/dashboard'}>
