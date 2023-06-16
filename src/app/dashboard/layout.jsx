@@ -37,7 +37,7 @@ const Layout = ({ children }) => {
                                     <Text>Dashboard</Text>
                                 </HStack>
                             </Link>
-                            <Link href={'/dashboard/videos'}>
+                            <Link href={'/dashboard'}>
                                 <HStack gap={4}>
                                     <AiFillYoutube size={20} />
                                     <Text>Manage Videos</Text>
