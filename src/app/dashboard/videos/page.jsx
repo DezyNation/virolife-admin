@@ -52,7 +52,7 @@ const Users = () => {
                 <TableContainer rounded={'16'} w={'full'}>
                     <Table variant={'striped'} colorScheme='gray'>
                         <TableCaption>
-                            Users on Virolife
+                            Videos on Virolife
                         </TableCaption>
                         <Thead bgColor={'yellow.400'}>
                             <Tr>
