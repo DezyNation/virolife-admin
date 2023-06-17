@@ -1,8 +1,22 @@
 'use client'
 import React, { useState } from 'react'
-import { Box, Stack, Text, Button, HStack, Input, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, Textarea, ModalFooter } from '@chakra-ui/react'
+import {
+    Box,
+    Stack,
+    Text,
+    Button,
+    HStack,
+    Input,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    Textarea,
+    ModalFooter,
+} from '@chakra-ui/react'
 import CampaignCard from '@/components/campaign/CampaignCard'
-import { BsPlus } from 'react-icons/bs'
+import { BsEye, BsPlus } from 'react-icons/bs'
 import Link from 'next/link'
 
 const Page = () => {
@@ -91,7 +105,17 @@ const Page = () => {
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>
-                        Approve or Reject
+                        <HStack justifyContent={'space-between'}>
+                            <Text>Approve or Reject</Text>
+                            <Link href={'/dashboard/campaigns/view/save-our-cows'} target={'_blank'}>
+                                <Button
+                                    size={'sm'}
+                                    variant={'ghost'}
+                                    leftIcon={<BsEye />}
+                                    colorScheme={'twitter'}
+                                >View</Button>
+                            </Link>
+                        </HStack>
                     </ModalHeader>
                     <ModalBody>
                         <Text>Action</Text>

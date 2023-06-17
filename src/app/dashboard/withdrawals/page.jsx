@@ -3,7 +3,7 @@ import React from 'react'
 import { Button, HStack, Stack, Table, TableCaption, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
 import Link from 'next/link'
 
-const Transactions = () => {
+const Withdrawals = () => {
     const arr = [1, 1, 1, 1, 11, 2]
     return (
         <>
@@ -33,7 +33,7 @@ const Transactions = () => {
                                         <Td>28-05-2023 18:13</Td>
                                         <Td>
                                             <HStack gap={4}>
-                                                <Button 
+                                                <Button
                                                 size={'sm'} variant={'outline'}
                                                 colorScheme='red' rounded={'full'}>
                                                     Reject
@@ -86,4 +86,4 @@ const Transactions = () => {
     )
 }
 
-export default Transactions
+export default Withdrawals

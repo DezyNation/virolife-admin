@@ -15,6 +15,7 @@ import {
 } from 'react-icons/ai'
 import { BsCashCoin, BsCurrencyRupee, BsFill1CircleFill, BsHeartFill, BsMegaphoneFill, BsPerson, BsPersonFill, BsPower } from 'react-icons/bs';
 import { MdGroups } from 'react-icons/md';
+import { BiUser } from 'react-icons/bi'
 
 
 const Layout = ({ children }) => {
@@ -37,10 +38,17 @@ const Layout = ({ children }) => {
                                     <Text>Dashboard</Text>
                                 </HStack>
                             </Link>
-                            <Link href={'/dashboard'}>
+                            <br />
+                            <Link href={'/dashboard/videos'}>
                                 <HStack gap={4}>
                                     <AiFillYoutube size={20} />
                                     <Text>Manage Videos</Text>
+                                </HStack>
+                            </Link>
+                            <Link href={'/dashboard/users'}>
+                                <HStack gap={4}>
+                                    <BiUser size={20} />
+                                    <Text>Manage Users</Text>
                                 </HStack>
                             </Link>
                             <Link href={'/dashboard/campaigns'}>
