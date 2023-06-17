@@ -83,7 +83,7 @@ const Layout = ({ children }) => {
                                     <Text>Support Tickets</Text>
                                 </HStack>
                             </Link>
-                            <HStack gap={4}>
+                            <HStack gap={4} cursor={'pointer'}>
                                 <BsPower size={20} />
                                 <Text>Log Out</Text>
                             </HStack>
