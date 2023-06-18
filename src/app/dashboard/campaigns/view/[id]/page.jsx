@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Box,
     Button,
@@ -9,15 +9,30 @@ import {
     InputGroup,
     InputLeftElement,
     Show,
-    Stack, Text
+    Stack, Text, useToast
 } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation'
+import BackendAxios from '@/utils/axios'
 
-const CampaignInfo = () => {
+const CampaignInfo = ({ params }) => {
+    const Toast = useToast({ position: 'top-right' })
     const [selectedImg, setSelectedImg] = useState("https://t3.ftcdn.net/jpg/04/19/34/24/360_F_419342418_pBHSf17ZBQn77E7z3OWcXrWfCuxZkc3Q.jpg")
+    const { id } = params
+    const [campaign, setCampaign] = useState({})
+    useEffect(() => {
+        BackendAxios.get(`/api/campaign/${id}`).then(res => {
+            setCampaign(res.data[0])
+        }).catch(err => {
+            Toast({
+                status: 'error',
+                description: err?.response?.data?.message || err?.response?.data || err?.message
+            })
+        })
+    }, [])
+
     return (
         <>
             <Stack
-                p={[4, 16, 24]}
                 direction={['column', 'row']}
                 justifyContent={'space-between'}
             >
@@ -26,19 +41,21 @@ const CampaignInfo = () => {
                     <Text
                         fontSize={['2xl', '3xl', '4xl']}
                         fontWeight={'semibold'}
-                    >Save Our Cows
+                        textTransform={'capitalize'}
+                    >{campaign?.title}
                     </Text>
                     <Text
                         fontSize={['md', 'lg', 'xl']}
                         className='serif' pb={8}
-                    >Campaign By John Doe - 04 June 2023
+                        textTransform={'capitalize'}
+                    >{campaign?.status} - {new Date(campaign?.updated_at).toDateString()}
                     </Text>
                     <Stack direction={['column', 'row']} gap={8} mb={16}>
                         <Image
-                            src={selectedImg}
+                            src={campaign.file_path ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/storage/${campaign.file_path}` : "https://idea.batumi.ge/files/default.jpg"}
                             w={['100%', 'lg', '3xl']} objectFit={'cover'} h={['xs', 'lg']} rounded={16}
                         />
-                        <Stack
+                        {/* <Stack
                             direction={['row', 'column']}
                             w={['full', '48']}
                             h={['auto', 'lg']} gap={6}
@@ -67,52 +84,14 @@ const CampaignInfo = () => {
                                 onClick={() => setSelectedImg("https://wellnessworks.in/wp-content/uploads/2019/10/indian-cow.jpg")}
                                 border={'2px'} borderColor={selectedImg == "https://wellnessworks.in/wp-content/uploads/2019/10/indian-cow.jpg" ? "yellow.400" : 'transparent'}
                             />
-                        </Stack>
+                        </Stack> */}
                     </Stack>
                     <Text pb={16} maxW={['full', 'xl', '4xl']}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque eligendi ullam aut alias soluta quod ipsam, suscipit sequi iusto nulla illum dolorum pariatur dolorem perferendis odio
-                        Ex ea sunt quibusdam, ducimus fugiat fuga consequuntur consequatur.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit ipsam debitis quisquam similique itaque perspiciatis eius animi nostrum totam ea! Voluptatem, iste. Velit, reiciendis?
+                        {campaign.description}
                         <br /><br />
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque eligendi ullam aut alias soluta quod ipsam, suscipit sequi iusto nulla illum dolorum pariatur dolorem perferendis odio
-                        Ex ea sunt quibusdam, ducimus fugiat fuga consequuntur consequatur.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit ipsam debitis quisquam similique itaque perspiciatis eius animi nostrum totam ea! Voluptatem, iste. Velit, reiciendis?
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque eligendi ullam aut alias soluta quod ipsam, suscipit sequi iusto nulla illum dolorum pariatur dolorem perferendis odio
-                        Ex ea sunt quibusdam, ducimus fugiat fuga consequuntur consequatur.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit ipsam debitis quisquam similique itaque perspiciatis eius animi nostrum totam ea! Voluptatem, iste. Velit, reiciendis?
-                        <br /><br />
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque eligendi ullam aut alias soluta quod ipsam, suscipit sequi iusto nulla illum dolorum pariatur dolorem perferendis odio
-                        Ex ea sunt quibusdam, ducimus fugiat fuga consequuntur consequatur.
+                        {campaign.full_description}
                     </Text>
                 </Box>
-                <Show above='md'>
-                    <Box width={'sm'} h={'inherit'} position={'relative'} p={4}>
-                        <Box p={4} boxShadow={'lg'} rounded={8} position={'sticky'} top={0}>
-                            <Text fontWeight={'semibold'} className='serif' fontSize={'xl'}>Donate To John Doe</Text>
-                            <br />
-                            <FormLabel>Enter Amount</FormLabel>
-                            <InputGroup>
-                                <InputLeftElement children={'₹'} />
-                                <Input type='number' mb={2} />
-                            </InputGroup>
-                            <Button w={'full'} colorScheme='yellow'>Donate Now</Button>
-                        </Box>
-                    </Box>
-                </Show>
-                <Show below='md'>
-                    <Box width={'full'} h={'inherit'} position={'fixed'} bottom={0} left={0} right={0} p={4} zIndex={999}>
-                        <Box p={4} boxShadow={'lg'} bg={'#FFF'} rounded={8} top={0}>
-                            <Text fontWeight={'semibold'} className='serif' fontSize={'xl'}>Donate To John Doe</Text>
-                            <br />
-                            <FormLabel>Enter Amount</FormLabel>
-                            <InputGroup>
-                                <InputLeftElement children={'₹'} />
-                                <Input type='number' mb={2} />
-                            </InputGroup>
-                            <Button w={'full'} colorScheme='yellow'>Donate Now</Button>
-                        </Box>
-                    </Box>
-                </Show>
             </Stack>
         </>
     )

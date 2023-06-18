@@ -16,9 +16,20 @@ import {
 import { BsCashCoin, BsCurrencyRupee, BsFill1CircleFill, BsHeartFill, BsMegaphoneFill, BsPerson, BsPersonFill, BsPower } from 'react-icons/bs';
 import { MdGroups } from 'react-icons/md';
 import { BiUser } from 'react-icons/bi'
+import BackendAxios from '@/utils/axios'
+import { useCookies } from 'react-cookie'
 
 
 const Layout = ({ children }) => {
+    const [cookies, setCookie, removeCookie] = useCookies(['jwt'])
+    async function handleLogout(){
+        await BackendAxios.post("/logout").catch(err => {
+            removeCookie("jwt")
+        }).finally(() => {
+            removeCookie("jwt")
+        })
+        window.location.replace("/")
+    }
     return (
         <>
             <Stack direction={'row'} justifyContent={'space-between'}>
@@ -83,7 +94,7 @@ const Layout = ({ children }) => {
                                     <Text>Support Tickets</Text>
                                 </HStack>
                             </Link>
-                            <HStack gap={4} cursor={'pointer'}>
+                            <HStack gap={4} cursor={'pointer'} onClick={handleLogout}>
                                 <BsPower size={20} />
                                 <Text>Log Out</Text>
                             </HStack>

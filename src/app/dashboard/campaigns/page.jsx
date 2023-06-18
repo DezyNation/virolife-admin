@@ -1,141 +1,111 @@
 'use client'
-import React, { useState } from 'react'
-import {
-    Box,
-    Stack,
-    Text,
-    Button,
-    HStack,
-    Input,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    Textarea,
-    ModalFooter,
-} from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { Box, Stack, Text, Button, useToast, useDisclosure, Modal, ModalContent, ModalOverlay, ModalHeader, HStack, ModalBody, ModalFooter } from '@chakra-ui/react'
 import CampaignCard from '@/components/campaign/CampaignCard'
 import { BsEye, BsPlus } from 'react-icons/bs'
 import Link from 'next/link'
+import BackendAxios from '@/utils/axios'
 
 const Page = () => {
-    const dummyCampaigns = [
-        {
-            id: '1',
-            title: 'save our cows',
-            userName: 'john doe',
-            coverImage: 'https://t3.ftcdn.net/jpg/04/19/34/24/360_F_419342418_pBHSf17ZBQn77E7z3OWcXrWfCuxZkc3Q.jpg',
-            description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore illo quos facere asperiores. Nulla harum unde praesentium hic aut nisi iusto recusandae, beatae aspernatur.'
-        },
-        {
-            id: '2',
-            title: 'help me heal',
-            userName: 'john doe',
-            coverImage: 'https://www.hippo.co.za/globalassets/images/blog/your-guide-to-switching-medical-aid/medical-aid-2.jpg',
-            description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore illo quos facere asperiores. Nulla harum unde praesentium hic aut nisi iusto recusandae, beatae aspernatur.'
-        },
-        {
-            id: '3',
-            title: 'save your future',
-            userName: 'john doe',
-            coverImage: 'https://www.hippo.co.za/globalassets/images/blog/your-guide-to-switching-medical-aid/medical-aid-2.jpg',
-            description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore illo quos facere asperiores. Nulla harum unde praesentium hic aut nisi iusto recusandae, beatae aspernatur.'
-        },
-        {
-            id: '4',
-            title: 'education funds',
-            userName: 'john doe',
-            coverImage: 'https://www.hippo.co.za/globalassets/images/blog/your-guide-to-switching-medical-aid/medical-aid-2.jpg',
-            description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore illo quos facere asperiores. Nulla harum unde praesentium hic aut nisi iusto recusandae, beatae aspernatur.'
-        },
-        {
-            id: '5',
-            title: 'startup funds',
-            userName: 'john doe',
-            coverImage: 'https://www.hippo.co.za/globalassets/images/blog/your-guide-to-switching-medical-aid/medical-aid-2.jpg',
-            description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore illo quos facere asperiores. Nulla harum unde praesentium hic aut nisi iusto recusandae, beatae aspernatur.'
-        },
-        {
-            id: '6',
-            title: 'travel funds',
-            userName: 'john doe',
-            coverImage: 'https://www.hippo.co.za/globalassets/images/blog/your-guide-to-switching-medical-aid/medical-aid-2.jpg',
-            description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore illo quos facere asperiores. Nulla harum unde praesentium hic aut nisi iusto recusandae, beatae aspernatur.'
-        },
-    ]
-    const [showPopup, setShowPopup] = useState(false)
-    const [action, setAction] = useState("")
+    const Toast = useToast({ position: 'top-right' })
+    const [campaigns, setCampaigns] = useState([])
+    const [selectedCampaign, setSelectedCampaign] = useState("")
+    const [status, setStatus] = useState("pending")
+    const [remarks, setRemarks] = useState("")
+    const { onToggle, isOpen } = useDisclosure()
+
+    function fetchData() {
+        BackendAxios.get("/api/campaign").then(res => {
+            setCampaigns(res.data)
+        }).catch(err => {
+            Toast({
+                status: 'error',
+                description: err?.response?.data?.message || err?.response?.data || err?.message
+            })
+        })
+    }
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    function handleCampaignSelection(id, status) {
+        setSelectedCampaign(id)
+        setStatus(status)
+        onToggle()
+    }
+
+    function handleUpdate(){
+        BackendAxios.put(`/api/campaign/${selectedCampaign}`, 
+        {status: status})
+        .then(res => {
+            Toast({
+                status: 'success',
+                description: "Campaign updated successfully!"
+            })
+            onToggle()
+            setStatus("pending")
+            fetchData()
+        }).catch(err =>{
+            Toast({
+                status: 'error',
+                description: err?.response?.data?.message || err?.response?.data || err?.message
+            })
+        })
+    }
 
     return (
         <>
             <Stack direction={'row'} justifyContent={'space-between'}>
                 <Text
                     className='serif' fontSize={'2xl'}
-                    mb={12}
+                    fontWeight={'semibold'} mb={12}
                 >Manage Campaigns</Text>
-                <HStack>
-                    <Input w={[64]} placeholder='Search Campaigns' />
-                    <Button colorScheme='yellow'>Search</Button>
-                </HStack>
             </Stack>
-            <Text py={4}>Pending For Approval</Text>
             <Stack
                 direction={['column', 'row']} flexWrap={'wrap'}
                 gap={[4, 8, 16]} justifyContent={'flex-start'}
             >
                 {
-                    dummyCampaigns.map((campaign, key) => (
+                    campaigns.map((campaign, key) => (
                         <CampaignCard
-                            coverImage={campaign.coverImage}
+                            key={key}
+                            coverImage={campaign.file_path ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/storage/${campaign.file_path}` : "https://idea.batumi.ge/files/default.jpg"}
                             title={campaign.title}
-                            userName={campaign.userName}
+                            userName={campaign.user_id}
+                            status={campaign?.status}
                             description={campaign.description}
-                            onClick={() => setShowPopup(true)}
+                            onClick={() => handleCampaignSelection(campaign?.id, campaign?.status)}
                         />
                     ))
                 }
             </Stack>
 
-
             <Modal
-                isOpen={showPopup}
-                onClose={() => setShowPopup(false)}
+                isOpen={isOpen}
+                onClose={onToggle}
             >
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>
                         <HStack justifyContent={'space-between'}>
                             <Text>Approve or Reject</Text>
-                            <Link href={'/dashboard/campaigns/view/save-our-cows'} target={'_blank'}>
-                                <Button
-                                    size={'sm'}
-                                    variant={'ghost'}
-                                    leftIcon={<BsEye />}
-                                    colorScheme={'twitter'}
-                                >View</Button>
+                            <Link href={`/dashboard/campaigns/view/${selectedCampaign}`}>
+                                <Button size={'sm'} variant={'ghost'} colorScheme='twitter' leftIcon={<BsEye />}>View</Button>
                             </Link>
                         </HStack>
                     </ModalHeader>
                     <ModalBody>
-                        <Text>Action</Text>
-                        <HStack>
-                            <Button
-                                colorScheme='red' variant={action == "reject" ? 'solid' : 'outline'}
-                                onClick={() => setAction("reject")}
-                            >Reject</Button>
-                            <Button
-                                colorScheme='whatsapp' variant={action == "approve" ? 'solid' : 'outline'}
-                                onClick={() => setAction("approve")}
-                            >Approve</Button>
-                        </HStack>
-                        <br />
-                        <Text>Remarks</Text>
-                        <Textarea w={['full']} h={'28'} resize={'none'} />
+                        <Stack direction={'column'} spacing={4}>
+                            <Text>Are you sure you want to update status of this campaign?</Text>
+                            <HStack py={4} spacing={8}>
+                                <Button onClick={()=>setStatus("rejected")} colorScheme='red' variant={status === "rejected" ? "solid" : "outline"}>Reject</Button>
+                                <Button onClick={()=>setStatus("approved")} colorScheme='whatsapp' variant={status === "approved" ? "solid" : "outline"}>Approve</Button>
+                            </HStack>
+                        </Stack>
                     </ModalBody>
                     <ModalFooter>
                         <HStack justifyContent={'flex-end'}>
-                            <Button colorScheme='twitter'>Save</Button>
+                            <Button colorScheme='twitter' onClick={handleUpdate}>Save</Button>
                         </HStack>
                     </ModalFooter>
                 </ModalContent>

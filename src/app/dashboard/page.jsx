@@ -10,7 +10,7 @@ import {
     VStack
 } from '@chakra-ui/react'
 import StatsCard from '@/components/dashboard/StatsCard'
-import { BsArrowRight, BsCashCoin, BsCurrencyRupee, BsMegaphoneFill, BsYoutube } from 'react-icons/bs'
+import { BsArrowRight, BsCashCoin, BsCurrencyRupee, BsMegaphoneFill, BsPerson, BsPersonFill, BsYoutube } from 'react-icons/bs'
 import Link from 'next/link'
 
 const DashboardHome = () => {
@@ -21,8 +21,8 @@ const DashboardHome = () => {
             <Text className='serif' fontSize={'xl'} py={4} textTransform={'capitalize'}>Welcome Admin</Text>
             <Stack w={'full'} direction={['column', 'row']} gap={[8, 16]} justifyContent={'space-between'}>
                 <StatsCard
-                    icon={<BsYoutube size={28} />}
-                    title={'videos watched'}
+                    icon={<BsPersonFill size={28} />}
+                    title={'Total Users'}
                 />
                 <StatsCard
                     icon={<BsMegaphoneFill size={28} />}

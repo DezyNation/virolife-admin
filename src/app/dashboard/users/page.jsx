@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Button,
     HStack,
@@ -15,13 +15,32 @@ import {
     Thead,
     Tr,
     Switch,
-    Box
+    Box,
+    useToast
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { BsDownload } from 'react-icons/bs'
+import BackendAxios from '@/utils/axios'
 
 const Users = () => {
     const arr = [1, 1, 1, 1, 1, 1, 2, 0]
+    const Toast = useToast({position: 'top-right'})
+    const [users, setUsers] = useState([])
+
+    function fetchUsers(){
+        BackendAxios.get("/api/users").then(res=> {
+            setUsers(res.data)
+        }).catch(err =>{
+            Toast({
+                status: 'error',
+                description: err?.response?.data?.message || err?.response?.data || err?.message
+            })
+        })
+    }
+    useEffect(()=>{
+        fetchUsers()
+    },[])
+
     return (
         <>
             <HStack justifyContent={['space-between']} py={8}>
@@ -50,23 +69,24 @@ const Users = () => {
                         </Thead>
                         <Tbody>
                             {
-                                arr.map((item, key) => (
+                                users.map((user, key) => (
                                     <Tr fontSize={'xs'} key={key}>
-                                        <Td>{key + 1}</Td>
-                                        <Td>Sangam Kumar (M)</Td>
+                                        <Td>{user.id}</Td>
+                                        <Td>{user.name} ({user.gender})</Td>
                                         <Td>
                                             <Box>
-                                                <p>sangam4742@gmail.com</p>
-                                                <p>+91 7838074742</p>
+                                                <p>{user.email}</p>
+                                                <p>+91 {user.phone}</p>
                                             </Box>
                                         </Td>
-                                        <Td>28-05-2002</Td>
+                                        <Td>{new Date(user.dob).toDateString()}</Td>
                                         <Td>Solo</Td>
-                                        <Td>28-05-2023 18:23</Td>
+                                        <Td>{new Date(user.created_at).toLocaleString()}</Td>
                                         <Td>
                                             <HStack gap={4}>
-                                                <Switch defaultChecked={true} colorScheme='yellow' />
-                                                <Button size={'xs'} colorScheme={'teal'} leftIcon={<BsDownload />}>Attachments</Button>
+                                                <Switch defaultChecked={true} colorScheme='yellow' onChange={e => Toast({status: 'success', description: 'Updated successfully!'})} />
+                                                <Button 
+                                                size={'xs'} colorScheme={'teal'} leftIcon={<BsDownload />}>Attachments</Button>
                                             </HStack>
                                         </Td>
                                     </Tr>

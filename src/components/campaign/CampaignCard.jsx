@@ -21,10 +21,13 @@ const CampaignCard = (props) => {
                 <Text
                     fontSize={['md', 'sm', 'md']}
                     fontWeight={'medium'}
-                    textTransform={'capitalize'}
-                    className='serif'>{props.userName}</Text>
+                    textTransform={'capitalize'}>
+                    User ID {props.userName}</Text>
                 <Text pt={2}>
                     {props.description?.slice(0, 60)}...
+                </Text>
+                <Text p={2} textTransform={'capitalize'} fontWeight={'semibold'} color={props.status == "approved" ? "green" : 'red'}>
+                    {props.status}
                 </Text>
             </Box>
         </>

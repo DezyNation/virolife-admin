@@ -1,4 +1,5 @@
 'use client'
+import BackendAxios from '@/utils/axios'
 import {
     Box,
     Button,
@@ -16,18 +17,58 @@ import {
     PinInput,
     PinInputField,
     VStack,
-    useDisclosure
+    useDisclosure,
+    useToast
 } from '@chakra-ui/react'
+import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
+import { isExpired } from 'react-jwt'
 
 const Auth = () => {
+    const Toast = useToast({ position: 'top-right' })
     const router = useRouter()
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [cookies, setCookie] = useCookies(['jwt'])
+    const [sessionExpired, setSessionExpired] = useState(false)
 
-    function handleLogin(){
-        router.push("/dashboard")
+    const Formik = useFormik({
+        initialValues: {
+            email: "",
+            password: ""
+        }
+    })
+
+    useEffect(() => {
+        if (!isExpired(cookies.jwt)) {
+            router.push('/dashboard')
+        }
+    }, [cookies])
+
+    function handleLogin() {
+        if (!Formik.values.email || !Formik.values.password) {
+            Toast({
+                description: 'Email and password must not be empty'
+            })
+            return
+        }
+        BackendAxios.post("/login", { ...Formik.values }).then(res => {
+            Toast({
+                status: 'success',
+                description: 'Login successful!'
+            })
+            BackendAxios.defaults.headers.common['Authorization'] = `Bearer ${res.data?.access_token}`
+            // Cookies.set("jwt", res.data?.access_token)
+            setCookie("jwt", res.data?.access_token)
+        }).catch(err => {
+            Toast({
+                status: 'error',
+                description: err?.response?.data?.message || err?.response?.data || err?.message
+            })
+        })
     }
+
 
     return (
         <>
@@ -40,15 +81,15 @@ const Auth = () => {
                 >
                     <FormControl mb={8}>
                         <FormLabel>Email</FormLabel>
-                        <Input variant={'flushed'} name='email' />
+                        <Input variant={'flushed'} onChange={Formik.handleChange} name='email' />
                     </FormControl>
                     <FormControl mb={8}>
                         <FormLabel>Password</FormLabel>
-                        <Input variant={'flushed'} type='password' name='password' />
+                        <Input variant={'flushed'} type='password' onChange={Formik.handleChange} name='password' />
                     </FormControl>
                     <HStack w={'full'} gap={8} justifyContent={'flex-end'}>
                         <Button size={'xs'} variant={'unstyled'}>Forgot Password?</Button>
-                        <Button colorScheme='yellow' onClick={onOpen}>Send OTP</Button>
+                        <Button colorScheme='yellow' onClick={handleLogin}>Login</Button>
                     </HStack>
                 </Box>
             </VStack>
