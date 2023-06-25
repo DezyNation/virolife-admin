@@ -23,7 +23,9 @@ import { useCookies } from 'react-cookie'
 const Layout = ({ children }) => {
     const [cookies, setCookie, removeCookie] = useCookies(['jwt'])
     async function handleLogout(){
-        await BackendAxios.post("/logout").catch(err => {
+        await BackendAxios.post("/logout").then(()=>{
+            removeCookie("jwt")
+        }).catch(err => {
             removeCookie("jwt")
         }).finally(() => {
             removeCookie("jwt")

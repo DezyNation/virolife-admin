@@ -9,7 +9,8 @@ const CampaignCard = (props) => {
             <Box w={['100%', 'xs']} onClick={props.onClick}>
                 <Image
                     src={props.coverImage}
-                    rounded={16} w={'full'} mb={4}
+                    rounded={16} w={'full'} 
+                    mb={4} h={'48'} objectFit={'cover'}
                     transition={'all .3s ease'}
                     _hover={{ boxShadow: 'xl' }}
                 />

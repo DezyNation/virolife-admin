@@ -79,6 +79,38 @@ const Transactions = () => {
                     </Table>
                 </TableContainer>
             </Stack>
+                            <br /><br />
+            <TableContainer rounded={'16'} py={6}>
+            <Table variant={'striped'} colorScheme='gray'>
+                        <TableCaption>
+                            Wallet Topup
+                        </TableCaption>
+                        <Thead bgColor={'yellow.400'}>
+                            <Tr>
+                                <Th>#</Th>
+                                <Th>Trnxn ID</Th>
+                                <Th>User</Th>
+                                <Th>Amount</Th>
+                                <Th>Remarks</Th>
+                                <Th>Timestamp</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {
+                                arr.map((item, key) => (
+                                    <Tr fontSize={'xs'} key={key}>
+                                        <Td>{key + 1}</Td>
+                                        <Td>TAN2341</Td>
+                                        <Td>Sangam Kumar</Td>
+                                        <Td>₹ 4565</Td>
+                                        <Td></Td>
+                                        <Td>28-05-2023 18:13</Td>
+                                    </Tr>
+                                ))
+                            }
+                        </Tbody>
+                    </Table>
+                </TableContainer>
         </>
     )
 }

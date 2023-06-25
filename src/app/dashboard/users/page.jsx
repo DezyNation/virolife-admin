@@ -1,103 +1,309 @@
-'use client'
-import React, { useEffect, useState } from 'react'
+"use client";
+import React, { useEffect, useState } from "react";
 import {
-    Button,
-    HStack,
-    Stack,
-    Input,
-    Table,
-    TableCaption,
-    TableContainer,
-    Tbody,
-    Td,
-    Text,
-    Th,
-    Thead,
-    Tr,
-    Switch,
-    Box,
-    useToast
-} from '@chakra-ui/react'
-import Link from 'next/link'
-import { BsDownload } from 'react-icons/bs'
-import BackendAxios from '@/utils/axios'
+  Button,
+  HStack,
+  Stack,
+  Input,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  Switch,
+  Box,
+  useToast,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  FormLabel,
+  ModalFooter,
+  Image,
+  Avatar,
+} from "@chakra-ui/react";
+import Link from "next/link";
+import { BsDownload, BsEye } from "react-icons/bs";
+import BackendAxios from "@/utils/axios";
 
 const Users = () => {
-    const arr = [1, 1, 1, 1, 1, 1, 2, 0]
-    const Toast = useToast({position: 'top-right'})
-    const [users, setUsers] = useState([])
+  const arr = [1, 1, 1, 1, 1, 1, 2, 0];
+  const Toast = useToast({ position: "top-right" });
+  const [users, setUsers] = useState([]);
+  const [amount, setAmount] = useState("");
+  const [query, setQuery] = useState("");
 
-    function fetchUsers(){
-        BackendAxios.get("/api/users").then(res=> {
-            setUsers(res.data)
-        }).catch(err =>{
-            Toast({
-                status: 'error',
-                description: err?.response?.data?.message || err?.response?.data || err?.message
-            })
-        })
-    }
-    useEffect(()=>{
-        fetchUsers()
-    },[])
+  const [walletModal, setWalletModal] = useState({
+    id: "",
+    name: "",
+    status: false,
+  });
+  const { isOpen, onToggle } = useDisclosure();
+  const [userId, setUserId] = useState("");
+  const [userInfo, setUserInfo] = useState({});
 
-    return (
-        <>
-            <HStack justifyContent={['space-between']} py={8}>
-                <Text className='serif' fontSize={'2xl'} textTransform={'capitalize'}>Users</Text>
-                <HStack alignItems={'flex-end'}>
-                    <Input placeholder={'Search Users'} />
-                    <Button colorScheme={'yellow'}>Search</Button>
-                </HStack>
+  function fetchUsers() {
+    BackendAxios.get("/api/users")
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  function sendMoney() {
+    console.log("send money");
+    BackendAxios.put(`/api/admin/wallet-user/${walletModal?.id}`, {
+      amount: amount,
+    })
+      .then(() => {
+        setWalletModal({ ...walletModal, status: false });
+        Toast({
+          status: "success",
+          description: "Wallet Updated",
+        });
+        fetchUsers();
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function getUserInfo(id) {
+    onToggle();
+    BackendAxios.get(`/api/users/${id}`)
+      .then((res) => {
+        setUserInfo(res.data[0]);
+      })
+      .catch((err) => {
+        onToggle();
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function updateUser(id, obj) {
+    BackendAxios.put(`/api/admin/update-user/${id}`, { ...obj })
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "User updated successfully!",
+        });
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function searchUser() {
+    BackendAxios.get(`/api/admin/find-user?search=${query}`)
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  return (
+    <>
+      <HStack justifyContent={["space-between"]} py={8}>
+        <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
+          Users
+        </Text>
+        <HStack alignItems={"flex-end"}>
+          <Input
+            placeholder={"Search Users"}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <Button colorScheme={"yellow"} onClick={searchUser}>Search</Button>
+        </HStack>
+      </HStack>
+      <Stack
+        w={"full"}
+        direction={["column"]}
+        justifyContent={"space-between"}
+        gap={8}
+      >
+        <TableContainer rounded={"16"} w={"full"}>
+          <Table variant={"striped"} colorScheme="gray">
+            <TableCaption>Users on Virolife</TableCaption>
+            <Thead bgColor={"yellow.400"}>
+              <Tr>
+                <Th>#</Th>
+                <Th>ID</Th>
+                <Th>User Name</Th>
+                <Th>Contact</Th>
+                <Th>Wallet Balance</Th>
+                <Th>Date of Birth</Th>
+                <Th>Subscription</Th>
+                <Th>Registered On</Th>
+                <Th>Action</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {users.map((user, key) => (
+                <Tr fontSize={"xs"} key={key}>
+                  <Td>{key + 1}</Td>
+                  <Td>{user.id}</Td>
+                  <Td>
+                    {user.name} ({user.gender})
+                  </Td>
+                  <Td>
+                    <Box>
+                      <p>{user.email}</p>
+                      <p>+91 {user.phone}</p>
+                    </Box>
+                  </Td>
+                  <Td>₹ {user?.wallet}</Td>
+                  <Td>
+                    {user?.dob ? new Date(user.dob).toDateString() : null}
+                  </Td>
+                  <Td>Self</Td>
+                  <Td>{new Date(user.created_at).toLocaleString()}</Td>
+                  <Td>
+                    <HStack gap={4}>
+                      <Switch
+                        defaultChecked={user?.active}
+                        colorScheme="yellow"
+                        onChange={(e) =>
+                          updateUser(user?.id, { active: e.target.checked })
+                        }
+                      />
+                      <Button
+                        size={"xs"}
+                        colorScheme={"teal"}
+                        leftIcon={<BsEye />}
+                        onClick={() => getUserInfo(user?.id)}
+                      >
+                        View
+                      </Button>
+                      <Button
+                        size={"xs"}
+                        colorScheme="twitter"
+                        onClick={() =>
+                          setWalletModal({
+                            id: user?.id,
+                            name: user?.name,
+                            status: true,
+                          })
+                        }
+                      >
+                        Add Money
+                      </Button>
+                    </HStack>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Stack>
+
+      {/* Wallet Topup Modal */}
+      <Modal
+        isCentered
+        isOpen={walletModal?.status}
+        onClose={() => setWalletModal({ ...walletModal, status: false })}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Topup Wallet of {walletModal?.name}</ModalHeader>
+          <ModalBody>
+            <FormLabel>Enter Amount</FormLabel>
+            <Input type="number" onChange={(e) => setAmount(e.target.value)} />
+          </ModalBody>
+          <ModalFooter justifyContent={"flex-end"}>
+            <Button colorScheme="blue" mr={3} onClick={sendMoney}>
+              Send
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {/* User Info Modal */}
+      <Modal
+        isCentered
+        isOpen={isOpen}
+        onClose={onToggle}
+        size={["full", "3xl"]}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader p={8}>
+            <HStack gap={8}>
+              <Avatar src={userInfo?.profile} name={userInfo?.name} />
+              <Text>{userInfo?.name}</Text>
             </HStack>
-            <Stack w={'full'} direction={['column']} justifyContent={'space-between'} gap={8}>
-                <TableContainer rounded={'16'} w={'full'}>
-                    <Table variant={'striped'} colorScheme='gray'>
-                        <TableCaption>
-                            Users on Virolife
-                        </TableCaption>
-                        <Thead bgColor={'yellow.400'}>
-                            <Tr>
-                                <Th>ID</Th>
-                                <Th>User Name</Th>
-                                <Th>Contact</Th>
-                                <Th>Date of Birth</Th>
-                                <Th>Subscription</Th>
-                                <Th>Registered On</Th>
-                                <Th>Action</Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
-                            {
-                                users.map((user, key) => (
-                                    <Tr fontSize={'xs'} key={key}>
-                                        <Td>{user.id}</Td>
-                                        <Td>{user.name} ({user.gender})</Td>
-                                        <Td>
-                                            <Box>
-                                                <p>{user.email}</p>
-                                                <p>+91 {user.phone}</p>
-                                            </Box>
-                                        </Td>
-                                        <Td>{new Date(user.dob).toDateString()}</Td>
-                                        <Td>Solo</Td>
-                                        <Td>{new Date(user.created_at).toLocaleString()}</Td>
-                                        <Td>
-                                            <HStack gap={4}>
-                                                <Switch defaultChecked={true} colorScheme='yellow' onChange={e => Toast({status: 'success', description: 'Updated successfully!'})} />
-                                                <Button 
-                                                size={'xs'} colorScheme={'teal'} leftIcon={<BsDownload />}>Attachments</Button>
-                                            </HStack>
-                                        </Td>
-                                    </Tr>
-                                ))
-                            }
-                        </Tbody>
-                    </Table>
-                </TableContainer>
+          </ModalHeader>
+          <ModalBody p={8}>
+            <Stack direction={["column", "row"]}>
+              <Box flex={1}>
+                <HStack gap={6}>
+                  <Text fontWeight={"semibold"}>Email</Text>
+                  <Text>{userInfo?.email}</Text>
+                </HStack>
+                <br />
+                <HStack gap={6}>
+                  <Text fontWeight={"semibold"}>Phone</Text>
+                  <Text>{userInfo?.phone_number}</Text>
+                </HStack>
+                <br />
+                <HStack gap={6}>
+                  <Text fontWeight={"semibold"}>Joined On</Text>
+                  <Text>{userInfo?.created_at}</Text>
+                </HStack>
+                <br />
+                <HStack gap={6}>
+                  <Text fontWeight={"semibold"}>Joined On</Text>
+                  <Text>{userInfo?.dob}</Text>
+                </HStack>
+              </Box>
+              <Box flex={1}>
+                <Text fontWeight={"semibold"}>Address</Text>
+                <Text>{userInfo?.address}</Text>
+                <br />
+                <HStack gap={6}>
+                  <Text fontWeight={"semibold"}>Wallet</Text>
+                  <Text>{userInfo?.wallet}</Text>
+                </HStack>
+              </Box>
             </Stack>
-        </>
-    )
-}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
-export default Users
+export default Users;

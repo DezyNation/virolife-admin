@@ -98,6 +98,7 @@ const Page = () => {
                         <Stack direction={'column'} spacing={4}>
                             <Text>Are you sure you want to update status of this campaign?</Text>
                             <HStack py={4} spacing={8}>
+                                <Button onClick={()=>setStatus("paused")} colorScheme='orange' variant={status === "paused" ? "solid" : "outline"}>Pause</Button>
                                 <Button onClick={()=>setStatus("rejected")} colorScheme='red' variant={status === "rejected" ? "solid" : "outline"}>Reject</Button>
                                 <Button onClick={()=>setStatus("approved")} colorScheme='whatsapp' variant={status === "approved" ? "solid" : "outline"}>Approve</Button>
                             </HStack>
