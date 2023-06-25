@@ -144,9 +144,12 @@ const DashboardHome = () => {
                         {new Date(user?.created_at).toLocaleString()}
                       </Text>
                     </Box>
+                    <Box>
                     <Text fontSize={"sm"} fontWeight={"semibold"}>
-                      ₹{user?.wallet}
+                      {user?.wallet}
                     </Text>
+                    <Text fontSize={'xs'} textAlign={'right'} >Points</Text>
+                    </Box>
                   </HStack>
                 </Box>
               ))}

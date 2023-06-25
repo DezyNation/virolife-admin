@@ -185,7 +185,7 @@ const Users = () => {
                       <p>+91 {user.phone}</p>
                     </Box>
                   </Td>
-                  <Td>₹ {user?.wallet}</Td>
+                  <Td>{user?.wallet}</Td>
                   <Td>
                     {user?.dob ? new Date(user.dob).toDateString() : null}
                   </Td>
@@ -285,7 +285,7 @@ const Users = () => {
                 </HStack>
                 <br />
                 <HStack gap={6}>
-                  <Text fontWeight={"semibold"}>Joined On</Text>
+                  <Text fontWeight={"semibold"}>D.o.B</Text>
                   <Text>{userInfo?.dob}</Text>
                 </HStack>
               </Box>
@@ -294,7 +294,7 @@ const Users = () => {
                 <Text>{userInfo?.address}</Text>
                 <br />
                 <HStack gap={6}>
-                  <Text fontWeight={"semibold"}>Wallet</Text>
+                  <Text fontWeight={"semibold"}>Points</Text>
                   <Text>{userInfo?.wallet}</Text>
                 </HStack>
               </Box>

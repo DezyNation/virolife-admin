@@ -6,7 +6,7 @@ import React from 'react'
 const CampaignCard = (props) => {
     return (
         <>
-            <Box w={['100%', 'xs']} onClick={props.onClick}>
+            <Box w={['100%', 'xs']} onClick={props.onClick} cursor={'pointer'}>
                 <Image
                     src={props.coverImage}
                     rounded={16} w={'full'} 
