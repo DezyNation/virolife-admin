@@ -43,6 +43,7 @@ const Users = () => {
     initialValues: {
       type: videoType,
       title: "",
+      video_id: "",
       link: "",
       points: "",
       isActive: false,
@@ -172,21 +173,21 @@ const Users = () => {
                 variant={videoType == "bunny" ? "solid" : "outline"}
                 onClick={() => setVideoType("bunny")}
               >
-                Bunny Link
+                Bunny ID
               </Button>
               <Button
                 colorScheme="twitter"
-                variant={videoType == "other" ? "solid" : "outline"}
-                onClick={() => setVideoType("other")}
+                variant={videoType == "youtube" ? "solid" : "outline"}
+                onClick={() => setVideoType("youtube")}
               >
-                Other Link
+                YouTube ID
               </Button>
             </HStack>
             <br />
 
             <FormControl pb={4}>
-              <FormLabel>Link</FormLabel>
-              <Input name="link" onChange={Formik.handleChange} />
+              <FormLabel>Video ID</FormLabel>
+              <Input name="video_id" onChange={Formik.handleChange} />
             </FormControl>
 
             <FormControl pb={4}>
