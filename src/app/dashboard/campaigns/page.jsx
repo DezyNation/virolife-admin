@@ -35,6 +35,19 @@ const Page = () => {
     }
 
     function handleUpdate(){
+        if(status == "delete"){
+            BackendAxios.delete(`/api/campaign/${selectedCampaign}`).then(res=>{
+                Toast({
+                    status: 'success',
+                    description: "Campaign deleted successfully!"
+                })
+            }).catch(err =>{
+                Toast({
+                    status: 'error',
+                    description: err?.response?.data?.message || err?.response?.data || err?.message
+                })
+            })
+        }
         BackendAxios.put(`/api/campaign/${selectedCampaign}`,
         {status: status})
         .then(res => {
@@ -98,9 +111,10 @@ const Page = () => {
                         <Stack direction={'column'} spacing={4}>
                             <Text>Are you sure you want to update status of this campaign?</Text>
                             <HStack py={4} spacing={8}>
-                                <Button onClick={()=>setStatus("paused")} colorScheme='orange' variant={status === "paused" ? "solid" : "outline"}>Pause</Button>
-                                <Button onClick={()=>setStatus("rejected")} colorScheme='red' variant={status === "rejected" ? "solid" : "outline"}>Reject</Button>
+                                <Button onClick={()=>setStatus("paused")} colorScheme='facebook' variant={status === "paused" ? "solid" : "outline"}>Pause</Button>
+                                <Button onClick={()=>setStatus("rejected")} colorScheme='orange' variant={status === "rejected" ? "solid" : "outline"}>Reject</Button>
                                 <Button onClick={()=>setStatus("approved")} colorScheme='whatsapp' variant={status === "approved" ? "solid" : "outline"}>Approve</Button>
+                                <Button onClick={()=>setStatus("delete")} colorScheme='red' variant={status === "delete" ? "solid" : "outline"}>Approve</Button>
                             </HStack>
                         </Stack>
                     </ModalBody>
