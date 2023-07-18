@@ -47,6 +47,7 @@ const Page = () => {
                     description: err?.response?.data?.message || err?.response?.data || err?.message
                 })
             })
+            return
         }
         BackendAxios.put(`/api/campaign/${selectedCampaign}`,
         {status: status})
@@ -114,7 +115,7 @@ const Page = () => {
                                 <Button onClick={()=>setStatus("paused")} colorScheme='facebook' variant={status === "paused" ? "solid" : "outline"}>Pause</Button>
                                 <Button onClick={()=>setStatus("rejected")} colorScheme='orange' variant={status === "rejected" ? "solid" : "outline"}>Reject</Button>
                                 <Button onClick={()=>setStatus("approved")} colorScheme='whatsapp' variant={status === "approved" ? "solid" : "outline"}>Approve</Button>
-                                <Button onClick={()=>setStatus("delete")} colorScheme='red' variant={status === "delete" ? "solid" : "outline"}>Approve</Button>
+                                <Button onClick={()=>setStatus("delete")} colorScheme='red' variant={status === "delete" ? "solid" : "outline"}>Delete</Button>
                             </HStack>
                         </Stack>
                     </ModalBody>
