@@ -52,7 +52,7 @@ const Info = ({ params }) => {
       address: "",
     },
     onSubmit: (values) => {
-      FormAxios.put(`/api/admin/update-user/${id}`, {
+      FormAxios.post(`/api/admin/update-user/${id}`, {
         ...values,
         address: JSON.stringify(addressObj),
         name:
