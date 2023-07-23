@@ -146,7 +146,9 @@ const Users = () => {
             placeholder={"Search Users"}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <Button colorScheme={"yellow"} onClick={searchUser}>Search</Button>
+          <Button colorScheme={"yellow"} onClick={searchUser}>
+            Search
+          </Button>
         </HStack>
       </HStack>
       <Stack
@@ -208,19 +210,11 @@ const Users = () => {
                       >
                         View
                       </Button>
-                      <Button
-                        size={"xs"}
-                        colorScheme="twitter"
-                        onClick={() =>
-                          setWalletModal({
-                            id: user?.id,
-                            name: user?.name,
-                            status: true,
-                          })
-                        }
-                      >
-                        Add Money
-                      </Button>
+                      <Link href={`/dashboard/users/edit/${user?.id}`} target="_blank">
+                        <Button size={"xs"} colorScheme="twitter">
+                          Edit
+                        </Button>
+                      </Link>
                     </HStack>
                   </Td>
                 </Tr>
@@ -267,23 +261,28 @@ const Users = () => {
             </HStack>
           </ModalHeader>
           <ModalBody p={8}>
+            <Text fontSize={"lg"} fontWeight={"semibold"}>
+              Basic Details
+            </Text>
+            <hr />
+            <br />
             <Stack direction={["column", "row"]}>
               <Box flex={1}>
                 <HStack gap={6}>
                   <Text fontWeight={"semibold"}>Email</Text>
                   <Text>{userInfo?.email}</Text>
                 </HStack>
-                <br />
+
                 <HStack gap={6}>
                   <Text fontWeight={"semibold"}>Phone</Text>
                   <Text>{userInfo?.phone_number}</Text>
                 </HStack>
-                <br />
+
                 <HStack gap={6}>
                   <Text fontWeight={"semibold"}>Joined On</Text>
                   <Text>{userInfo?.created_at}</Text>
                 </HStack>
-                <br />
+
                 <HStack gap={6}>
                   <Text fontWeight={"semibold"}>D.o.B</Text>
                   <Text>{userInfo?.dob}</Text>
@@ -291,12 +290,67 @@ const Users = () => {
               </Box>
               <Box flex={1}>
                 <Text fontWeight={"semibold"}>Address</Text>
-                <Text>{userInfo?.address}</Text>
-                <br />
+                <Text>
+                  Street:{" "}
+                  {userInfo?.address
+                    ? JSON.parse(userInfo?.address)?.street
+                    : null}
+                </Text>
+                <Text>
+                  City:{" "}
+                  {userInfo?.address
+                    ? JSON.parse(userInfo?.address)?.city
+                    : null}
+                </Text>
+                <Text>
+                  Pincode:{" "}
+                  {userInfo?.address
+                    ? JSON.parse(userInfo?.address)?.pincode
+                    : null}
+                </Text>
+                <Text>
+                  Landmark:{" "}
+                  {userInfo?.address
+                    ? JSON.parse(userInfo?.address)?.landmark
+                    : null}
+                </Text>
+              </Box>
+            </Stack>
+            <br />
+            <br />
+            <Text fontSize={"lg"} fontWeight={"semibold"}>
+              Financial Details
+            </Text>
+            <hr />
+            <br />
+            <Stack direction={["column", "row"]}>
+              <Box flex={1}>
                 <HStack gap={6}>
-                  <Text fontWeight={"semibold"}>Points</Text>
-                  <Text>{userInfo?.wallet}</Text>
+                  <Text fontWeight={"semibold"}>Account No.:</Text>
+                  <Text>{userInfo?.account_number}</Text>
                 </HStack>
+                <HStack gap={6}>
+                  <Text fontWeight={"semibold"}>Bank Name:</Text>
+                  <Text>{userInfo?.bank_name}</Text>
+                </HStack>
+                <HStack gap={6}>
+                  <Text fontWeight={"semibold"}>IFSC:</Text>
+                  <Text>{userInfo?.ifsc}</Text>
+                </HStack>
+              </Box>
+              <Box flex={1}>
+                <HStack gap={6}>
+                  <Text fontWeight={"semibold"}>MICR:</Text>
+                  <Text>{userInfo?.micr}</Text>
+                </HStack>
+                <HStack gap={6}>
+                  <Text fontWeight={"semibold"}>UPI:</Text>
+                  <Text>{userInfo?.upi_id}</Text>
+                </HStack>
+                <br />
+                <Button size={"sm"} rounded={"full"}>
+                  View UPI QR Code
+                </Button>
               </Box>
             </Stack>
           </ModalBody>
