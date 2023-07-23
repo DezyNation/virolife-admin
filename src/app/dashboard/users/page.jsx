@@ -31,6 +31,7 @@ import {
 import Link from "next/link";
 import { BsDownload, BsEye } from "react-icons/bs";
 import BackendAxios from "@/utils/axios";
+import QRCode from "react-qr-code";
 
 const Users = () => {
   const arr = [1, 1, 1, 1, 1, 1, 2, 0];
@@ -47,6 +48,17 @@ const Users = () => {
   const { isOpen, onToggle } = useDisclosure();
   const [userId, setUserId] = useState("");
   const [userInfo, setUserInfo] = useState({});
+  const [qrVisible, setQrVisible] = useState({status: false, upi: ""})
+
+  function showQr(upi){
+    if(!upi){
+      Toast({
+        description: "UPI ID is not available for this user."
+      })
+      return
+    }
+    setQrVisible({status: true, upi: upi})
+  }
 
   function fetchUsers() {
     BackendAxios.get("/api/users")
@@ -348,12 +360,32 @@ const Users = () => {
                   <Text>{userInfo?.upi_id}</Text>
                 </HStack>
                 <br />
-                <Button size={"sm"} rounded={"full"}>
+                <Button size={"sm"} rounded={"full"} onClick={()=>showQr(userInfo?.upi_id)}>
                   View UPI QR Code
                 </Button>
               </Box>
             </Stack>
           </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      <Modal size={"xs"} isOpen={qrVisible.status} onClose={() => setQrVisible({status: false})}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader></ModalHeader>
+          <ModalBody alignItems={"center"} justifyContent={"center"}>
+            <QRCode size={256} value={`upi://pay?cu=INR&pa=${qrVisible.upi}`} />
+            <br />
+            <Text textAlign={"center"}>Scan with any UPI app</Text>
+            <Image
+              w={"80%"} alignSelf={'center'} mx={'auto'}
+              src={"https://mytechtrips.com/wp-content/uploads/2023/01/upi.png"}
+              objectFit={"contain"}
+            />
+          </ModalBody>
+          <ModalFooter>
+            
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
