@@ -134,12 +134,14 @@ const Page = ({params}) => {
     Formik.setFieldValue("description", campaign?.description)
     Formik.setFieldValue("full_description", campaign?.full_description)
     Formik.setFieldValue("category_id", campaign?.category?.id)
-    setBeneficiaryDetails({
+    if(campaign?.beneficiary_details){
+      setBeneficiaryDetails({
         type: JSON.parse(JSON.parse(campaign?.beneficiary_details))?.type,
         name: JSON.parse(JSON.parse(campaign?.beneficiary_details))?.name,
         address: JSON.parse(JSON.parse(campaign?.beneficiary_details))?.address,
         contact: JSON.parse(JSON.parse(campaign?.beneficiary_details))?.contact,
-    })
+      })
+    }
   },[campaign])
 
   return (
