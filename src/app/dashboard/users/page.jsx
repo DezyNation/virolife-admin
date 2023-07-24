@@ -116,7 +116,7 @@ const Users = () => {
   }
 
   function updateUser(id, obj) {
-    BackendAxios.put(`/api/admin/update-user/${id}`, { ...obj })
+    BackendAxios.post(`/api/admin/update-user/${id}`, { ...obj })
       .then((res) => {
         Toast({
           status: "success",
