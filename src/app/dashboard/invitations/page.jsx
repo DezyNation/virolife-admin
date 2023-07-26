@@ -79,7 +79,7 @@ const page = () => {
                 <Td>{key + 1}</Td>
                 <Td>{data.name}</Td>
                 <Td>{data.email}</Td>
-                <Td>{data?.phone}</Td>
+                <Td>{data?.phone_number}</Td>
                 <Td>
                   {data?.updated_at
                     ? new Date(data?.updated_at).toDateString()
