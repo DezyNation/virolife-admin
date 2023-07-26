@@ -29,7 +29,7 @@ import {
   BsPersonFill,
   BsPower,
 } from "react-icons/bs";
-import { MdGroups } from "react-icons/md";
+import { MdGroups, MdPersonAdd } from "react-icons/md";
 import { BiMenuAltLeft, BiUser } from "react-icons/bi";
 import BackendAxios from "@/utils/axios";
 import { useCookies } from "react-cookie";
@@ -117,6 +117,12 @@ const Layout = ({ children }) => {
                   <Text>Groups</Text>
                 </HStack>
               </Link>
+              <Link href={"/dashboard/invitations"}>
+                <HStack gap={4}>
+                  <MdPersonAdd size={20} />
+                  <Text>Invitations</Text>
+                </HStack>
+              </Link>
               <br />
               <Link href={"/dashboard"}>
                 <HStack gap={4}>
@@ -190,6 +196,12 @@ const Layout = ({ children }) => {
                 <HStack gap={4}>
                   <MdGroups size={20} />
                   <Text>Groups</Text>
+                </HStack>
+              </Link>
+              <Link href={"/dashboard"}>
+                <HStack gap={4}>
+                  <MdPersonAdd size={20} />
+                  <Text>Invitations</Text>
                 </HStack>
               </Link>
               <br />

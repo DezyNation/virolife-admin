@@ -178,9 +178,9 @@ const Users = () => {
                 <Th>ID</Th>
                 <Th>User Name</Th>
                 <Th>Contact</Th>
-                <Th>Wallet Balance</Th>
+                <Th>Donation Collected</Th>
                 <Th>Date of Birth</Th>
-                <Th>Subscription</Th>
+                {/* <Th>Subscription</Th> */}
                 <Th>Registered On</Th>
                 <Th>Action</Th>
               </Tr>
@@ -203,7 +203,7 @@ const Users = () => {
                   <Td>
                     {user?.dob ? new Date(user.dob).toDateString() : null}
                   </Td>
-                  <Td>Self</Td>
+                  {/* <Td>Self</Td> */}
                   <Td>{new Date(user.created_at).toLocaleString()}</Td>
                   <Td>
                     <HStack gap={4}>

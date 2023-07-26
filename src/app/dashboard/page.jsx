@@ -145,10 +145,10 @@ const DashboardHome = () => {
                       </Text>
                     </Box>
                     <Box>
-                    <Text fontSize={"sm"} fontWeight={"semibold"}>
+                    {/* <Text fontSize={"sm"} fontWeight={"semibold"}>
                       {user?.wallet}
                     </Text>
-                    <Text fontSize={'xs'} textAlign={'right'} >Points</Text>
+                    <Text fontSize={'xs'} textAlign={'right'} >Points</Text> */}
                     </Box>
                   </HStack>
                 </Box>
