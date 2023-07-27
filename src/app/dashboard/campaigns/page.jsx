@@ -158,7 +158,7 @@ const Page = () => {
               key={key}
               coverImage={
                 campaign.file_path
-                  ? `https://api.virolife.in/campaign_assets/${campaign.file_path}`
+                  ? `https://api.virolife.in/${campaign.file_path}`
                   : "https://idea.batumi.ge/files/default.jpg"
               }
               title={campaign.title}
