@@ -59,7 +59,7 @@ const CampaignInfo = ({ params }) => {
             <Image
               src={
                 campaign.file_path
-                  ? `https://edulec.in/storage/${campaign.file_path}`
+                  ? `https://api.virolife.in/campaign_assets/${campaign.file_path}`
                   : "https://idea.batumi.ge/files/default.jpg"
               }
               w={["100%", "lg", "3xl"]}
