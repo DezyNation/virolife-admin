@@ -37,16 +37,9 @@ const Users = () => {
   const arr = [1, 1, 1, 1, 1, 1, 2, 0];
   const Toast = useToast({ position: "top-right" });
   const [users, setUsers] = useState([]);
-  const [amount, setAmount] = useState("");
   const [query, setQuery] = useState("");
 
-  const [walletModal, setWalletModal] = useState({
-    id: "",
-    name: "",
-    status: false,
-  });
   const { isOpen, onToggle } = useDisclosure();
-  const [userId, setUserId] = useState("");
   const [userInfo, setUserInfo] = useState({});
   const [qrVisible, setQrVisible] = useState({status: false, upi: ""})
 
@@ -76,28 +69,6 @@ const Users = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
-
-  function sendMoney() {
-    console.log("send money");
-    BackendAxios.put(`/api/admin/wallet-user/${walletModal?.id}`, {
-      amount: amount,
-    })
-      .then(() => {
-        setWalletModal({ ...walletModal, status: false });
-        Toast({
-          status: "success",
-          description: "Wallet Updated",
-        });
-        fetchUsers();
-      })
-      .catch((err) => {
-        Toast({
-          status: "error",
-          description:
-            err?.response?.data?.message || err?.response?.data || err?.message,
-        });
-      });
-  }
 
   function getUserInfo(id) {
     onToggle();
@@ -176,7 +147,7 @@ const Users = () => {
               <Tr>
                 <Th>#</Th>
                 <Th>ID</Th>
-                <Th>User Name</Th>
+                <Th className="sticky-left">User Name</Th>
                 <Th>Contact</Th>
                 <Th>Donation Collected</Th>
                 <Th>Date of Birth</Th>
@@ -189,8 +160,8 @@ const Users = () => {
               {users.map((user, key) => (
                 <Tr fontSize={"xs"} key={key}>
                   <Td>{key + 1}</Td>
-                  <Td>{user.id}</Td>
-                  <Td>
+                  <Td>VCF{user.id}</Td>
+                  <Td className="sticky-left">
                     {user.name} ({user.gender})
                   </Td>
                   <Td>
@@ -235,27 +206,6 @@ const Users = () => {
           </Table>
         </TableContainer>
       </Stack>
-
-      {/* Wallet Topup Modal */}
-      <Modal
-        isCentered
-        isOpen={walletModal?.status}
-        onClose={() => setWalletModal({ ...walletModal, status: false })}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Topup Wallet of {walletModal?.name}</ModalHeader>
-          <ModalBody>
-            <FormLabel>Enter Amount</FormLabel>
-            <Input type="number" onChange={(e) => setAmount(e.target.value)} />
-          </ModalBody>
-          <ModalFooter justifyContent={"flex-end"}>
-            <Button colorScheme="blue" mr={3} onClick={sendMoney}>
-              Send
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
 
       {/* User Info Modal */}
       <Modal
