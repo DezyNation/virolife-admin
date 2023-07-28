@@ -15,11 +15,16 @@ body{
   display: none;
 }
 
+table thead tr th{
+  background-color: #ECC94B;
+}
+
+table tbody tr td{
+  background-color: inherit;
+}
+
 .sticky-left {
   position: sticky;
   left: 0;
   z-index: 10 !important;
-}
-table tr:nth-child(2){
-  background-color: #FFF;
 }

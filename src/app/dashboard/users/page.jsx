@@ -32,6 +32,7 @@ import Link from "next/link";
 import { BsDownload, BsEye } from "react-icons/bs";
 import BackendAxios from "@/utils/axios";
 import QRCode from "react-qr-code";
+import TreeModal from "@/components/dashboard/users/TreeModal";
 
 const Users = () => {
   const arr = [1, 1, 1, 1, 1, 1, 2, 0];
@@ -41,16 +42,19 @@ const Users = () => {
 
   const { isOpen, onToggle } = useDisclosure();
   const [userInfo, setUserInfo] = useState({});
-  const [qrVisible, setQrVisible] = useState({status: false, upi: ""})
+  const [qrVisible, setQrVisible] = useState({ status: false, upi: "" });
 
-  function showQr(upi){
-    if(!upi){
+  const [groupMembers, setGroupMembers] = useState([]);
+  const [showTreeModal, setShowTreeModal] = useState(false);
+
+  function showQr(upi) {
+    if (!upi) {
       Toast({
-        description: "UPI ID is not available for this user."
-      })
-      return
+        description: "UPI ID is not available for this user.",
+      });
+      return;
     }
-    setQrVisible({status: true, upi: upi})
+    setQrVisible({ status: true, upi: upi });
   }
 
   function fetchUsers() {
@@ -118,6 +122,89 @@ const Users = () => {
       });
   }
 
+  function updateUserRole(id, role) {
+    BackendAxios.post(`/api/admin/change-role/${id}`, { role: role })
+      .then((res) => {
+        onToggle();
+        Toast({
+          status: "success",
+          description: `The user role was updated successfully!`,
+        });
+        fetchUsers();
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function viewSecondaryTree(id, name) {
+    function buildHierarchy(items, parentId) {
+      const nestedArray = [];
+      for (const item of items) {
+        if (parseInt(item.secondary_parent_id) == parseInt(parentId)) {
+          const children = buildHierarchy(items, item.id);
+          if (children.length > 0) {
+            item.children = children;
+          }
+          nestedArray.push(item);
+        }
+      }
+      return nestedArray;
+    }
+
+    BackendAxios.get(`/api/admin/my-group/secondary/${id}`)
+      .then((res) => {
+        const hierarchyArray = buildHierarchy(res.data, id);
+        setGroupMembers([
+          { name: name, children: hierarchyArray, id: id, donation: 0 },
+        ]);
+        setShowTreeModal(true)
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function viewPrimaryTree(id, name) {
+    function buildHierarchy(items, parentId) {
+      const nestedArray = [];
+      for (const item of items) {
+        if (parseInt(item.parent_id) == parseInt(parentId)) {
+          const children = buildHierarchy(items, item.id);
+          if (children.length > 0) {
+            item.children = children;
+          }
+          nestedArray.push(item);
+        }
+      }
+      return nestedArray;
+    }
+
+    BackendAxios.get(`/api/admin/my-group/${id}`)
+      .then((res) => {
+        const hierarchyArray = buildHierarchy(res.data, id);
+        setGroupMembers([
+          { name: name, children: hierarchyArray, id: id, donation: 0 },
+        ]);
+        setShowTreeModal(true)
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
   return (
     <>
       <HStack justifyContent={["space-between"]} py={8}>
@@ -151,7 +238,7 @@ const Users = () => {
                 <Th>Contact</Th>
                 <Th>Donation Collected</Th>
                 <Th>Date of Birth</Th>
-                {/* <Th>Subscription</Th> */}
+                <Th>Role</Th>
                 <Th>Registered On</Th>
                 <Th>Action</Th>
               </Tr>
@@ -174,10 +261,10 @@ const Users = () => {
                   <Td>
                     {user?.dob ? new Date(user.dob).toDateString() : null}
                   </Td>
-                  {/* <Td>Self</Td> */}
+                  <Td>{user?.role_name}</Td>
                   <Td>{new Date(user.created_at).toLocaleString()}</Td>
                   <Td>
-                    <HStack gap={4}>
+                    <HStack gap={4} pb={2}>
                       <Switch
                         defaultChecked={user?.active}
                         colorScheme="yellow"
@@ -193,12 +280,31 @@ const Users = () => {
                       >
                         View
                       </Button>
-                      <Link href={`/dashboard/users/edit/${user?.id}`} target="_blank">
+                      <Link
+                        href={`/dashboard/users/edit/${user?.id}`}
+                        target="_blank"
+                      >
                         <Button size={"xs"} colorScheme="twitter">
                           Edit
                         </Button>
                       </Link>
                     </HStack>
+                    <HStack pt={2}>
+                    <Button
+                      size={"xs"}
+                      colorScheme={"yellow"}
+                      onClick={() => viewPrimaryTree(user?.id, user?.name)}
+                      >
+                      Prim. Tree
+                    </Button>
+                    <Button
+                      size={"xs"}
+                      colorScheme={"orange"}
+                      onClick={() => viewSecondaryTree(user?.id, user?.name)}
+                      >
+                      Sec. Tree
+                    </Button>
+                      </HStack>
                   </Td>
                 </Tr>
               ))}
@@ -217,9 +323,22 @@ const Users = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader p={8}>
-            <HStack gap={8}>
-              <Avatar src={userInfo?.profile} name={userInfo?.name} />
-              <Text>{userInfo?.name}</Text>
+            <HStack w={"full"} justifyContent={"space-between"}>
+              <HStack gap={8}>
+                <Avatar src={userInfo?.profile} name={userInfo?.name} />
+                <Text>{userInfo?.name}</Text>
+              </HStack>
+              <Button
+              colorScheme="twitter"
+                onClick={() =>
+                  updateUserRole(
+                    userInfo?.id,
+                    userInfo?.role_name == "admin" ? "user" : "admin"
+                  )
+                }
+              >
+                Make {userInfo?.role_name == "admin" ? "User" : "Admin"}
+              </Button>
             </HStack>
           </ModalHeader>
           <ModalBody p={8}>
@@ -310,7 +429,11 @@ const Users = () => {
                   <Text>{userInfo?.upi_id}</Text>
                 </HStack>
                 <br />
-                <Button size={"sm"} rounded={"full"} onClick={()=>showQr(userInfo?.upi_id)}>
+                <Button
+                  size={"sm"}
+                  rounded={"full"}
+                  onClick={() => showQr(userInfo?.upi_id)}
+                >
                   View UPI QR Code
                 </Button>
               </Box>
@@ -319,7 +442,12 @@ const Users = () => {
         </ModalContent>
       </Modal>
 
-      <Modal size={"xs"} isOpen={qrVisible.status} onClose={() => setQrVisible({status: false})}>
+      {/* UPI Modal */}
+      <Modal
+        size={"xs"}
+        isOpen={qrVisible.status}
+        onClose={() => setQrVisible({ status: false })}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader></ModalHeader>
@@ -328,16 +456,23 @@ const Users = () => {
             <br />
             <Text textAlign={"center"}>Scan with any UPI app</Text>
             <Image
-              w={"80%"} alignSelf={'center'} mx={'auto'}
+              w={"80%"}
+              alignSelf={"center"}
+              mx={"auto"}
               src={"https://mytechtrips.com/wp-content/uploads/2023/01/upi.png"}
               objectFit={"contain"}
             />
           </ModalBody>
-          <ModalFooter>
-            
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
+
+      {/* Tree Modal */}
+      <TreeModal
+        status={showTreeModal}
+        onClose={() => setShowTreeModal(false)}
+        groupMembers={groupMembers}
+      />
     </>
   );
 };
