@@ -58,7 +58,7 @@ const Users = () => {
   }
 
   function fetchUsers() {
-    BackendAxios.get("/api/users-list/user")
+    BackendAxios.get("/api/users-list/admin")
       .then((res) => {
         setUsers(res.data);
       })
@@ -162,7 +162,7 @@ const Users = () => {
         setGroupMembers([
           { name: name, children: hierarchyArray, id: id, donation: 0 },
         ]);
-        setShowTreeModal(true)
+        setShowTreeModal(true);
       })
       .catch((err) => {
         Toast({
@@ -194,7 +194,7 @@ const Users = () => {
         setGroupMembers([
           { name: name, children: hierarchyArray, id: id, donation: 0 },
         ]);
-        setShowTreeModal(true)
+        setShowTreeModal(true);
       })
       .catch((err) => {
         Toast({
@@ -209,7 +209,7 @@ const Users = () => {
     <>
       <HStack justifyContent={["space-between"]} py={8}>
         <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
-          Users
+          Admin Employees
         </Text>
         <HStack alignItems={"flex-end"}>
           <Input
@@ -238,7 +238,7 @@ const Users = () => {
                 <Th>Contact</Th>
                 <Th>Donation Collected</Th>
                 <Th>Date of Birth</Th>
-                <Th>Role</Th>
+                {/* <Th>Role</Th> */}
                 <Th>Registered On</Th>
                 <Th>Action</Th>
               </Tr>
@@ -261,7 +261,7 @@ const Users = () => {
                   <Td>
                     {user?.dob ? new Date(user.dob).toDateString() : null}
                   </Td>
-                  <Td>{user?.role_name}</Td>
+                  {/* <Td>{user?.role_name}</Td> */}
                   <Td>{new Date(user.created_at).toLocaleString()}</Td>
                   <Td>
                     <HStack gap={4} pb={2}>
@@ -281,7 +281,7 @@ const Users = () => {
                         View
                       </Button>
                       <Link
-                        href={`/dashboard/users/edit/${user?.id}`}
+                        href={`/dashboard/admin/edit/${user?.id}`}
                         target="_blank"
                       >
                         <Button size={"xs"} colorScheme="twitter">
@@ -289,7 +289,7 @@ const Users = () => {
                         </Button>
                       </Link>
                     </HStack>
-                    <HStack pt={2}>
+                    {/* <HStack pt={2}>
                     <Button
                       size={"xs"}
                       colorScheme={"yellow"}
@@ -304,7 +304,7 @@ const Users = () => {
                       >
                       Sec. Tree
                     </Button>
-                      </HStack>
+                      </HStack> */}
                   </Td>
                 </Tr>
               ))}
@@ -329,7 +329,7 @@ const Users = () => {
                 <Text>{userInfo?.name}</Text>
               </HStack>
               <Button
-              colorScheme="twitter"
+                colorScheme="twitter"
                 onClick={() =>
                   updateUserRole(
                     userInfo?.id,
