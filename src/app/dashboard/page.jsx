@@ -86,7 +86,7 @@ const DashboardHome = () => {
                 rounded={8}
                 overflow={"hidden"}
                 bgImage={
-                  overviewData[1]?.campaigns[0]?.file_path ||
+                  `https://api.virolife.in/${overviewData[1]?.campaigns[0]?.file_path}` ||
                   "https://idea.batumi.ge/files/default.jpg"
                 }
                 bgSize={"cover"}
@@ -145,7 +145,7 @@ const DashboardHome = () => {
                       </Text>
                     </Box>
                     <Box>
-                    {/* <Text fontSize={"sm"} fontWeight={"semibold"}>
+                      {/* <Text fontSize={"sm"} fontWeight={"semibold"}>
                       {user?.wallet}
                     </Text>
                     <Text fontSize={'xs'} textAlign={'right'} >Points</Text> */}
