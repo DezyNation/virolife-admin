@@ -97,7 +97,7 @@ const MenuOptions = () => {
             <Text>Campaign Donation</Text>
           </HStack>
         </Link>
-        <Link href={"/dashboard/group-donations"}>
+        <Link href={"/dashboard/transactions/group-donations"}>
           <HStack gap={4}>
             <BsCashCoin size={20} />
             <Text>Group Donations</Text>

@@ -58,7 +58,7 @@ const Users = () => {
   }
 
   function fetchUsers() {
-    BackendAxios.get("/api/users-list/user")
+    BackendAxios.get("/api/admin/users-list/user")
       .then((res) => {
         setUsers(res.data);
       })
