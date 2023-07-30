@@ -24,7 +24,7 @@ const page = () => {
   const [user, setUser] = useState("");
 
   function fetchMyCollections() {
-    BackendAxios.get(`/api/admin/user-collections/${user || ""}`)
+    BackendAxios.get(`/api/admin/user-collections${user ? `/${user}` : ""}`)
       .then((res) => {
         setTransactions(res.data);
       })
