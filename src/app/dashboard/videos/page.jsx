@@ -49,7 +49,7 @@ const Users = () => {
       isActive: false,
     },
     onSubmit: (values) => {
-      BackendAxios.post("/api/video", values)
+      BackendAxios.post("/api/video", {...values, link: `https://www.youtube.com/watch?v=${values.video_id}`})
         .then(() => {
           fetchVideos();
           onClose();
