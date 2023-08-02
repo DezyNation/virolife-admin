@@ -108,11 +108,11 @@ const CampaignInfo = ({ params }) => {
             bgColor={"blue.50"}
             rounded={"12"}
           >
-            {campaign.beneficiary_details ? (
+            {campaign.beneficiary_details != null || campaign.beneficiary_details != "null" ? (
               <>
                 This campaign will benefit{" "}
-                {JSON.parse(JSON.parse(campaign?.beneficiary_details))?.name} of{" "}
-                {JSON.parse(JSON.parse(campaign?.beneficiary_details))?.address}
+                {JSON.parse(campaign?.beneficiary_details)?.name} of{" "}
+                {JSON.parse(campaign?.beneficiary_details)?.address}
                 <br />
               </>
             ) : null}
