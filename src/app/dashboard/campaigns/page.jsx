@@ -14,9 +14,22 @@ import {
   HStack,
   ModalBody,
   ModalFooter,
+  TableContainer,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
 } from "@chakra-ui/react";
 import CampaignCard from "@/components/campaign/CampaignCard";
-import { BsEye, BsPencil, BsPlus, BsTrash2Fill, BsTrashFill } from "react-icons/bs";
+import {
+  BsEye,
+  BsPencil,
+  BsPlus,
+  BsTrash2Fill,
+  BsTrashFill,
+} from "react-icons/bs";
 import Link from "next/link";
 import BackendAxios from "@/utils/axios";
 
@@ -109,7 +122,7 @@ const Page = () => {
             size={"sm"}
             colorScheme="yellow"
             rounded={"full"}
-            onClick={()=>setFilter("all")}
+            onClick={() => setFilter("all")}
           >
             All
           </Button>
@@ -118,7 +131,7 @@ const Page = () => {
             size={"sm"}
             colorScheme="yellow"
             rounded={"full"}
-            onClick={()=>setFilter("pending")}
+            onClick={() => setFilter("pending")}
           >
             Pending
           </Button>
@@ -127,7 +140,7 @@ const Page = () => {
             size={"sm"}
             colorScheme="yellow"
             rounded={"full"}
-            onClick={()=>setFilter("paused")}
+            onClick={() => setFilter("paused")}
           >
             Paused
           </Button>
@@ -136,13 +149,14 @@ const Page = () => {
             size={"sm"}
             colorScheme="yellow"
             rounded={"full"}
-            onClick={()=>setFilter("approved")}
+            onClick={() => setFilter("approved")}
           >
             Approved
           </Button>
         </HStack>
       </Stack>
-      <Stack
+
+      {/* <Stack
         direction={["column", "row"]}
         flexWrap={"wrap"}
         gap={[4, 8, 16]}
@@ -170,7 +184,79 @@ const Page = () => {
               }
             />
           ))}
-      </Stack>
+      </Stack> */}
+
+      <TableContainer>
+        <Table variant={"striped"} colorScheme="gray">
+          <Thead>
+            <Tr>
+              <Th>ID</Th>
+              <Th>Title</Th>
+              <Th>User</Th>
+              <Th>Status</Th>
+              <Th>Timestamp</Th>
+              <Th>Action</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {campaigns
+              .filter((item) => {
+                if (filter == "all") return item;
+                else return item?.status?.toLowerCase() == filter;
+              })
+              .map((campaign, key) => (
+                <Tr key={key}>
+                  <Td>{campaign?.id}</Td>
+                  <Td>{campaign?.title}</Td>
+                  <Td>{campaign?.user_id}</Td>
+                  <Td>{campaign?.status}</Td>
+                  <Td>{new Date(campaign?.created_at).toLocaleDateString()}</Td>
+                  <Td>
+                    <HStack>
+                      <Button
+                        size={"sm"}
+                        rounded={"full"}
+                        colorScheme="yellow"
+                        onClick={() =>
+                          handleCampaignSelection(
+                            campaign?.id,
+                            campaign?.status
+                          )
+                        }
+                      >
+                        Update
+                      </Button>
+                      <Link
+                        href={`/dashboard/campaigns/view/${campaign?.id}`}
+                        target="_blank"
+                      >
+                        <Button
+                          size={"sm"}
+                          rounded={"full"}
+                          colorScheme="twitter"
+                        >
+                          View
+                        </Button>
+                      </Link>
+                      <Link
+                        href={`/dashboard/campaigns/edit/${campaign?.id}`}
+                        target="_blank"
+                      >
+                        <Button
+                          size={"sm"}
+                          rounded={"full"}
+                          colorScheme="whatsapp"
+                        >
+                          Edit
+                        </Button>
+                      </Link>
+                    </HStack>
+                  </Td>
+                </Tr>
+              ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
 
       <Modal isOpen={isOpen} onClose={onToggle}>
         <ModalOverlay />
@@ -178,7 +264,10 @@ const Page = () => {
           <ModalHeader>
             <HStack justifyContent={"space-between"}>
               <Text>Update Status</Text>
-              <Link href={`/dashboard/campaigns/view/${selectedCampaign}`} target="_blank">
+              <Link
+                href={`/dashboard/campaigns/view/${selectedCampaign}`}
+                target="_blank"
+              >
                 <Button
                   size={"sm"}
                   variant={"ghost"}
@@ -188,7 +277,10 @@ const Page = () => {
                   View
                 </Button>
               </Link>
-              <Link href={`/dashboard/campaigns/edit/${selectedCampaign}`} target="_blank">
+              <Link
+                href={`/dashboard/campaigns/edit/${selectedCampaign}`}
+                target="_blank"
+              >
                 <Button
                   size={"sm"}
                   variant={"ghost"}
@@ -208,33 +300,37 @@ const Page = () => {
               <HStack py={4} spacing={6}>
                 <Button
                   onClick={() => setStatus("paused")}
-                  colorScheme="facebook" size={'sm'}
+                  colorScheme="facebook"
+                  size={"sm"}
                   variant={status === "paused" ? "solid" : "outline"}
-                  rounded={'full'}
+                  rounded={"full"}
                 >
                   Pause
                 </Button>
                 <Button
                   onClick={() => setStatus("rejected")}
-                  colorScheme="orange" size={'sm'}
+                  colorScheme="orange"
+                  size={"sm"}
                   variant={status === "rejected" ? "solid" : "outline"}
-                  rounded={'full'}
+                  rounded={"full"}
                 >
                   Reject
                 </Button>
                 <Button
                   onClick={() => setStatus("approved")}
-                  colorScheme="whatsapp" size={'sm'}
+                  colorScheme="whatsapp"
+                  size={"sm"}
                   variant={status === "approved" ? "solid" : "outline"}
-                  rounded={'full'}
+                  rounded={"full"}
                 >
                   Approve
                 </Button>
                 <Button
                   onClick={() => setStatus("delete")}
-                  colorScheme="red" size={'sm'}
+                  colorScheme="red"
+                  size={"sm"}
                   variant={status === "delete" ? "solid" : "outline"}
-                  rounded={'full'}
+                  rounded={"full"}
                   leftIcon={<BsTrashFill />}
                 >
                   Delete
