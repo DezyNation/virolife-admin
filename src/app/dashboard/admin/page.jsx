@@ -27,6 +27,12 @@ import {
   ModalFooter,
   Image,
   Avatar,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { BsDownload, BsEye } from "react-icons/bs";
@@ -35,7 +41,17 @@ import QRCode from "react-qr-code";
 import TreeModal from "@/components/dashboard/users/TreeModal";
 
 const Users = () => {
-  const arr = [1, 1, 1, 1, 1, 1, 2, 0];
+  const [permissionsDrawer, setPermissionsDrawer] = useState({
+    id: "",
+    name: "",
+    status: false,
+    onSubmit: () => {
+      Toast({
+        status: "success",
+        description: "Permissions saved successfully!",
+      });
+    }
+  });
   const Toast = useToast({ position: "top-right" });
   const [users, setUsers] = useState([]);
   const [query, setQuery] = useState("");
@@ -141,70 +157,6 @@ const Users = () => {
       });
   }
 
-  function viewSecondaryTree(id, name) {
-    function buildHierarchy(items, parentId) {
-      const nestedArray = [];
-      for (const item of items) {
-        if (parseInt(item.secondary_parent_id) == parseInt(parentId)) {
-          const children = buildHierarchy(items, item.id);
-          if (children.length > 0) {
-            item.children = children;
-          }
-          nestedArray.push(item);
-        }
-      }
-      return nestedArray;
-    }
-
-    BackendAxios.get(`/api/admin/my-group/secondary/${id}`)
-      .then((res) => {
-        const hierarchyArray = buildHierarchy(res.data, id);
-        setGroupMembers([
-          { name: name, children: hierarchyArray, id: id, donation: 0 },
-        ]);
-        setShowTreeModal(true);
-      })
-      .catch((err) => {
-        Toast({
-          status: "error",
-          description:
-            err?.response?.data?.message || err?.response?.data || err?.message,
-        });
-      });
-  }
-
-  function viewPrimaryTree(id, name) {
-    function buildHierarchy(items, parentId) {
-      const nestedArray = [];
-      for (const item of items) {
-        if (parseInt(item.parent_id) == parseInt(parentId)) {
-          const children = buildHierarchy(items, item.id);
-          if (children.length > 0) {
-            item.children = children;
-          }
-          nestedArray.push(item);
-        }
-      }
-      return nestedArray;
-    }
-
-    BackendAxios.get(`/api/admin/my-group/${id}`)
-      .then((res) => {
-        const hierarchyArray = buildHierarchy(res.data, id);
-        setGroupMembers([
-          { name: name, children: hierarchyArray, id: id, donation: 0 },
-        ]);
-        setShowTreeModal(true);
-      })
-      .catch((err) => {
-        Toast({
-          status: "error",
-          description:
-            err?.response?.data?.message || err?.response?.data || err?.message,
-        });
-      });
-  }
-
   return (
     <>
       <HStack justifyContent={["space-between"]} py={8}>
@@ -280,14 +232,33 @@ const Users = () => {
                       >
                         View
                       </Button>
-                      <Link
+                      {/* <Link
                         href={`/dashboard/admin/edit/${user?.id}`}
                         target="_blank"
                       >
                         <Button size={"xs"} colorScheme="twitter">
                           Edit
                         </Button>
-                      </Link>
+                      </Link> */}
+                      <Button
+                        size={"xs"}
+                        colorScheme="twitter"
+                        onClick={() =>
+                          setPermissionsDrawer({
+                            id: user?.id,
+                            name: user?.name,
+                            status: true,
+                            onSubmit: () => {
+                              Toast({
+                                status: "success",
+                                description: "Permissions saved successfully!",
+                              });
+                            },
+                          })
+                        }
+                      >
+                        Permissions
+                      </Button>
                     </HStack>
                     {/* <HStack pt={2}>
                     <Button
@@ -473,6 +444,37 @@ const Users = () => {
         onClose={() => setShowTreeModal(false)}
         groupMembers={groupMembers}
       />
+
+      <Drawer
+        isOpen={permissionsDrawer.status}
+        onClose={() =>
+          setPermissionsDrawer({ ...permissionsDrawer, status: false })
+        }
+        placement="right"
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader>
+            Assign Permissions to {permissionsDrawer.name}
+          </DrawerHeader>
+          <DrawerBody></DrawerBody>
+          <DrawerFooter justifyContent={"flex-end"}>
+            <Button
+              onClick={() =>
+                setPermissionsDrawer({ ...permissionsDrawer, status: false })
+              }
+            >
+              Close
+            </Button>
+            <Button
+              colorScheme="yellow"
+              onClick={() => permissionsDrawer.onSubmit()}
+            >
+              Save Changes
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 };
