@@ -451,6 +451,7 @@ const Users = () => {
           setPermissionsDrawer({ ...permissionsDrawer, status: false })
         }
         placement="right"
+        size={'md'}
       >
         <DrawerOverlay />
         <DrawerContent>
@@ -458,7 +459,7 @@ const Users = () => {
             Assign Permissions to {permissionsDrawer.name}
           </DrawerHeader>
           <DrawerBody></DrawerBody>
-          <DrawerFooter justifyContent={"flex-end"}>
+          <DrawerFooter gap={4} justifyContent={"flex-end"}>
             <Button
               onClick={() =>
                 setPermissionsDrawer({ ...permissionsDrawer, status: false })
