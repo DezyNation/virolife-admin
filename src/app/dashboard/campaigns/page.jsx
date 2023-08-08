@@ -73,6 +73,8 @@ const Page = () => {
             status: "success",
             description: "Campaign deleted successfully!",
           });
+          onToggle()
+          fetchData()
         })
         .catch((err) => {
           Toast({
