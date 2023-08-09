@@ -43,7 +43,7 @@ const page = () => {
 
   function approveDonation(id) {
     if (!id) return;
-    BackendAxios.post(`/api/approve-donation/${id}`, { status: 1 })
+    BackendAxios.post(`/api/admin/approve-donation/${id}`, { status: 1 })
       .then((res) => {
         Toast({
           status: "success",
