@@ -129,7 +129,7 @@ const page = () => {
                         colorScheme="red"
                         onClick={() => deleteDonation(item.id)}
                       >
-                        Delete
+                        Cancel
                       </Button>
                     </HStack>
                   ) : null}
