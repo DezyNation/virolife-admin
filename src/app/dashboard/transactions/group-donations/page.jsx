@@ -62,7 +62,7 @@ const page = () => {
 
   function deleteDonation(id) {
     if (!id) return;
-    BackendAxios.delete(`/api/donation/${id}`)
+    BackendAxios.delete(`/api/admin/delete-donation/${id}`)
       .then((res) => {
         Toast({
           description: "Donation deleted",
