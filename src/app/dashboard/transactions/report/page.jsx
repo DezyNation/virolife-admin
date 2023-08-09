@@ -44,15 +44,13 @@ const Transactions = () => {
                                 arr.map((item, key) => (
                                     <Tr fontSize={'xs'} key={key}>
                                         <Td>{key + 1}</Td>
-                                        <Td>TAN2341</Td>
+                                        <Td> </Td>
                                         <Td>
-                                            <Link href={'/campaigns/save-the-cow'} target='_blank'>
-                                                Save The Cows
-                                            </Link>
+                                            
                                         </Td>
-                                        <Td>Sangam Kumar</Td>
-                                        <Td>₹ 4565</Td>
-                                        <Td>28-05-2023 18:13</Td>
+                                        <Td> </Td>
+                                        <Td> </Td>
+                                        <Td> </Td>
                                     </Tr>
                                 ))
                             }

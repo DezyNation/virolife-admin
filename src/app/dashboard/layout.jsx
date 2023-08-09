@@ -53,12 +53,12 @@ const MenuOptions = () => {
   return (
     <>
       <VStack w={"full"} gap={4} pt={8} alignItems={"flex-start"}>
-        <Link href={"#"}>
+        {/* <Link href={"#"}>
           <HStack gap={4}>
             <BsPersonFill size={20} />
             <Text>Profile</Text>
           </HStack>
-        </Link>
+        </Link> */}
         <Link href={"/dashboard"}>
           <HStack gap={4}>
             <AiFillDashboard size={20} />

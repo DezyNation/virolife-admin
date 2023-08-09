@@ -44,11 +44,11 @@ const Transactions = () => {
                                 arr.map((item, key) => (
                                     <Tr fontSize={'xs'} key={key}>
                                         <Td>{key + 1}</Td>
-                                        <Td>TAN2341</Td>
-                                        <Td>Sangam Kumar</Td>
-                                        <Td>₹ 4565</Td>
+                                        <Td> </Td>
+                                        <Td> </Td>
+                                        <Td> </Td>
                                         <Td></Td>
-                                        <Td>28-05-2023 18:13</Td>
+                                        <Td> </Td>
                                     </Tr>
                                 ))
                             }

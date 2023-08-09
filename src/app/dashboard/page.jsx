@@ -62,7 +62,7 @@ const DashboardHome = () => {
         />
         <StatsCard
           icon={<BsMegaphoneFill size={28} />}
-          title={"live campaigns"}
+          title={"active campaigns"}
           quantity={overviewData[1]?.count}
         />
         <StatsCard
@@ -71,7 +71,7 @@ const DashboardHome = () => {
         />
         <StatsCard icon={<BsCashCoin size={28} />} title={"amount settled"} />
       </Stack>
-      <Box pt={16}>
+      {/* <Box pt={16}>
         <Stack
           direction={["column", "row"]}
           gap={8}
@@ -145,10 +145,10 @@ const DashboardHome = () => {
                       </Text>
                     </Box>
                     <Box>
-                      {/* <Text fontSize={"sm"} fontWeight={"semibold"}>
+                      
                       {user?.wallet}
-                    </Text>
-                    <Text fontSize={'xs'} textAlign={'right'} >Points</Text> */}
+                    
+                    <Text fontSize={'xs'} textAlign={'right'} >Points</Text>
                     </Box>
                   </HStack>
                 </Box>
@@ -159,7 +159,7 @@ const DashboardHome = () => {
             </VStack>
           </Box>
         </Stack>
-      </Box>
+      </Box> */}
     </>
   );
 };
