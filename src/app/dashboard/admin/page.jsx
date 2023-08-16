@@ -194,7 +194,6 @@ const Users = () => {
         setSelectedUserPermissions(
           res.data?.map((permission) => permission?.name)
         );
-        console.log(res.data?.map((permission) => permission?.name));
       })
       .catch((err) => {
         Toast({

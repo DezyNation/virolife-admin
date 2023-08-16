@@ -37,6 +37,7 @@ import { useCookies } from "react-cookie";
 
 const MenuOptions = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["jwt"]);
+  const [permissions, setPermissions] = useState([]);
   async function handleLogout() {
     await BackendAxios.post("/logout")
       .then(() => {
@@ -50,6 +51,32 @@ const MenuOptions = () => {
       });
     window.location.replace("/");
   }
+
+  useEffect(() => {
+    if (!localStorage.getItem("permissions")) {
+      fetchPermissions();
+      return;
+    }
+    setPermissions(JSON.parse(localStorage.getItem("permissions")));
+  }, []);
+
+  function fetchPermissions() {
+    BackendAxios.get(`/api/admin/user-permissions`)
+      .then((res) => {
+        setPermissions(res.data?.map((permission) => permission?.name));
+        localStorage.setItem(
+          "permissions",
+          JSON.stringify(res.data?.map((permission) => permission?.name))
+        );
+      })
+      .catch((err) => {
+        if (err?.response?.status == 401) {
+          localStorage.clear();
+          window.location.assign("/");
+        }
+      });
+  }
+
   return (
     <>
       <VStack w={"full"} gap={4} pt={8} alignItems={"flex-start"}>
@@ -72,37 +99,45 @@ const MenuOptions = () => {
             <Text>Manage Videos</Text>
           </HStack>
         </Link>
-        <Link href={"/dashboard/users"}>
-          <HStack gap={4}>
-            <BiUser size={20} />
-            <Text>Manage Users</Text>
-          </HStack>
-        </Link>
+        {permissions.includes("user-view") ? (
+          <Link href={"/dashboard/users"}>
+            <HStack gap={4}>
+              <BiUser size={20} />
+              <Text>Manage Users</Text>
+            </HStack>
+          </Link>
+        ) : null}
         <Link href={"/dashboard/admin"}>
           <HStack gap={4}>
             <FaUserShield size={20} />
             <Text>Manage Admin</Text>
           </HStack>
         </Link>
-        <Link href={"/dashboard/campaigns"}>
-          <HStack gap={4}>
-            <BsMegaphoneFill size={20} />
-            <Text>Manage Campaigns</Text>
-          </HStack>
-        </Link>
+        {permissions.includes("campaign-view") ? (
+          <Link href={"/dashboard/campaigns"}>
+            <HStack gap={4}>
+              <BsMegaphoneFill size={20} />
+              <Text>Manage Campaigns</Text>
+            </HStack>
+          </Link>
+        ) : null}
         <br />
-        <Link href={"/dashboard/transactions"}>
-          <HStack gap={4}>
-            <BsCurrencyRupee size={20} />
-            <Text>Campaign Donation</Text>
-          </HStack>
-        </Link>
-        <Link href={"/dashboard/transactions/group-donations"}>
-          <HStack gap={4}>
-            <BsCashCoin size={20} />
-            <Text>Group Donations</Text>
-          </HStack>
-        </Link>
+        {permissions.includes("donation-view") ? (
+          <Link href={"/dashboard/transactions"}>
+            <HStack gap={4}>
+              <BsCurrencyRupee size={20} />
+              <Text>Campaign Donation</Text>
+            </HStack>
+          </Link>
+        ) : null}
+        {permissions.includes("donation-view") ? (
+          <Link href={"/dashboard/transactions/group-donations"}>
+            <HStack gap={4}>
+              <BsCashCoin size={20} />
+              <Text>Group Donations</Text>
+            </HStack>
+          </Link>
+        ) : null}
         {/* <Link href={"/dashboard"}>
                 <HStack gap={4}>
                   <MdGroups size={20} />
