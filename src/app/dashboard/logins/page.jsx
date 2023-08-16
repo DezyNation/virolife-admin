@@ -49,7 +49,7 @@ const page = () => {
       {pages.map((page, key) => (
           <Button
           onClick={() => fetchLogins(page?.url)}
-          size={"sm"}
+          size={"xs"}
           colorScheme="yellow"
           variant={page?.active ? "solid" : "outline"}
           >
