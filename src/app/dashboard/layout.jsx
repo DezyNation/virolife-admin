@@ -30,7 +30,7 @@ import {
   BsPower,
 } from "react-icons/bs";
 import { MdGroups, MdPersonAdd } from "react-icons/md";
-import { BiMenuAltLeft, BiUser } from "react-icons/bi";
+import { BiLogIn, BiMenuAltLeft, BiUser } from "react-icons/bi";
 import { FaUserShield } from "react-icons/fa";
 import BackendAxios from "@/utils/axios";
 import { useCookies } from "react-cookie";
@@ -152,7 +152,7 @@ const MenuOptions = () => {
         </Link>
         <Link href={"/dashboard/logins"}>
           <HStack gap={4}>
-            <MdPersonAdd size={20} />
+            <BiLogIn size={20} />
             <Text>Login Report</Text>
           </HStack>
         </Link>
