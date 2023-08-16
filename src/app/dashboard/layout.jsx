@@ -150,6 +150,12 @@ const MenuOptions = () => {
             <Text>Invitations</Text>
           </HStack>
         </Link>
+        <Link href={"/dashboard/logins"}>
+          <HStack gap={4}>
+            <MdPersonAdd size={20} />
+            <Text>Login Report</Text>
+          </HStack>
+        </Link>
         <br />
         {/* <Link href={"/dashboard"}>
                 <HStack gap={4}>
