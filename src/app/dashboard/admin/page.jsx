@@ -33,6 +33,9 @@ import {
   DrawerHeader,
   DrawerBody,
   DrawerFooter,
+  CheckboxGroup,
+  Checkbox,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { BsDownload, BsEye } from "react-icons/bs";
@@ -50,7 +53,7 @@ const Users = () => {
         status: "success",
         description: "Permissions saved successfully!",
       });
-    }
+    },
   });
   const Toast = useToast({ position: "top-right" });
   const [users, setUsers] = useState([]);
@@ -62,6 +65,9 @@ const Users = () => {
 
   const [groupMembers, setGroupMembers] = useState([]);
   const [showTreeModal, setShowTreeModal] = useState(false);
+
+  const [selectedUserPermissions, setSelectedUserPermissions] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState([]);
 
   function showQr(upi) {
     if (!upi) {
@@ -147,6 +153,48 @@ const Users = () => {
           description: `The user role was updated successfully!`,
         });
         fetchUsers();
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function handlePermissions() {
+    BackendAxios.post(`/api/admin/assign-permissions/${permissionsDrawer.id}`, {
+      permissions: selectedUserPermissions,
+    })
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Permissions were updated successfully!",
+        });
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  useEffect(() => {
+    if (permissionsDrawer.status) {
+      getUserPermissions();
+    }
+  }, [permissionsDrawer]);
+
+  function getUserPermissions() {
+    BackendAxios.get(`/api/admin/user-permissions/${permissionsDrawer.id}`)
+      .then((res) => {
+        setSelectedUserPermissions(
+          res.data?.map((permission) => permission?.name)
+        );
+        console.log(res.data?.map((permission) => permission?.name));
       })
       .catch((err) => {
         Toast({
@@ -248,12 +296,6 @@ const Users = () => {
                             id: user?.id,
                             name: user?.name,
                             status: true,
-                            onSubmit: () => {
-                              Toast({
-                                status: "success",
-                                description: "Permissions saved successfully!",
-                              });
-                            },
                           })
                         }
                       >
@@ -451,14 +493,88 @@ const Users = () => {
           setPermissionsDrawer({ ...permissionsDrawer, status: false })
         }
         placement="right"
-        size={'md'}
+        size={"md"}
       >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader>
             Assign Permissions to {permissionsDrawer.name}
           </DrawerHeader>
-          <DrawerBody></DrawerBody>
+          <DrawerCloseButton />
+          <DrawerBody>
+            <CheckboxGroup
+              onChange={(values) => setSelectedUserPermissions(values)}
+              defaultValue={selectedUserPermissions}
+            >
+              <FormLabel>Users Related Permissions</FormLabel>
+              <Checkbox
+                value={"user-view"}
+              >
+                View
+              </Checkbox>{" "}
+              <br />
+              <Checkbox
+                value={"user-edit"}
+              >
+                Edit
+              </Checkbox>{" "}
+              <br />
+              <br />
+              <FormLabel>Campaigns Related Permissions</FormLabel>
+              <Checkbox
+                value={"campaign-view"}
+              >
+                View
+              </Checkbox>{" "}
+              <br />
+              <Checkbox
+                value={"campaign-edit"}
+              >
+                Edit
+              </Checkbox>{" "}
+              <br />
+              <Checkbox
+                value={"campaign-delete"}
+              >
+                Delete
+              </Checkbox>{" "}
+              <br />
+              <br />
+              <FormLabel>Donations Related Permissions</FormLabel>
+              <Checkbox
+                value={"donation-view"}
+              >
+                View
+              </Checkbox>{" "}
+              <br />
+              <Checkbox
+                value={"donation-edit"}
+              >
+                Update
+              </Checkbox>{" "}
+              <br />
+              <br />
+              <FormLabel>Plans Related Permissions</FormLabel>
+              <Checkbox
+                value={"plan-create"}
+              >
+                View
+              </Checkbox>{" "}
+              <br />
+              <Checkbox
+                value={"plan-view"}
+              >
+                View
+              </Checkbox>{" "}
+              <br />
+              <Checkbox
+                value={"plan-edit"}
+              >
+                Update
+              </Checkbox>{" "}
+              <br />
+            </CheckboxGroup>
+          </DrawerBody>
           <DrawerFooter gap={4} justifyContent={"flex-end"}>
             <Button
               onClick={() =>
@@ -467,10 +583,7 @@ const Users = () => {
             >
               Close
             </Button>
-            <Button
-              colorScheme="yellow"
-              onClick={() => permissionsDrawer.onSubmit()}
-            >
+            <Button colorScheme="yellow" onClick={handlePermissions}>
               Save Changes
             </Button>
           </DrawerFooter>
