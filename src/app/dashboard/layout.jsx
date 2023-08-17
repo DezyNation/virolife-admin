@@ -63,10 +63,11 @@ const MenuOptions = () => {
   function fetchPermissions() {
     BackendAxios.get(`/api/admin/user-permissions`)
       .then((res) => {
-        setPermissions(res.data?.map((permission) => permission?.name));
+        const newPermissions = res.data?.map((permission) => permission?.name)
+        setPermissions(newPermissions);
         localStorage.setItem(
           "permissions",
-          JSON.stringify(res.data?.map((permission) => permission?.name))
+          JSON.stringify(newPermissions)
         );
       })
       .catch((err) => {
