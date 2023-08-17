@@ -53,7 +53,7 @@ const MenuOptions = () => {
   }
 
   useEffect(() => {
-    if (!localStorage.getItem("permissions") || !JSON.parse(localStorage.getItem("permissions"))) {
+    if (!localStorage.getItem("permissions") || !JSON.parse(localStorage.getItem("permissions"))?.length) {
       fetchPermissions();
       return;
     }
