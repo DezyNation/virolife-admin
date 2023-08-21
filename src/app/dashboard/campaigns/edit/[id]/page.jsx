@@ -237,7 +237,7 @@ const Page = ({ params }) => {
           value={Formik.values.title}
         />
       </FormControl>
-      <HStack w={"full"} flexWrap={"wrap"} justifyContent={"space-between"}>
+      <HStack w={"full"} flexWrap={"wrap"} alignItems={'flex-start'} justifyContent={"space-between"}>
         <Box p={4}>
           <Text fontWeight={"semibold"}>Upload Image</Text>
           <Text pb={4} color={"darkslategray"}>
