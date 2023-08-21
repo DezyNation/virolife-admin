@@ -23,6 +23,7 @@ import {
   ModalHeader,
   ModalContent,
   ModalFooter,
+  ModalBody,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { BsXCircleFill } from "react-icons/bs";
