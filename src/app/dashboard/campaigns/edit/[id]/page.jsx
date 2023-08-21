@@ -288,7 +288,7 @@ const Page = ({ params }) => {
         </Box>
         <Box>
           <Text>Existing Images</Text>
-          {/* {JSON.parse(campaign?.file_path)?.map((img, key) => (
+          {JSON.parse(campaign?.file_path)?.map((img, key) => (
             <HStack
               justifyContent={"space-between"}
               p={4}
@@ -317,7 +317,7 @@ const Page = ({ params }) => {
                 </Button>
               </Box>
             </HStack>
-          ))} */}
+          ))}
         </Box>
       </HStack>
       <FormControl py={4}>
