@@ -159,7 +159,7 @@ const Page = ({ params }) => {
   }, [campaign]);
 
   function removeFile(img) {
-    BackendAxios.delete(`/api/admin/delete-attachment/${img}`)
+    BackendAxios.delete(`/api/admin/delete-attachment}`, {id: img})
       .then((res) => {
         setConfirmationModal(false)
         Toast({
