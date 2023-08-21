@@ -131,6 +131,12 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
+        <Link href={"/dashboard/subscriptions"}>
+            <HStack gap={4}>
+              <BsCurrencyRupee size={20} />
+              <Text>Subscriptions</Text>
+            </HStack>
+          </Link>
         {permissions.includes("donation-view") ? (
           <Link href={"/dashboard/transactions/group-donations"}>
             <HStack gap={4}>
