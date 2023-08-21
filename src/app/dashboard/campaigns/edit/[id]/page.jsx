@@ -18,17 +18,32 @@ import {
   Stack,
   InputGroup,
   InputLeftElement,
+  Modal,
+  ModalOverlay,
+  ModalHeader,
+  ModalContent,
+  ModalFooter,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { BsXCircleFill } from "react-icons/bs";
 import BackendAxios, { FormAxios } from "@/utils/axios";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+import { FaTrashAlt } from "react-icons/fa";
 
-const Page = ({params}) => {
+const QuillNoSSRWrapper = dynamic(async () => {
+  const { default: RQ } = await import("react-quill");
+  return ({ ...props }) => <RQ {...props} />;
+});
+
+const Page = ({ params }) => {
   const Toast = useToast({ position: "top-right" });
   const [loading, setLoading] = useState(false);
-  const [campaign, setCampaign] = useState({})
+  const [campaign, setCampaign] = useState({});
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
+  const [imageToDelete, setImageToDelete] = useState("")
+  const [confirmationModal, setConfirmationModal] = useState(false)
   const [beneficiaryDetails, setBeneficiaryDetails] = useState({
     type: "myself",
     name: "",
@@ -36,9 +51,13 @@ const Page = ({params}) => {
     contact: "",
   });
 
-  const {id} = params
+  const { id } = params;
 
-  useEffect(()=>{
+  useEffect(() => {
+    fetchCampaignInfo();
+  }, []);
+
+  function fetchCampaignInfo() {
     BackendAxios.get(`/api/campaign/${id}`)
       .then((res) => {
         setCampaign(res.data[0]);
@@ -50,12 +69,10 @@ const Page = ({params}) => {
             err?.response?.data?.message || err?.response?.data || err?.message,
         });
       });
-  },[])
-
+  }
 
   const onDrop = useCallback(async (acceptedFiles) => {
-    console.log(acceptedFiles[0]);
-    Formik.setFieldValue("files", acceptedFiles[0]);
+    Formik.setFieldValue("files", acceptedFiles);
     const newImages = acceptedFiles.map((file) => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -64,25 +81,27 @@ const Page = ({params}) => {
         reader.readAsDataURL(file);
       });
     });
-    console.log(newImages);
+
     Promise.all(newImages)
       .then((imagePreviews) =>
         setSelectedImages((prevImages) => [...prevImages, ...imagePreviews])
       )
       .catch((error) => console.error("Error reading file:", error));
   }, []);
+
   const removeImage = (index) => {
     setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
     Formik.setFieldValue(
       "files",
-      Formik.values.files.filter((_, i) => i !== index)
+      Formik.values.files?.filter((_, i) => i !== index)
     );
   };
+
   const [selectedImages, setSelectedImages] = useState([]);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: "image/*",
-    multiple: false,
+    multiple: true,
   });
 
   const Formik = useFormik({
@@ -96,24 +115,18 @@ const Page = ({params}) => {
     },
     onSubmit: () => {
       setLoading(true);
-      const formData = new FormData();
-      formData.append("files", Formik.values.files);
-      formData.append("title", Formik.values.title);
-      formData.append("description", Formik.values.description);
-      formData.append("full_description", Formik.values.full_description);
-      formData.append("category_id", Formik.values.category_id);
-      formData.append("target_amount", Formik.values.target_amount);
-      formData.append("from", new Date(selectedDates[0]).getUTCSeconds());
-      formData.append("to", new Date(selectedDates[1]).getUTCSeconds());
-      formData.append("beneficiaryDetails", JSON.stringify(beneficiaryDetails));
-      FormAxios.put(`/api/campaign/${id}`, formData)
+      FormAxios.put(`/api/campaign/${id}`, {
+        ...values,
+        beneficiaryDetails: JSON.stringify(beneficiaryDetails),
+        from: new Date(selectedDates[0]).getUTCSeconds(),
+        to: new Date(selectedDates[1]).getUTCSeconds(),
+      })
         .then((res) => {
           setLoading(false);
           Toast({
             status: "success",
             description: "Campaign was updated successfully!",
           });
-          console.log(formData);
         })
         .catch((err) => {
           setLoading(false);
@@ -128,21 +141,40 @@ const Page = ({params}) => {
     },
   });
 
-  useEffect(()=>{
-    Formik.setFieldValue("target_amount", campaign?.target_amount)
-    Formik.setFieldValue("title", campaign?.title)
-    Formik.setFieldValue("description", campaign?.description)
-    Formik.setFieldValue("full_description", campaign?.full_description)
-    Formik.setFieldValue("category_id", campaign?.category?.id)
-    if(campaign?.beneficiary_details){
+  useEffect(() => {
+    Formik.setFieldValue("target_amount", campaign?.target_amount);
+    Formik.setFieldValue("title", campaign?.title);
+    Formik.setFieldValue("description", campaign?.description);
+    Formik.setFieldValue("full_description", campaign?.full_description);
+    Formik.setFieldValue("category_id", campaign?.category?.id);
+    if (campaign?.beneficiary_details) {
       setBeneficiaryDetails({
         type: JSON.parse(campaign?.beneficiary_details)?.type,
         name: JSON.parse(campaign?.beneficiary_details)?.name,
         address: JSON.parse(campaign?.beneficiary_details)?.address,
         contact: JSON.parse(campaign?.beneficiary_details)?.contact,
-      })
+      });
     }
-  },[campaign])
+  }, [campaign]);
+
+  function removeFile(img) {
+    BackendAxios.delete(`/api/admin/delete-attachment/${img}`)
+      .then((res) => {
+        setConfirmationModal(false)
+        Toast({
+          status: "success",
+          description: "Attachment deleted successfully!",
+        });
+        fetchCampaignInfo();
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
 
   return (
     <>
@@ -204,48 +236,89 @@ const Page = ({params}) => {
           value={Formik.values.title}
         />
       </FormControl>
-      <Box p={4}>
-        <Text pb={4} fontWeight={"semibold"}>
-          Upload Image
-        </Text>
-        <VStack
-          {...getRootProps()}
-          w={["full", "lg"]}
-          h={"xs"}
-          rounded={16}
-          border={"1px"}
-          borderStyle={"dashed"}
-          bg={"#FAFAFA"}
-          cursor={"pointer"}
-          justifyContent={"center"}
-        >
-          <Input visibility={"hidden"} {...getInputProps()} />
-          {isDragActive ? (
-            <Text>Drop Your Files Here...</Text>
-          ) : (
-            <Text>Click to Upload Or Drop Your Files Here...</Text>
-          )}
-        </VStack>
-        <HStack py={4}>
-          {selectedImages.map((image, index) => (
-            <Box key={index} pos={"relative"}>
-              {/* <Icon
+      <HStack w={"full"} flexWrap={"wrap"} justifyContent={"space-between"}>
+        <Box p={4}>
+          <Text fontWeight={"semibold"}>Upload Image</Text>
+          <Text pb={4} color={"darkslategray"}>
+            Uploading new images will replace the existing ones.
+            <br />
+            Kindly download the existing images before uploading any new images.
+          </Text>
+          <VStack
+            {...getRootProps()}
+            w={["full", "lg"]}
+            h={"xs"}
+            rounded={16}
+            border={"1px"}
+            borderStyle={"dashed"}
+            bg={"#FAFAFA"}
+            cursor={"pointer"}
+            justifyContent={"center"}
+          >
+            <Input visibility={"hidden"} {...getInputProps()} />
+            {isDragActive ? (
+              <Text>Drop Your Files Here...</Text>
+            ) : (
+              <Text>Click to Upload Or Drop Your Files Here...</Text>
+            )}
+          </VStack>
+          <HStack py={4} overflowX={"scroll"}>
+            {selectedImages.map((image, index) => (
+              <Box key={index} pos={"relative"}>
+                <Icon
                   as={BsXCircleFill}
-                  color={'red'} pos={'absolute'}
-                  size={12} top={0} right={0}
+                  color={"red"}
+                  pos={"absolute"}
+                  size={12}
+                  top={0}
+                  right={0}
                   onClick={() => removeImage(index)}
-              /> */}
+                />
+                <Image
+                  src={image}
+                  w={36}
+                  h={36}
+                  rounded={16}
+                  objectFit={"cover"}
+                />
+              </Box>
+            ))}
+          </HStack>
+        </Box>
+        <Box>
+          <Text>Existing Images</Text>
+          {JSON.parse(campaign?.file_path)?.map((img, key) => (
+            <HStack
+              justifyContent={"space-between"}
+              p={4}
+              key={key}
+              rounded={4}
+              bgColor={"#FFF"}
+              boxShadow={"md"}
+            >
               <Image
-                src={image}
-                w={36}
-                h={36}
-                rounded={16}
-                objectFit={"cover"}
+                boxSize={'24'}
+                src={process.env.NEXT_PUBLIC_BACKEND_URL + "/" + img}
+                rounded={6}
               />
-            </Box>
+              <Box>
+                <Button
+                  rounded={"full"}
+                  colorScheme="red"
+                  leftIcon={<FaTrashAlt />}
+                  size={'sm'}
+                  onClick={() => {
+                    setConfirmationModal(true)
+                    setImageToDelete(img)
+                  }}
+                >
+                  Remove File
+                </Button>
+              </Box>
+            </HStack>
           ))}
-        </HStack>
-      </Box>
+        </Box>
+      </HStack>
       <FormControl py={4}>
         <FormLabel>Short Description (15-20 words)</FormLabel>
         <Textarea
@@ -258,13 +331,17 @@ const Page = ({params}) => {
       </FormControl>
       <FormControl py={4}>
         <FormLabel>Your message</FormLabel>
-        <Textarea
+        {/* <Textarea
           w={"full"}
           name="full_description"
           onChange={Formik.handleChange}
           value={Formik.values.full_description}
           placeholder="Tell us about your campaign"
-        ></Textarea>
+        ></Textarea> */}
+        <QuillNoSSRWrapper
+          value={Formik.values.full_description}
+          onChange={(value) => Formik.setFieldValue("full_description", value)}
+        />
       </FormControl>
       <VStack
         w={"full"}
@@ -327,15 +404,16 @@ const Page = ({params}) => {
             </Button>
           </Stack>
         </FormControl>
-              <br />
+        <br />
         {beneficiaryDetails.type == "myself" || (
           <VStack
             w={"full"}
-            py={4} gap={8}
+            py={4}
+            gap={8}
             alignItems={"flex-start"}
             justifyContent={"flex-start"}
           >
-            <FormControl w={['full', 'xs']}>
+            <FormControl w={["full", "xs"]}>
               <FormLabel>Name</FormLabel>
               <Input
                 placeholder="Enter beneficiary name"
@@ -348,7 +426,7 @@ const Page = ({params}) => {
                 value={beneficiaryDetails.name}
               />
             </FormControl>
-            <FormControl w={['full', 'xs']}>
+            <FormControl w={["full", "xs"]}>
               <FormLabel>Contact</FormLabel>
               <Input
                 placeholder="Beneficiary contact details"
@@ -361,7 +439,7 @@ const Page = ({params}) => {
                 value={beneficiaryDetails.contact}
               />
             </FormControl>
-            <FormControl w={['full', 'xs']}>
+            <FormControl w={["full", "xs"]}>
               <FormLabel>Address</FormLabel>
               <Input
                 placeholder="Beneficiary address"
@@ -386,6 +464,29 @@ const Page = ({params}) => {
           Update Changes
         </Button>
       </HStack>
+
+      {/* Delete confirmation modal */}
+      <Modal
+        isOpen={confirmationModal}
+        onClose={() => setConfirmationModal(false)}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Confirm Deletion</ModalHeader>
+          <ModalBody>Are you sure to delte this file?</ModalBody>
+          <ModalFooter justifyContent={"flex-end"}>
+            <Button
+              variant={"ghost"}
+              onClick={() => setConfirmationModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button colorScheme="red" onClick={() => removeFile(imageToDelete)}>
+              Delete
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
