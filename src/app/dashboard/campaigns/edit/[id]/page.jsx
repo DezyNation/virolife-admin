@@ -42,6 +42,7 @@ const Page = ({ params }) => {
   const Toast = useToast({ position: "top-right" });
   const [loading, setLoading] = useState(false);
   const [campaign, setCampaign] = useState({});
+  const [campaignImages, setCampaignImages] = useState(null)
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
   const [imageToDelete, setImageToDelete] = useState("")
   const [confirmationModal, setConfirmationModal] = useState(false)
@@ -62,6 +63,9 @@ const Page = ({ params }) => {
     BackendAxios.get(`/api/campaign/${id}`)
       .then((res) => {
         setCampaign(res.data[0]);
+        if(res?.data[0]?.file_path){
+          setCampaignImages(JSON.parse(res?.data[0]?.file_path))
+        }
       })
       .catch((err) => {
         Toast({
@@ -159,22 +163,25 @@ const Page = ({ params }) => {
   }, [campaign]);
 
   function removeFile(img) {
-    BackendAxios.post(`/api/admin/delete-attachment`, {id: img})
-      .then((res) => {
-        setConfirmationModal(false)
-        Toast({
-          status: "success",
-          description: "Attachment deleted successfully!",
-        });
-        fetchCampaignInfo();
+    const imgsArr = campaignImages
+    const index =  imgsArr?.indexOf(img)
+    if(!index) return
+    const newArr = imgsArr?.splice(index, 1)
+    BackendAxios?.post(`/api/campaigns/update-attachment/${id}`, {file_path: newArr}).then(res => {
+      Toast({
+        status: "success",
+        description: "Images updated successfully!"
       })
-      .catch((err) => {
-        Toast({
-          status: "error",
-          description:
-            err?.response?.data?.message || err?.response?.data || err?.message,
-        });
+      fetchCampaignInfo()
+    }).catch(err => {
+      Toast({
+        status: "error",
+        description:
+          err?.response?.data?.message ||
+          err?.response?.data ||
+          err?.message,
       });
+    })
   }
 
   return (
