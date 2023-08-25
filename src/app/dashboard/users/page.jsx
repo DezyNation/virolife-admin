@@ -235,6 +235,7 @@ const Users = () => {
                 <Th>#</Th>
                 <Th>ID</Th>
                 <Th className="sticky-left">User Name</Th>
+                <Th className="sticky-left">Current Round</Th>
                 <Th>Contact</Th>
                 <Th>Donation Collected</Th>
                 <Th>Date of Birth</Th>
@@ -257,7 +258,8 @@ const Users = () => {
                       <p>+91 {user.phone}</p>
                     </Box>
                   </Td>
-                  <Td>{user?.wallet}</Td>
+                  <Td>{user?.round}</Td>
+                  <Td>{user?.group_collection}</Td>
                   <Td>
                     {user?.dob ? new Date(user.dob).toDateString() : null}
                   </Td>
