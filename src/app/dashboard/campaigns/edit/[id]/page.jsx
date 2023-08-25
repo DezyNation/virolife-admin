@@ -114,7 +114,7 @@ const Page = ({ params }) => {
       category_id: "",
       target_amount: "",
     },
-    onSubmit: () => {
+    onSubmit: (values) => {
       setLoading(true);
       FormAxios.put(`/api/campaign/${id}`, {
         ...values,
