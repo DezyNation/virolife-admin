@@ -29,7 +29,7 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { BsDownload, BsEye } from "react-icons/bs";
+import { BsDownload, BsEye, BsPlus } from "react-icons/bs";
 import BackendAxios from "@/utils/axios";
 import QRCode from "react-qr-code";
 import TreeModal from "@/components/dashboard/users/TreeModal";
@@ -162,7 +162,7 @@ const Users = () => {
         setGroupMembers([
           { name: name, children: hierarchyArray, id: id, donation: 0 },
         ]);
-        setShowTreeModal(true)
+        setShowTreeModal(true);
       })
       .catch((err) => {
         Toast({
@@ -194,7 +194,7 @@ const Users = () => {
         setGroupMembers([
           { name: name, children: hierarchyArray, id: id, donation: 0 },
         ]);
-        setShowTreeModal(true)
+        setShowTreeModal(true);
       })
       .catch((err) => {
         Toast({
@@ -292,21 +292,21 @@ const Users = () => {
                       </Link>
                     </HStack>
                     <HStack pt={2}>
-                    <Button
-                      size={"xs"}
-                      colorScheme={"yellow"}
-                      onClick={() => viewPrimaryTree(user?.id, user?.name)}
+                      <Button
+                        size={"xs"}
+                        colorScheme={"yellow"}
+                        onClick={() => viewPrimaryTree(user?.id, user?.name)}
                       >
-                      Prim. Tree
-                    </Button>
-                    <Button
-                      size={"xs"}
-                      colorScheme={"orange"}
-                      onClick={() => viewSecondaryTree(user?.id, user?.name)}
+                        Prim. Tree
+                      </Button>
+                      <Button
+                        size={"xs"}
+                        colorScheme={"orange"}
+                        onClick={() => viewSecondaryTree(user?.id, user?.name)}
                       >
-                      Sec. Tree
-                    </Button>
-                      </HStack>
+                        Sec. Tree
+                      </Button>
+                    </HStack>
                   </Td>
                 </Tr>
               ))}
@@ -314,6 +314,20 @@ const Users = () => {
           </Table>
         </TableContainer>
       </Stack>
+
+      <Link href={"/dashboard/users/create"}>
+        <Button
+          position={"fixed"}
+          bottom={4}
+          right={4}
+          colorScheme="twitter"
+          zIndex={9999}
+          rounded={"full"}
+          leftIcon={<BsPlus />}
+        >
+          Create New
+        </Button>
+      </Link>
 
       {/* User Info Modal */}
       <Modal
@@ -331,7 +345,7 @@ const Users = () => {
                 <Text>{userInfo?.name}</Text>
               </HStack>
               <Button
-              colorScheme="twitter"
+                colorScheme="twitter"
                 onClick={() =>
                   updateUserRole(
                     userInfo?.id,
