@@ -82,7 +82,13 @@ const Info = () => {
     <>
       <form action="#" onSubmit={Formik.handleSubmit}>
         <Box p={8}>
-          <FormControl w={['full', 'xs']} mb={8}>
+          <Stack
+            direction={["column", "row"]}
+            alignItems={"center"}
+            justifyContent={"flex-start"}
+            gap={8}
+          >
+            <FormControl w={["full", "xs"]} mb={8}>
               <FormLabel
                 fontWeight={"bold"}
                 textTransform={"uppercase"}
@@ -96,7 +102,9 @@ const Info = () => {
                 <option value="distributor">Distributor</option>
                 <option value="admin">Admin Employee</option>
               </Select>
-          </FormControl>
+            </FormControl>
+          </Stack>
+          <br />
           <Stack
             w={"full"}
             pb={16}
@@ -226,9 +234,9 @@ const Info = () => {
             gap={8}
             pb={16}
             direction={["column", "row"]}
-            justifyContent={"space-between"}
+            justifyContent={"flex-start"}
           >
-            <FormControl>
+            <FormControl w={["full", "xs"]}>
               <FormLabel
                 fontWeight={"bold"}
                 textTransform={"uppercase"}
@@ -236,18 +244,15 @@ const Info = () => {
               >
                 CONTACT NO
               </FormLabel>
-              <HStack>
-                <Input
-                  bg={"blanchedalmond"}
-                  w={["full", "xs"]}
-                  name="phone"
-                  value={Formik.values.phone}
-                  onChange={Formik.handleChange}
-                />
-                <Text cursor={"pointer"}>Verify</Text>
-              </HStack>
+              <Input
+                bg={"blanchedalmond"}
+                w={["full", "xs"]}
+                name="phone"
+                value={Formik.values.phone}
+                onChange={Formik.handleChange}
+              />
             </FormControl>
-            <FormControl>
+            <FormControl w={["full", "xs"]}>
               <FormLabel
                 fontWeight={"bold"}
                 textTransform={"uppercase"}
@@ -255,16 +260,12 @@ const Info = () => {
               >
                 EMAIL ID
               </FormLabel>
-              <HStack>
-                <Input
-                  bg={"blanchedalmond"}
-                  w={["full", "xs"]}
-                  name="email"
-                  value={Formik.values.email}
-                  disabled
-                />
-                <Text cursor={"pointer"}>Verify</Text>
-              </HStack>
+              <Input
+                bg={"blanchedalmond"}
+                w={["full", "xs"]}
+                name="email"
+                value={Formik.values.email}
+              />
             </FormControl>
           </Stack>
 
@@ -276,7 +277,7 @@ const Info = () => {
             pb={16}
             gap={8}
             direction={["column", "row"]}
-            justifyContent={"space-between"}
+            justifyContent={"flex-start"}
           >
             <FormControl>
               <Box>
@@ -332,49 +333,45 @@ const Info = () => {
                 />
               </Box>
             </FormControl>
-            <FormControl>
-              <Box>
-                <FormLabel
-                  fontWeight={"bold"}
-                  textTransform={"uppercase"}
-                  fontSize={"lg"}
-                >
-                  UPI ID
-                </FormLabel>
-                <Input
-                  name="upi"
-                  value={Formik.values.upi}
-                  onChange={Formik.handleChange}
-                  bg={"blanchedalmond"}
-                  w={["full", "xs"]}
-                />
-              </Box>
-            </FormControl>
           </Stack>
           <Stack
             w={"full"}
             pb={16}
             gap={8}
             direction={["column", "row"]}
-            justifyContent={"space-between"}
+            justifyContent={"flex-start"}
           >
-            <FormControl>
-              <Box>
-                <FormLabel
-                  fontWeight={"bold"}
-                  textTransform={"uppercase"}
-                  fontSize={"lg"}
-                >
-                  MICR (optional)
-                </FormLabel>
-                <Input
-                  name="micr"
-                  value={Formik.values.micr}
-                  onChange={Formik.handleChange}
-                  bg={"blanchedalmond"}
-                  w={["full", "xs"]}
-                />
-              </Box>
+            <FormControl w={["full", "xs"]}>
+              <FormLabel
+                fontWeight={"bold"}
+                textTransform={"uppercase"}
+                fontSize={"lg"}
+              >
+                UPI ID
+              </FormLabel>
+              <Input
+                name="upi"
+                value={Formik.values.upi}
+                onChange={Formik.handleChange}
+                bg={"blanchedalmond"}
+                w={["full", "xs"]}
+              />
+            </FormControl>
+            <FormControl w={["full", "xs"]}>
+              <FormLabel
+                fontWeight={"bold"}
+                textTransform={"uppercase"}
+                fontSize={"lg"}
+              >
+                MICR (optional)
+              </FormLabel>
+              <Input
+                name="micr"
+                value={Formik.values.micr}
+                onChange={Formik.handleChange}
+                bg={"blanchedalmond"}
+                w={["full", "xs"]}
+              />
             </FormControl>
           </Stack>
 
@@ -405,7 +402,7 @@ const Info = () => {
             w={"full"}
             gap={8}
             direction={["column", "row"]}
-            justifyContent={"space-between"}
+            justifyContent={"flex-start"}
           >
             <FormControl>
               <Box>
@@ -467,25 +464,31 @@ const Info = () => {
                 />
               </Box>
             </FormControl>
+          </Stack>
+          <Stack
+            direction={["column", "row"]}
+            alignItems={"center"}
+            justifyContent={"flex-start"}
+            pt={8}
+            gap={8}
+          >
             <FormControl>
-              <Box>
-                <FormLabel
-                  fontWeight={"bold"}
-                  textTransform={"uppercase"}
-                  fontSize={"lg"}
-                >
-                  Pin Code
-                </FormLabel>
-                <Input
-                  name="pincode"
-                  value={addressObj.pincode}
-                  onChange={(e) =>
-                    setAddressObj({ ...addressObj, pincode: e.target.value })
-                  }
-                  bg={"blanchedalmond"}
-                  w={["full", "xs"]}
-                />
-              </Box>
+              <FormLabel
+                fontWeight={"bold"}
+                textTransform={"uppercase"}
+                fontSize={"lg"}
+              >
+                Pin Code
+              </FormLabel>
+              <Input
+                name="pincode"
+                value={addressObj.pincode}
+                onChange={(e) =>
+                  setAddressObj({ ...addressObj, pincode: e.target.value })
+                }
+                bg={"blanchedalmond"}
+                w={["full", "xs"]}
+              />
             </FormControl>
           </Stack>
 
@@ -495,7 +498,7 @@ const Info = () => {
             w={"full"}
             pb={16}
             direction={["column", "row"]}
-            justifyContent={"space-between"}
+            justifyContent={"flex-start"}
           >
             <FormControl>
               <FormLabel
