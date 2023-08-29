@@ -51,7 +51,7 @@ const Info = () => {
       address: "",
     },
     onSubmit: (values) => {
-      FormAxios.post(`/update-user`, {
+      FormAxios.post(`/api/users`, {
         ...values,
         address: JSON.stringify(addressObj),
         name:
@@ -82,8 +82,7 @@ const Info = () => {
     <>
       <form action="#" onSubmit={Formik.handleSubmit}>
         <Box p={8}>
-          <FormControl>
-            <Box>
+          <FormControl w={['full', 'xs']} mb={8}>
               <FormLabel
                 fontWeight={"bold"}
                 textTransform={"uppercase"}
@@ -97,7 +96,6 @@ const Info = () => {
                 <option value="distributor">Distributor</option>
                 <option value="admin">Admin Employee</option>
               </Select>
-            </Box>
           </FormControl>
           <Stack
             w={"full"}

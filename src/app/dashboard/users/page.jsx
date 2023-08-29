@@ -323,7 +323,7 @@ const Users = () => {
           colorScheme="twitter"
           zIndex={9999}
           rounded={"full"}
-          leftIcon={<BsPlus />}
+          leftIcon={<BsPlus size={24} />}
         >
           Create New
         </Button>
