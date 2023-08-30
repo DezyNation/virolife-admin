@@ -58,7 +58,7 @@ const Users = () => {
   }
 
   function fetchUsers() {
-    BackendAxios.get("/api/admin/users-list/user")
+    BackendAxios.get("/api/admin/users-list/distributor")
       .then((res) => {
         setUsers(res.data);
       })
@@ -122,98 +122,15 @@ const Users = () => {
       });
   }
 
-  function updateUserRole(id, role) {
-    BackendAxios.post(`/api/admin/change-role/${id}`, { role: role })
-      .then((res) => {
-        onToggle();
-        Toast({
-          status: "success",
-          description: `The user role was updated successfully!`,
-        });
-        fetchUsers();
-      })
-      .catch((err) => {
-        Toast({
-          status: "error",
-          description:
-            err?.response?.data?.message || err?.response?.data || err?.message,
-        });
-      });
-  }
-
-  function viewSecondaryTree(id, name) {
-    function buildHierarchy(items, parentId) {
-      const nestedArray = [];
-      for (const item of items) {
-        if (parseInt(item.secondary_parent_id) == parseInt(parentId)) {
-          const children = buildHierarchy(items, item.id);
-          if (children.length > 0) {
-            item.children = children;
-          }
-          nestedArray.push(item);
-        }
-      }
-      return nestedArray;
-    }
-
-    BackendAxios.get(`/api/admin/my-group/secondary/${id}`)
-      .then((res) => {
-        const hierarchyArray = buildHierarchy(res.data, id);
-        setGroupMembers([
-          { name: name, children: hierarchyArray, id: id, donation: 0 },
-        ]);
-        setShowTreeModal(true);
-      })
-      .catch((err) => {
-        Toast({
-          status: "error",
-          description:
-            err?.response?.data?.message || err?.response?.data || err?.message,
-        });
-      });
-  }
-
-  function viewPrimaryTree(id, name) {
-    function buildHierarchy(items, parentId) {
-      const nestedArray = [];
-      for (const item of items) {
-        if (parseInt(item.parent_id) == parseInt(parentId)) {
-          const children = buildHierarchy(items, item.id);
-          if (children.length > 0) {
-            item.children = children;
-          }
-          nestedArray.push(item);
-        }
-      }
-      return nestedArray;
-    }
-
-    BackendAxios.get(`/api/admin/my-group/${id}`)
-      .then((res) => {
-        const hierarchyArray = buildHierarchy(res.data, id);
-        setGroupMembers([
-          { name: name, children: hierarchyArray, id: id, donation: 0 },
-        ]);
-        setShowTreeModal(true);
-      })
-      .catch((err) => {
-        Toast({
-          status: "error",
-          description:
-            err?.response?.data?.message || err?.response?.data || err?.message,
-        });
-      });
-  }
-
   return (
     <>
       <HStack justifyContent={["space-between"]} py={8}>
         <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
-          Users
+          Distributors
         </Text>
         <HStack alignItems={"flex-end"}>
           <Input
-            placeholder={"Search Users"}
+            placeholder={"Search Distributors"}
             onChange={(e) => setQuery(e.target.value)}
           />
           <Button colorScheme={"yellow"} onClick={searchUser}>
@@ -229,17 +146,14 @@ const Users = () => {
       >
         <TableContainer rounded={"16"} w={"full"}>
           <Table variant={"striped"} colorScheme="gray">
-            <TableCaption>Users on Virolife</TableCaption>
+            <TableCaption>Distributors on Virolife</TableCaption>
             <Thead bgColor={"yellow.400"}>
               <Tr>
                 <Th>#</Th>
                 <Th>ID</Th>
                 <Th className="sticky-left">User Name</Th>
-                <Th>Current Round</Th>
                 <Th>Contact</Th>
-                <Th>Donation Collected</Th>
                 <Th>Date of Birth</Th>
-                <Th>Role</Th>
                 <Th>Registered On</Th>
                 <Th>Action</Th>
               </Tr>
@@ -258,12 +172,9 @@ const Users = () => {
                       <p>+91 {user.phone}</p>
                     </Box>
                   </Td>
-                  <Td>{user?.round}</Td>
-                  <Td>{user?.group_collection}</Td>
                   <Td>
                     {user?.dob ? new Date(user.dob).toDateString() : null}
                   </Td>
-                  <Td>{user?.role_name}</Td>
                   <Td>{new Date(user.created_at).toLocaleString()}</Td>
                   <Td>
                     <HStack gap={4} pb={2}>
@@ -290,22 +201,6 @@ const Users = () => {
                           Edit
                         </Button>
                       </Link>
-                    </HStack>
-                    <HStack pt={2}>
-                      <Button
-                        size={"xs"}
-                        colorScheme={"yellow"}
-                        onClick={() => viewPrimaryTree(user?.id, user?.name)}
-                      >
-                        Prim. Tree
-                      </Button>
-                      <Button
-                        size={"xs"}
-                        colorScheme={"orange"}
-                        onClick={() => viewSecondaryTree(user?.id, user?.name)}
-                      >
-                        Sec. Tree
-                      </Button>
                     </HStack>
                   </Td>
                 </Tr>
@@ -344,17 +239,6 @@ const Users = () => {
                 <Avatar src={userInfo?.profile} name={userInfo?.name} />
                 <Text>{userInfo?.name}</Text>
               </HStack>
-              <Button
-                colorScheme="twitter"
-                onClick={() =>
-                  updateUserRole(
-                    userInfo?.id,
-                    userInfo?.role_name == "admin" ? "user" : "admin"
-                  )
-                }
-              >
-                Make {userInfo?.role_name == "admin" ? "User" : "Admin"}
-              </Button>
             </HStack>
           </ModalHeader>
           <ModalBody p={8}>

@@ -20,18 +20,16 @@ import {
 import Link from "next/link";
 import { AiFillDashboard, AiFillYoutube } from "react-icons/ai";
 import {
+  BsCalendarCheck,
   BsCashCoin,
   BsCurrencyRupee,
-  BsFill1CircleFill,
-  BsHeartFill,
   BsMegaphoneFill,
-  BsPerson,
-  BsPersonFill,
   BsPower,
 } from "react-icons/bs";
 import { MdGroups, MdPersonAdd } from "react-icons/md";
+import { HiUserGroup } from "react-icons/hi";
 import { BiLogIn, BiMenuAltLeft, BiUser } from "react-icons/bi";
-import { FaUserShield } from "react-icons/fa";
+import { FaRegCreditCard, FaUserShield, FaUserTie } from "react-icons/fa";
 import BackendAxios from "@/utils/axios";
 import { useCookies } from "react-cookie";
 
@@ -53,7 +51,10 @@ const MenuOptions = () => {
   }
 
   useEffect(() => {
-    if (!localStorage.getItem("permissions") || !JSON.parse(localStorage.getItem("permissions"))?.length) {
+    if (
+      !localStorage.getItem("permissions") ||
+      !JSON.parse(localStorage.getItem("permissions"))?.length
+    ) {
       fetchPermissions();
       return;
     }
@@ -63,12 +64,9 @@ const MenuOptions = () => {
   function fetchPermissions() {
     BackendAxios.get(`/api/admin/user-permissions`)
       .then((res) => {
-        const newPermissions = res.data?.map((permission) => permission?.name)
+        const newPermissions = res.data?.map((permission) => permission?.name);
         setPermissions(newPermissions);
-        localStorage.setItem(
-          "permissions",
-          JSON.stringify(newPermissions)
-        );
+        localStorage.setItem("permissions", JSON.stringify(newPermissions));
       })
       .catch((err) => {
         if (err?.response?.status == 401) {
@@ -94,12 +92,6 @@ const MenuOptions = () => {
           </HStack>
         </Link>
         <br />
-        <Link href={"/dashboard/videos"}>
-          <HStack gap={4}>
-            <AiFillYoutube size={20} />
-            <Text>Manage Videos</Text>
-          </HStack>
-        </Link>
         {permissions.includes("user-view") ? (
           <Link href={"/dashboard/users"}>
             <HStack gap={4}>
@@ -108,12 +100,29 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
+        {permissions.includes("user-view") ? (
+          <Link href={"/dashboard/distributors"}>
+            <HStack gap={4}>
+              <HiUserGroup size={20} />
+              <Text>Distributors</Text>
+            </HStack>
+          </Link>
+        ) : null}
+        {permissions.includes("user-view") ? (
+          <Link href={"/dashboard/agents"}>
+            <HStack gap={4}>
+              <FaUserTie size={20} />
+              <Text>Agents</Text>
+            </HStack>
+          </Link>
+        ) : null}
         <Link href={"/dashboard/admin"}>
           <HStack gap={4}>
             <FaUserShield size={20} />
-            <Text>Manage Admin</Text>
+            <Text>Admin Employees</Text>
           </HStack>
         </Link>
+        <br />
         {permissions.includes("campaign-view") ? (
           <Link href={"/dashboard/campaigns"}>
             <HStack gap={4}>
@@ -122,7 +131,6 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
-        <br />
         {permissions.includes("donation-view") ? (
           <Link href={"/dashboard/transactions"}>
             <HStack gap={4}>
@@ -132,11 +140,11 @@ const MenuOptions = () => {
           </Link>
         ) : null}
         <Link href={"/dashboard/subscriptions"}>
-            <HStack gap={4}>
-              <BsCurrencyRupee size={20} />
-              <Text>Subscriptions</Text>
-            </HStack>
-          </Link>
+          <HStack gap={4}>
+            <BsCalendarCheck size={20} />
+            <Text>Subscriptions</Text>
+          </HStack>
+        </Link>
         {permissions.includes("donation-view") ? (
           <Link href={"/dashboard/transactions/group-donations"}>
             <HStack gap={4}>
@@ -145,16 +153,23 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
-        {/* <Link href={"/dashboard"}>
-                <HStack gap={4}>
-                  <MdGroups size={20} />
-                  <Text>Groups</Text>
-                </HStack>
-              </Link> */}
+        <br />
+        <Link href={"/dashboard/gift-cards"}>
+          <HStack gap={4}>
+            <FaRegCreditCard size={20} />
+            <Text>Gift Cards</Text>
+          </HStack>
+        </Link>
         <Link href={"/dashboard/invitations"}>
           <HStack gap={4}>
             <MdPersonAdd size={20} />
             <Text>Invitations</Text>
+          </HStack>
+        </Link>
+        <Link href={"/dashboard/videos"}>
+          <HStack gap={4}>
+            <AiFillYoutube size={20} />
+            <Text>Manage Videos</Text>
           </HStack>
         </Link>
         <Link href={"/dashboard/logins"}>
@@ -193,7 +208,7 @@ const Layout = ({ children }) => {
 
       <Stack direction={"row"} justifyContent={"space-between"}>
         <Show above="md">
-          <Box p={8} bg={"blanchedalmond"} w={"xs"}>
+          <Box p={8} bg={"blanchedalmond"} w={"xs"} h={'100vh'} overflow={'scroll'}>
             <Text className="serif" fontSize={"xl"} fontWeight={"semibold"}>
               Virolife
             </Text>
