@@ -151,7 +151,7 @@ const page = () => {
                 <Td>{item?.purpose}</Td>
                 <Td>{item?.redeemed ? "USED" : "PENDING"}</Td>
                 <Td>{item?.user_id}</Td>
-                <Td>{item?.created_at}</Td>
+                <Td>{item?.created_at ? new Date(item?.created_at).toLocaleDateString()}</Td>
                 <Td>{item?.expiry_at}</Td>
               </Tr>
             ))}
