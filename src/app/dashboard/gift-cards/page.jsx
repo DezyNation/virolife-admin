@@ -47,7 +47,7 @@ const page = () => {
       amount: "",
       purpose: "",
       expiry: "",
-      purpose: ""
+      purpose: "",
     },
     onSubmit: (values) => {
       BackendAxios.post(`/api/gift`, values)
@@ -56,7 +56,7 @@ const page = () => {
             status: "success",
             title: "Gift card created successfully!",
           });
-          fetchGiftCards()
+          fetchGiftCards();
           onClose();
         })
         .catch((err) => {
@@ -143,16 +143,18 @@ const page = () => {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td></Td>
-              <Td></Td>
-              <Td></Td>
-              <Td></Td>
-              <Td></Td>
-              <Td></Td>
-              <Td></Td>
-              <Td></Td>
-            </Tr>
+            {giftCards?.map((item, key) => (
+              <Tr key={key}>
+                <Td>{key+1}</Td>
+                <Td>{item?.code}</Td>
+                <Td>{item?.amount}</Td>
+                <Td>{item?.purpose}</Td>
+                <Td>{item?.redeemed ? "USED" : "PENDING"}</Td>
+                <Td>{item?.user_id}</Td>
+                <Td>{item?.created_at}</Td>
+                <Td>{item?.expiry_at}</Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
@@ -175,11 +177,15 @@ const page = () => {
           <ModalBody>
             <FormControl mb={8}>
               <FormLabel>Purpose</FormLabel>
-                <Select placeholder="Please Select" name="purpose" onChange={Formik.handleChange}>
-                  <option value="viroteam-process">Viro Team Processing</option>
-                  <option value="primary-group">Primary Group</option>
-                  <option value="secondary-group">Secondary Group</option>
-                </Select>
+              <Select
+                placeholder="Please Select"
+                name="purpose"
+                onChange={Formik.handleChange}
+              >
+                <option value="viroteam-process">Viro Team Processing</option>
+                <option value="primary-group">Primary Group</option>
+                <option value="secondary-group">Secondary Group</option>
+              </Select>
             </FormControl>
             <FormControl mb={8}>
               <FormLabel>Card No.</FormLabel>
@@ -230,9 +236,7 @@ const page = () => {
             </FormControl>
           </ModalBody>
           <ModalFooter justifyContent={"flex-end"} gap={4}>
-            <Button onClick={onClose}>
-              Cancel
-            </Button>
+            <Button onClick={onClose}>Cancel</Button>
             <Button colorScheme="twitter" onClick={Formik.handleSubmit}>
               Save
             </Button>
