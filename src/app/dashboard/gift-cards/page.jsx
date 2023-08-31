@@ -15,6 +15,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
   Table,
   TableContainer,
   Tbody,
@@ -41,11 +42,12 @@ const page = () => {
 
   const Formik = useFormik({
     initialValues: {
-      cardNumber: "",
-      linkedUser: "",
+      code: "",
+      userId: "",
       amount: "",
       purpose: "",
-      expiresAt: "",
+      expiry: "",
+      purpose: ""
     },
     onSubmit: (values) => {
       BackendAxios.post(`/api/gift`, values)
@@ -88,17 +90,17 @@ const page = () => {
     const min = 100000;
     const max = 999999;
     const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-    Formik.setFieldValue("cardNumber", randomNum);
+    Formik.setFieldValue("code", randomNum);
   }
 
   function verifyUser() {
-    if (!Formik.values.linkedUser) {
+    if (!Formik.values.userId) {
       Toast({
         description: "Please enter User ID",
       });
       return;
     }
-    BackendAxios.get(`/api/users/${Formik.values.linkedUser}`)
+    BackendAxios.get(`/api/users/${Formik.values.userId}`)
       .then((res) => {
         if (res.data?.length) {
           Toast({
@@ -172,11 +174,19 @@ const page = () => {
           <ModalHeader>Create New Gift Card</ModalHeader>
           <ModalBody>
             <FormControl mb={8}>
+              <FormLabel>Purpose</FormLabel>
+                <Select placeholder="Please Select" name="purpose" onChange={Formik.handleChange}>
+                  <option value="viroteam-process">Viro Team Processing</option>
+                  <option value="primary-group">Primary Group</option>
+                  <option value="secondary-group">Secondary Group</option>
+                </Select>
+            </FormControl>
+            <FormControl mb={8}>
               <FormLabel>Card No.</FormLabel>
               <HStack>
                 <Input
-                  name="cardNumber"
-                  value={Formik.values.cardNumber}
+                  name="code"
+                  value={Formik.values.code}
                   onChange={Formik.handleChange}
                 />
                 <Button size={"xs"} onClick={generateGiftCard}>
@@ -198,9 +208,9 @@ const page = () => {
                 <InputGroup>
                   <InputLeftAddon children={"VCF"} />
                   <Input
-                    name="linkedUser"
+                    name="userId"
                     placeholder="Enter User ID"
-                    value={Formik.values.linkedUser}
+                    value={Formik.values.userId}
                     onChange={Formik.handleChange}
                   />
                 </InputGroup>
@@ -213,8 +223,8 @@ const page = () => {
               <FormLabel>Expiry</FormLabel>
               <Input
                 type="date"
-                name="expiresAt"
-                value={Formik.values.expiresAt}
+                name="expiry"
+                value={Formik.values.expiry}
                 onChange={Formik.handleChange}
               />
             </FormControl>

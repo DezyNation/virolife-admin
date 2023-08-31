@@ -30,10 +30,13 @@ const Info = () => {
     state: "",
     pincode: "",
   });
+  const [agents, setAgents] = useState([]);
+  const [distributors, setDistributors] = useState([]);
 
   const Formik = useFormik({
     initialValues: {
       role: "user",
+      password: "",
       firstName: "",
       middleName: "",
       lastName: "",
@@ -49,11 +52,14 @@ const Info = () => {
       ifsc: "",
       upi: "",
       address: "",
+      agent: "",
+      distributor: "",
     },
     onSubmit: (values) => {
-      FormAxios.post(`/api/users`, {
+      FormAxios.post(`/register`, {
         ...values,
         address: JSON.stringify(addressObj),
+        password_confirmation: Formik.values.password,
         name:
           values.firstName +
           (values.middleName && values.lastName
@@ -77,6 +83,41 @@ const Info = () => {
         });
     },
   });
+
+  useEffect(() => {
+    fetchAgents();
+    fetchDistributors();
+  }, []);
+
+  function fetchAgents() {
+    BackendAxios.get(`/api/admin/users-list/agent`)
+      .then((res) => {
+        setAgents(res.data);
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          title: "Error while fetching agents",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function fetchDistributors() {
+    BackendAxios.get(`/api/admin/users-list/distributor`)
+      .then((res) => {
+        setDistributors(res.data);
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          title: "Error while fetching agents",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
 
   return (
     <>
@@ -103,6 +144,41 @@ const Info = () => {
                 <option value="admin">Admin Employee</option>
               </Select>
             </FormControl>
+            {Formik.values.role == "user" ? (
+              <FormControl w={["full", "xs"]} mb={8}>
+                <FormLabel
+                  fontWeight={"bold"}
+                  textTransform={"uppercase"}
+                  fontSize={"lg"}
+                >
+                  Agent
+                </FormLabel>
+                <Select placeholder="Please Select" name="agent" onChange={Formik.handleChange}>
+                  {agents?.map((user, key) => (
+                    <option key={key} value={user?.id}>
+                      {user?.name}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            ) : Formik.values.role == "agent" ? (
+              <FormControl w={["full", "xs"]} mb={8}>
+                <FormLabel
+                  fontWeight={"bold"}
+                  textTransform={"uppercase"}
+                  fontSize={"lg"}
+                >
+                  Distributor
+                </FormLabel>
+                <Select placeholder="Please Select" name="distributor" onChange={Formik.handleChange}>
+                  {distributors?.map((user, key) => (
+                    <option key={key} value={user?.id}>
+                      {user?.name}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            ) : null}
           </Stack>
           <br />
           <Stack
@@ -264,7 +340,23 @@ const Info = () => {
                 bg={"blanchedalmond"}
                 w={["full", "xs"]}
                 name="email"
+                type="email"
                 value={Formik.values.email}
+              />
+            </FormControl>
+            <FormControl w={["full", "xs"]}>
+              <FormLabel
+                fontWeight={"bold"}
+                textTransform={"uppercase"}
+                fontSize={"lg"}
+              >
+                PASSWORD
+              </FormLabel>
+              <Input
+                bg={"blanchedalmond"}
+                w={["full", "xs"]}
+                name="password"
+                value={Formik.values.password}
               />
             </FormControl>
           </Stack>
