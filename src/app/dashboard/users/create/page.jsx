@@ -342,6 +342,7 @@ const Info = () => {
                 name="email"
                 type="email"
                 value={Formik.values.email}
+                onChange={Formik.handleChange}
               />
             </FormControl>
             <FormControl w={["full", "xs"]}>
