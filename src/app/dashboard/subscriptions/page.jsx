@@ -121,7 +121,7 @@ const page = () => {
                 <Td>{data?.user_name}</Td>
                 <Td>{data?.parent_id}</Td>
                 <Td>{data?.plan_name}</Td>
-                <Td>{data?.points}</Td>
+                <Td>{data?.health_points}</Td>
                 <Td>{data?.created_at}</Td>
               </Tr>
             ))}
