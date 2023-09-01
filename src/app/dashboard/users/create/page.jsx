@@ -357,6 +357,7 @@ const Info = () => {
                 w={["full", "xs"]}
                 name="password"
                 value={Formik.values.password}
+                onChange={Formik.handleChange}
               />
             </FormControl>
           </Stack>
