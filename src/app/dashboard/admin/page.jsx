@@ -340,7 +340,7 @@ const Users = () => {
                 <Avatar src={userInfo?.profile} name={userInfo?.name} />
                 <Text>{userInfo?.name}</Text>
               </HStack>
-              <Button
+              {/* <Button
                 colorScheme="twitter"
                 onClick={() =>
                   updateUserRole(
@@ -350,7 +350,7 @@ const Users = () => {
                 }
               >
                 Make {userInfo?.role_name == "admin" ? "User" : "Admin"}
-              </Button>
+              </Button> */}
             </HStack>
           </ModalHeader>
           <ModalBody p={8}>
