@@ -134,7 +134,7 @@ const page = () => {
             <Tr>
               <Th>#</Th>
               <Th>Card No.</Th>
-              <Th>Amount</Th>
+              {/* <Th>Amount</Th> */}
               <Th>Purpose</Th>
               <Th>Status</Th>
               <Th>Linked User</Th>
@@ -147,7 +147,7 @@ const page = () => {
               <Tr key={key}>
                 <Td>{key+1}</Td>
                 <Td>{item?.code}</Td>
-                <Td>{item?.amount}</Td>
+                {/* <Td>{item?.amount}</Td> */}
                 <Td>{item?.purpose}</Td>
                 <Td>{item?.redeemed ? "USED" : "PENDING"}</Td>
                 <Td>{item?.user_id}</Td>

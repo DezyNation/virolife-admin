@@ -65,6 +65,7 @@ const page = () => {
               <Th>User ID</Th>
               <Th>User Name</Th>
               <Th>IP</Th>
+              <Th>Timestamp</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -74,6 +75,7 @@ const page = () => {
                 <Td>{entry?.user_id}</Td>
                 <Td>{entry?.name}</Td>
                 <Td>{entry?.ip}</Td>
+                <Td>{entry?.updated_at}</Td>
               </Tr>
             ))}
           </Tbody>
