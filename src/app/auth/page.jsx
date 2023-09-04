@@ -56,7 +56,7 @@ const Auth = () => {
       });
       return;
     }
-    BackendAxios.post("/login", { ...Formik.values })
+    BackendAxios.post("/admin/login", { ...Formik.values })
       .then((res) => {
         Toast({
           status: "success",
