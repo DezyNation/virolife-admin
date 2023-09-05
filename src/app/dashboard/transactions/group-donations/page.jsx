@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import BackendAxios from "@/utils/axios";
 
-const DonationTable = ({ groupType, transactions }) => {
+const DonationTable = ({ groupType }) => {
   const [transactions, setTransactions] = useState([]);
   const Toast = useToast({
     position: "top-right",
