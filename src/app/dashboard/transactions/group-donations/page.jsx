@@ -17,6 +17,7 @@ import {
 import BackendAxios from "@/utils/axios";
 
 const DonationTable = ({ groupType }) => {
+  const [user, setUser] = useState("");
   const [transactions, setTransactions] = useState([]);
   const Toast = useToast({
     position: "top-right",
@@ -144,7 +145,6 @@ const DonationTable = ({ groupType }) => {
 };
 
 const page = () => {
-  const [user, setUser] = useState("");
 
   return (
     <>
