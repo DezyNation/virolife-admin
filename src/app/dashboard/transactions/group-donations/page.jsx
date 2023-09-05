@@ -77,6 +77,17 @@ const DonationTable = ({ groupType }) => {
   }
   return (
     <>
+      <HStack w={"full"} justifyContent={"space-between"}>
+        <Input
+          w={["full", "xs"]}
+          placeholder="Enter User ID To Search"
+          value={user}
+          onChange={(e) => setUser(e.target.value)}
+        />
+        <Button colorScheme="yellow" onClick={fetchMyCollections}>
+          Search
+        </Button>
+      </HStack>
       <TableContainer height={"lg"} overflowY={"scroll"}>
         <Table variant={"striped"} colorScheme="gray">
           <Thead>
@@ -139,17 +150,6 @@ const page = () => {
     <>
       <Text fontSize={["2xl", "3xl"]}>Group Donations</Text>
       <br />
-      <HStack w={"full"} justifyContent={"space-between"}>
-        <Input
-          w={["full", "xs"]}
-          placeholder="Enter User ID To Search"
-          value={user}
-          onChange={(e) => setUser(e.target.value)}
-        />
-        <Button colorScheme="yellow" onClick={fetchMyCollections}>
-          Search
-        </Button>
-      </HStack>
       <br />
       <Text fontWeight={"semibold"}>Primary Donations</Text>
       <DonationTable groupType={"primary"} />
