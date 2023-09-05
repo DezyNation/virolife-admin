@@ -78,7 +78,7 @@ const DonationTable = ({ groupType }) => {
   }
   return (
     <>
-      <HStack w={"full"} justifyContent={"space-between"}>
+      <HStack w={"full"} justifyContent={"space-between"} mb={4}>
         <Input
           w={["full", "xs"]}
           placeholder="Enter User ID To Search"
