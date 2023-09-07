@@ -36,6 +36,8 @@ const page = () => {
   const [giftCards, setGiftCards] = useState([]);
   const Toast = useToast({ position: "top-right" });
 
+  const [expiryDays, setExpiryDays] = useState("30");
+
   const plans = [
     { id: 1, amount: 1200 },
     { id: 2, amount: 2400 },
@@ -81,26 +83,33 @@ const page = () => {
     },
   });
 
-  useEffect(()=>{
-    if(Formik.values.purpose == "viroteam-funding"){
-      if(Formik.values.plan){
-        const amount = plans.find((plan) => plan.id == Formik.values.plan)?.amount
-        Formik.setFieldValue("amount", amount)
+  useEffect(() => {
+    if (Formik.values.purpose == "viroteam-funding") {
+      if (Formik.values.plan) {
+        const amount = plans.find(
+          (plan) => plan.id == Formik.values.plan
+        )?.amount;
+        Formik.setFieldValue("amount", amount);
       }
     }
-    if(Formik.values.purpose == "all-team-process"){
-        const amount = 210
-        Formik.setFieldValue("amount", amount)
+    if (Formik.values.purpose == "all-team-process") {
+      const amount = 210;
+      Formik.setFieldValue("amount", amount);
     }
-    if(Formik.values.purpose == "primary-group"){
-        const amount = 250
-        Formik.setFieldValue("amount", amount)
+    if (Formik.values.purpose == "primary-group") {
+      const amount = 250;
+      Formik.setFieldValue("amount", amount);
     }
-    if(Formik.values.purpose == "secondary-group"){
-        const amount = 500
-        Formik.setFieldValue("amount", amount)
+    if (Formik.values.purpose == "secondary-group") {
+      const amount = 500;
+      Formik.setFieldValue("amount", amount);
     }
-  },[Formik.values.purpose, Formik.values.plan])
+  }, [Formik.values.purpose, Formik.values.plan]);
+
+  useEffect(() => {
+    const date = new Date();
+    Formik.setFieldValue("expiry", date.setDate(date.getDate() + expiryDays));
+  }, [expiryDays]);
 
   function fetchGiftCards() {
     BackendAxios.get(`/api/gift`)
@@ -285,12 +294,22 @@ const page = () => {
             </FormControl>
             <FormControl mb={8}>
               <FormLabel>Expiry</FormLabel>
-              <Input
-                type="date"
-                name="expiry"
-                value={Formik.values.expiry}
-                onChange={Formik.handleChange}
-              />
+              <HStack gap={6}>
+                <Button
+                  colorScheme={expiryDays == 30 ? "yellow" : "gray"}
+                  rounded={"full"}
+                  onClick={() => setExpiryDays(30)}
+                >
+                  30 Days
+                </Button>
+                <Button
+                  colorScheme={expiryDays == 60 ? "yellow" : "gray"}
+                  onClick={() => setExpiryDays(60)}
+                  rounded={"full"}
+                >
+                  60 Days
+                </Button>
+              </HStack>
             </FormControl>
           </ModalBody>
           <ModalFooter justifyContent={"flex-end"} gap={4}>
