@@ -75,7 +75,7 @@ const page = () => {
                 <Td>{entry?.user_id}</Td>
                 <Td>{entry?.name}</Td>
                 <Td>{entry?.ip}</Td>
-                <Td>{entry?.updated_at}</Td>
+                <Td>{new Date(entry?.updated_at).toLocaleString(undefined, {timeZone: "Asia/Kolkata"})}</Td>
               </Tr>
             ))}
           </Tbody>
