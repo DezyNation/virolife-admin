@@ -189,10 +189,7 @@ const page = () => {
                 <Td>{item?.code}</Td>
                 {/* <Td>{item?.amount}</Td> */}
                 <Td>
-                  {item?.purpose?.replace(
-                    /viroteam-process/g,
-                    "all-team-processing"
-                  )}
+                  {item?.purpose}
                 </Td>
                 <Td>{item?.redeemed ? "USED" : "PENDING"}</Td>
                 <Td>{item?.user_id}</Td>
