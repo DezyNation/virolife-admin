@@ -148,7 +148,7 @@ const page = () => {
                 <Td>{key+1}</Td>
                 <Td>{item?.code}</Td>
                 {/* <Td>{item?.amount}</Td> */}
-                <Td>{item?.purpose}</Td>
+                <Td>{item?.purpose?.replace(/viroteam-process/g, "all-team-processing")}</Td>
                 <Td>{item?.redeemed ? "USED" : "PENDING"}</Td>
                 <Td>{item?.user_id}</Td>
                 <Td>{item?.created_at ? new Date(item?.created_at).toLocaleDateString() : ""}</Td>
@@ -182,7 +182,7 @@ const page = () => {
                 name="purpose"
                 onChange={Formik.handleChange}
               >
-                <option value="viroteam-process">Viro Team Processing</option>
+                <option value="viroteam-process">All Team Processing</option>
                 <option value="primary-group">Primary Group</option>
                 <option value="secondary-group">Secondary Group</option>
               </Select>
