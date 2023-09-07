@@ -36,6 +36,15 @@ const page = () => {
   const [giftCards, setGiftCards] = useState([]);
   const Toast = useToast({ position: "top-right" });
 
+  const plans = [
+    { id: 1, amount: 1200 },
+    { id: 2, amount: 2400 },
+    { id: 3, amount: 3600 },
+    { id: 4, amount: 6000 },
+    { id: 5, amount: 12000 },
+    { id: 6, amount: 18000 },
+  ];
+
   useEffect(() => {
     fetchGiftCards();
   }, []);
@@ -46,6 +55,7 @@ const page = () => {
       userId: "",
       amount: "",
       purpose: "",
+      plan: "",
       expiry: "",
       purpose: "",
     },
@@ -70,6 +80,27 @@ const page = () => {
         });
     },
   });
+
+  useEffect(()=>{
+    if(Formik.values.purpose == "viroteam-funding"){
+      if(Formik.values.plan){
+        const amount = plans.find((plan) => plan.id == Formik.values.plan)?.amount
+        Formik.setFieldValue("amount", amount)
+      }
+    }
+    if(Formik.values.purpose == "all-team-process"){
+        const amount = 210
+        Formik.setFieldValue("amount", amount)
+    }
+    if(Formik.values.purpose == "primary-group"){
+        const amount = 250
+        Formik.setFieldValue("amount", amount)
+    }
+    if(Formik.values.purpose == "secondary-group"){
+        const amount = 500
+        Formik.setFieldValue("amount", amount)
+    }
+  },[Formik.values.purpose, Formik.values.plan])
 
   function fetchGiftCards() {
     BackendAxios.get(`/api/gift`)
@@ -145,13 +176,22 @@ const page = () => {
           <Tbody>
             {giftCards?.map((item, key) => (
               <Tr key={key}>
-                <Td>{key+1}</Td>
+                <Td>{key + 1}</Td>
                 <Td>{item?.code}</Td>
                 {/* <Td>{item?.amount}</Td> */}
-                <Td>{item?.purpose?.replace(/viroteam-process/g, "all-team-processing")}</Td>
+                <Td>
+                  {item?.purpose?.replace(
+                    /viroteam-process/g,
+                    "all-team-processing"
+                  )}
+                </Td>
                 <Td>{item?.redeemed ? "USED" : "PENDING"}</Td>
                 <Td>{item?.user_id}</Td>
-                <Td>{item?.created_at ? new Date(item?.created_at).toLocaleDateString() : ""}</Td>
+                <Td>
+                  {item?.created_at
+                    ? new Date(item?.created_at).toLocaleDateString()
+                    : ""}
+                </Td>
                 <Td>{item?.expiry_at}</Td>
               </Tr>
             ))}
@@ -182,11 +222,29 @@ const page = () => {
                 name="purpose"
                 onChange={Formik.handleChange}
               >
-                <option value="viroteam-process">All Team Processing</option>
+                <option value="viroteam-funding">Viro Team Funding</option>
+                <option value="all-team-process">All Team Processing</option>
                 <option value="primary-group">Primary Group</option>
                 <option value="secondary-group">Secondary Group</option>
               </Select>
             </FormControl>
+            {Formik.values.purpose == "viroteam-funding" ? (
+              <FormControl mb={8}>
+                <FormLabel>Select Plan</FormLabel>
+                <Select
+                  placeholder="Please Select"
+                  name="plan"
+                  onChange={Formik.handleChange}
+                >
+                  <option value="1">Plan A</option>
+                  <option value="2">Plan B</option>
+                  <option value="3">Plan D</option>
+                  <option value="4">Plan E</option>
+                  <option value="5">Plan F</option>
+                  <option value="6">Plan G</option>
+                </Select>
+              </FormControl>
+            ) : null}
             <FormControl mb={8}>
               <FormLabel>Card No.</FormLabel>
               <HStack>
