@@ -108,7 +108,7 @@ const page = () => {
 
   useEffect(() => {
     const date = new Date();
-    Formik.setFieldValue("expiry", date.setDate(date.getDate() + expiryDays));
+    Formik.setFieldValue("expiry", new Date(date.setDate(date.getDate() + expiryDays)).toISOString());
   }, [expiryDays]);
 
   function fetchGiftCards() {
