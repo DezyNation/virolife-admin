@@ -65,8 +65,8 @@ const Auth = () => {
         BackendAxios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${res.data?.access_token}`;
-        // Cookies.set("jwt", res.data?.access_token)
-        setCookie("jwt", res.data?.access_token);
+        Cookies.set("jwt", res.data?.access_token)
+        // setCookie("jwt", res.data?.access_token);
       })
       .catch((err) => {
         Toast({
