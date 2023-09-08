@@ -45,10 +45,10 @@ const Auth = () => {
   });
 
   useEffect(() => {
-    if (!isExpired(cookies.jwt)) {
+    if (!isExpired(Cookies.get("jwt"))) {
       router.push("/dashboard");
     }
-  }, [cookies]);
+  }, []);
 
   function handleLogin() {
     if (!Formik.values.email || !Formik.values.password) {
@@ -67,6 +67,7 @@ const Auth = () => {
           "Authorization"
         ] = `Bearer ${res.data?.access_token}`;
         Cookies.set("jwt", res.data?.access_token)
+        router.push("/dashboard");
         // setCookie("jwt", res.data?.access_token);
       })
       .catch((err) => {
