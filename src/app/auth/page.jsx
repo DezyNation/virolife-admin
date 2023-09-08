@@ -23,6 +23,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
