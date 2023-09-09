@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { AiFillDashboard, AiFillYoutube } from "react-icons/ai";
+import { HiArrowsRightLeft } from "react-icons/hi2";
 import {
   BsCalendarCheck,
   BsCashCoin,
@@ -131,14 +132,14 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
-        {permissions.includes("donation-view") ? (
+        {/* {permissions.includes("donation-view") ? (
           <Link href={"/dashboard/transactions"}>
             <HStack gap={4}>
               <BsCurrencyRupee size={20} />
               <Text>Campaign Donation</Text>
             </HStack>
           </Link>
-        ) : null}
+        ) : null} */}
         <Link href={"/dashboard/subscriptions"}>
           <HStack gap={4}>
             <BsCalendarCheck size={20} />
@@ -153,6 +154,12 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
+        <Link href={"/dashboard/points/transfers"}>
+          <HStack gap={4}>
+            <HiArrowsRightLeft size={20} />
+            <Text>Transfer Requests</Text>
+          </HStack>
+        </Link>
         <br />
         <Link href={"/dashboard/gift-cards"}>
           <HStack gap={4}>
@@ -208,7 +215,13 @@ const Layout = ({ children }) => {
 
       <Stack direction={"row"} justifyContent={"space-between"}>
         <Show above="md">
-          <Box p={8} bg={"blanchedalmond"} w={"xs"} h={'100vh'} overflow={'scroll'}>
+          <Box
+            p={8}
+            bg={"blanchedalmond"}
+            w={"xs"}
+            h={"100vh"}
+            overflow={"scroll"}
+          >
             <Text className="serif" fontSize={"xl"} fontWeight={"semibold"}>
               Virolife
             </Text>
