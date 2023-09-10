@@ -66,6 +66,7 @@ const Transactions = () => {
           status: "success",
           description: "Request updated!",
         });
+        fetchRequests();
       })
       .catch((err) => {
         Toast({
