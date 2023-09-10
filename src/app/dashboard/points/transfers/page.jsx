@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   HStack,
@@ -22,7 +22,39 @@ const Transactions = () => {
   const [requests, setRequests] = useState([]);
   const [transfers, setTransfers] = useState([]);
 
-  function fetchRequests() {}
+  useEffect(() => {
+    fetchRequests();
+    fetchTransfers();
+  }, []);
+
+  function fetchRequests() {
+    BackendAxios.get("/api/points/requests/pending")
+      .then((res) => {
+        setRequests(res.data);
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          title: "Error while fetching peding requests",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+  function fetchTransfers() {
+    BackendAxios.get("/api/points/requests/all")
+      .then((res) => {
+        setTransfers(res.data);
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          title: "Error while fetching peding requests",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
 
   function updateStatus({ transactionId, status }) {
     BackendAxios.post(`/api/admin/approve-points`, {
