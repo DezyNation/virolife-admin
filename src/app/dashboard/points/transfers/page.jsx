@@ -28,7 +28,7 @@ const Transactions = () => {
   }, []);
 
   function fetchRequests() {
-    BackendAxios.get("/api/points/requests/pending")
+    BackendAxios.get("/api/admin/points/requests/pending")
       .then((res) => {
         setRequests(res.data);
       })
@@ -42,7 +42,7 @@ const Transactions = () => {
       });
   }
   function fetchTransfers() {
-    BackendAxios.get("/api/points/requests/all")
+    BackendAxios.get("/api/admin/points/requests/all")
       .then((res) => {
         setTransfers(res.data);
       })
