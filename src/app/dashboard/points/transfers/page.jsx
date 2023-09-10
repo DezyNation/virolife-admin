@@ -12,8 +12,8 @@ import {
   Text,
   Th,
   Thead,
-  Toast,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import BackendAxios from "@/utils/axios";
@@ -21,6 +21,9 @@ import BackendAxios from "@/utils/axios";
 const Transactions = () => {
   const [requests, setRequests] = useState([]);
   const [transfers, setTransfers] = useState([]);
+  const Toast = useToast({
+    position: 'top-right'
+  })
 
   useEffect(() => {
     fetchRequests();
@@ -33,6 +36,10 @@ const Transactions = () => {
         setRequests(res.data);
       })
       .catch((err) => {
+        if (err?.response?.status == 401) {
+          localStorage.clear();
+          window.location.assign("/");
+        }
         Toast({
           status: "error",
           title: "Error while fetching peding requests",
@@ -41,12 +48,17 @@ const Transactions = () => {
         });
       });
   }
+
   function fetchTransfers() {
     BackendAxios.get("/api/admin/points/requests/all")
       .then((res) => {
         setTransfers(res.data);
       })
       .catch((err) => {
+        if (err?.response?.status == 401) {
+          localStorage.clear();
+          window.location.assign("/");
+        }
         Toast({
           status: "error",
           title: "Error while fetching peding requests",
@@ -69,6 +81,10 @@ const Transactions = () => {
         fetchRequests();
       })
       .catch((err) => {
+        if (err?.response?.status == 401) {
+          localStorage.clear();
+          window.location.assign("/");
+        }
         Toast({
           status: "error",
           description:
