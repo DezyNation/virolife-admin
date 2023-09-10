@@ -112,11 +112,15 @@ const Transactions = () => {
               {requests.map((item, key) => (
                 <Tr fontSize={"xs"} key={key}>
                   <Td>{key + 1}</Td>
-                  <Td> </Td>
-                  <Td></Td>
-                  <Td> </Td>
-                  <Td> </Td>
-                  <Td> </Td>
+                  <Td>{item?.id}</Td>
+                  <Td>
+                    {item?.user_name}-{item?.user_id}
+                  </Td>
+                  <Td>{item?.value}</Td>
+                  <Td>
+                    {item?.receiver_id}-{item?.receiver_name}
+                  </Td>
+                  <Td>{item?.created_at}</Td>
                   <Td>
                     <HStack>
                       <Button
@@ -125,15 +129,25 @@ const Transactions = () => {
                         colorScheme="yellow"
                         onClick={() => {
                           updateStatus({
-                            transactionId: item?.transactionId,
-                            status: 1,
+                            transactionId: item?.id,
+                            status: "approved",
                           });
                         }}
                       >
                         Approve
                       </Button>
-                      <Button size={"sm"} rounded={"full"} colorScheme="red">
-                        Delete
+                      <Button
+                        size={"sm"}
+                        rounded={"full"}
+                        colorScheme="red"
+                        onClick={() => {
+                          updateStatus({
+                            transactionId: item?.id,
+                            status: "rejected",
+                          });
+                        }}
+                      >
+                        Reject
                       </Button>
                     </HStack>
                   </Td>
@@ -155,18 +169,22 @@ const Transactions = () => {
               <Th>Payee Name</Th>
               <Th>Ponits</Th>
               <Th>Beneficiary</Th>
-              <Th>Requested At</Th>
+              <Th>Updated At</Th>
             </Tr>
           </Thead>
           <Tbody>
             {transfers.map((item, key) => (
               <Tr fontSize={"xs"} key={key}>
                 <Td>{key + 1}</Td>
-                <Td> </Td>
-                <Td> </Td>
-                <Td> </Td>
-                <Td></Td>
-                <Td> </Td>
+                <Td>{item?.id}</Td>
+                <Td>
+                  {item?.user_name}-{item?.user_id}
+                </Td>
+                <Td>{item?.value}</Td>
+                <Td>
+                  {item?.receiver_id}-{item?.receiver_name}
+                </Td>
+                <Td>{item?.updated_at}</Td>
               </Tr>
             ))}
           </Tbody>
