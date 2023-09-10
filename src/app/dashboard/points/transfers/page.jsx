@@ -22,8 +22,8 @@ const Transactions = () => {
   const [requests, setRequests] = useState([]);
   const [transfers, setTransfers] = useState([]);
   const Toast = useToast({
-    position: 'top-right'
-  })
+    position: "top-right",
+  });
 
   useEffect(() => {
     fetchRequests();
@@ -103,6 +103,10 @@ const Transactions = () => {
       >
         Transactions
       </Text>
+      <br />
+      <HStack justifyContent={"flex-end"} py={4}>
+        <Button onClick={fetchRequests}>Reload Data</Button>
+      </HStack>
       <Stack
         w={"full"}
         direction={["column", "row"]}
@@ -176,6 +180,10 @@ const Transactions = () => {
       </Stack>
       <br />
       <br />
+      <br />
+      <HStack justifyContent={"flex-end"} py={4}>
+        <Button onClick={fetchRequests}>Reload Data</Button>
+      </HStack>
       <TableContainer rounded={"16"} py={6}>
         <Table variant={"striped"} colorScheme="gray">
           <TableCaption>Point Transfer Requests (All)</TableCaption>
