@@ -39,6 +39,7 @@ const Transactions = () => {
         if (err?.response?.status == 401) {
           localStorage.clear();
           window.location.assign("/");
+          return
         }
         Toast({
           status: "error",
@@ -58,6 +59,7 @@ const Transactions = () => {
         if (err?.response?.status == 401) {
           localStorage.clear();
           window.location.assign("/");
+          return
         }
         Toast({
           status: "error",
@@ -79,6 +81,7 @@ const Transactions = () => {
           description: "Request updated!",
         });
         fetchRequests();
+        fetchTransfers();
       })
       .catch((err) => {
         if (err?.response?.status == 401) {
@@ -182,7 +185,7 @@ const Transactions = () => {
       <br />
       <br />
       <HStack justifyContent={"flex-end"} py={4}>
-        <Button onClick={fetchRequests}>Reload Data</Button>
+        <Button onClick={fetchTransfers}>Reload Data</Button>
       </HStack>
       <TableContainer rounded={"16"} py={6}>
         <Table variant={"striped"} colorScheme="gray">

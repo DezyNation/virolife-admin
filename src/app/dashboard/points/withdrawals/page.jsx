@@ -1,84 +1,225 @@
-'use client'
-import React from 'react'
-import { Stack, Table, TableCaption, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
-import Link from 'next/link'
+"use client";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  HStack,
+  Stack,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  useToast,
+} from "@chakra-ui/react";
+import Link from "next/link";
+import BackendAxios from "@/utils/axios";
 
 const Transactions = () => {
-    const arr = [1, 1, 1, 1, 11, 2]
-    return (
-        <>
-            <Text className='serif' fontSize={'2xl'} py={4} textTransform={'capitalize'}>Transactions</Text>
-            <Stack w={'full'} direction={['column', 'row']} justifyContent={'space-between'} gap={8}>
-                <TableContainer rounded={'16'} flex={['unset', 3]}>
-                    <Table variant={'striped'} colorScheme='gray'>
-                        <TableCaption>
-                            <Link href={'/dashboard/transactions/report'}>
-                                Subscription Purchases (View All)
-                            </Link>
-                        </TableCaption>
-                        <Thead bgColor={'yellow.400'}>
-                            <Tr>
-                                <Th>#</Th>
-                                <Th>Trnxn ID</Th>
-                                <Th>Campaign</Th>
-                                <Th>Payee Name</Th>
-                                <Th>Amount</Th>
-                                <Th>Timestamp</Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
-                            {
-                                arr.map((item, key) => (
-                                    <Tr fontSize={'xs'} key={key}>
-                                        <Td>{key + 1}</Td>
-                                        <Td> </Td>
-                                        <Td>
-                                             
-                                        </Td>
-                                        <Td> </Td>
-                                        <Td> </Td>
-                                        <Td> </Td>
-                                    </Tr>
-                                ))
-                            }
-                        </Tbody>
-                    </Table>
-                </TableContainer>
-            </Stack>
-                            <br /><br />
-            <TableContainer rounded={'16'} py={6}>
-            <Table variant={'striped'} colorScheme='gray'>
-                        <TableCaption>
-                            Wallet Topup
-                        </TableCaption>
-                        <Thead bgColor={'yellow.400'}>
-                            <Tr>
-                                <Th>#</Th>
-                                <Th>Trnxn ID</Th>
-                                <Th>User</Th>
-                                <Th>Amount</Th>
-                                <Th>Remarks</Th>
-                                <Th>Timestamp</Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
-                            {
-                                arr.map((item, key) => (
-                                    <Tr fontSize={'xs'} key={key}>
-                                        <Td>{key + 1}</Td>
-                                        <Td> </Td>
-                                        <Td> </Td>
-                                        <Td> </Td>
-                                        <Td></Td>
-                                        <Td> </Td>
-                                    </Tr>
-                                ))
-                            }
-                        </Tbody>
-                    </Table>
-                </TableContainer>
-        </>
-    )
-}
+  const [requests, setRequests] = useState([]);
+  const [transfers, setTransfers] = useState([]);
+  const Toast = useToast({
+    position: "top-right",
+  });
 
-export default Transactions
+  useEffect(() => {
+    fetchRequests();
+    fetchTransfers();
+  }, []);
+
+  function fetchRequests() {
+    BackendAxios.get("/api/admin/campaign/requests/pending")
+      .then((res) => {
+        setRequests(res.data);
+      })
+      .catch((err) => {
+        if (err?.response?.status == 401) {
+          localStorage.clear();
+          window.location.assign("/");
+          return
+        }
+        Toast({
+          status: "error",
+          title: "Error while fetching peding requests",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function fetchTransfers() {
+    BackendAxios.get("/api/admin/campaign/requests/all")
+      .then((res) => {
+        setTransfers(res.data);
+      })
+      .catch((err) => {
+        if (err?.response?.status == 401) {
+          localStorage.clear();
+          window.location.assign("/");
+          return
+        }
+        Toast({
+          status: "error",
+          title: "Error while fetching peding requests",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function updateStatus({ transactionId, status }) {
+    BackendAxios.post(`/api/admin/approve-withrawals/${transactionId}`, {
+      transactionId: transactionId,
+      status: status,
+    })
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Request updated!",
+        });
+        fetchRequests();
+        fetchTransfers();
+      })
+      .catch((err) => {
+        if (err?.response?.status == 401) {
+          localStorage.clear();
+          window.location.assign("/");
+        }
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  return (
+    <>
+      <Text
+        className="serif"
+        fontSize={"2xl"}
+        py={4}
+        textTransform={"capitalize"}
+      >
+        Transactions
+      </Text>
+      <br />
+      <HStack justifyContent={"flex-end"} py={4}>
+        <Button onClick={fetchRequests}>Reload Data</Button>
+      </HStack>
+      <Stack
+        w={"full"}
+        direction={["column", "row"]}
+        justifyContent={"space-between"}
+        gap={8}
+      >
+        <TableContainer rounded={"16"} flex={["unset", 3]}>
+          <Table variant={"striped"} colorScheme="gray">
+            <TableCaption>
+              <Link href={"#"}>Point Transfer Requests (Pending)</Link>
+            </TableCaption>
+            <Thead bgColor={"yellow.400"}>
+              <Tr>
+                <Th>#</Th>
+                <Th>Trnxn ID</Th>
+                <Th>Payee Name</Th>
+                <Th>Ponits</Th>
+                <Th>Beneficiary</Th>
+                <Th>Requested At</Th>
+                <Th>Action</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {requests.map((item, key) => (
+                <Tr fontSize={"xs"} key={key}>
+                  <Td>{key + 1}</Td>
+                  <Td>{item?.id}</Td>
+                  <Td>
+                    {item?.user_name}-{item?.user_id}
+                  </Td>
+                  <Td>{item?.value}</Td>
+                  <Td>
+                    {item?.receiver_id}-{item?.receiver_name}
+                  </Td>
+                  <Td>{item?.created_at}</Td>
+                  <Td>
+                    <HStack>
+                      <Button
+                        size={"sm"}
+                        rounded={"full"}
+                        colorScheme="yellow"
+                        onClick={() => {
+                          updateStatus({
+                            transactionId: item?.id,
+                            status: "approved",
+                          });
+                        }}
+                      >
+                        Approve
+                      </Button>
+                      <Button
+                        size={"sm"}
+                        rounded={"full"}
+                        colorScheme="red"
+                        onClick={() => {
+                          updateStatus({
+                            transactionId: item?.id,
+                            status: "rejected",
+                          });
+                        }}
+                      >
+                        Reject
+                      </Button>
+                    </HStack>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Stack>
+      <br />
+      <br />
+      <br />
+      <HStack justifyContent={"flex-end"} py={4}>
+        <Button onClick={fetchTransfers}>Reload Data</Button>
+      </HStack>
+      <TableContainer rounded={"16"} py={6}>
+        <Table variant={"striped"} colorScheme="gray">
+          <TableCaption>Point Transfer Requests (All)</TableCaption>
+          <Thead bgColor={"yellow.400"}>
+            <Tr>
+              <Th>#</Th>
+              <Th>Trnxn ID</Th>
+              <Th>Payee Name</Th>
+              <Th>Ponits</Th>
+              <Th>Campaign</Th>
+              <Th>Updated At</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {transfers.map((item, key) => (
+              <Tr fontSize={"xs"} key={key}>
+                <Td>{key + 1}</Td>
+                <Td>{item?.id}</Td>
+                <Td>
+                  {item?.campaign_id}-{item?.title}
+                </Td>
+                <Td>{item?.value}</Td>
+                <Td>
+                  {item?.receiver_id}-{item?.receiver_name}
+                </Td>
+                <Td>{item?.updated_at}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+};
+
+export default Transactions;

@@ -28,6 +28,7 @@ import {
   BsPower,
 } from "react-icons/bs";
 import { MdGroups, MdPersonAdd } from "react-icons/md";
+import { GiTakeMyMoney } from "react-icons/gi";
 import { HiUserGroup } from "react-icons/hi";
 import { BiLogIn, BiMenuAltLeft, BiUser } from "react-icons/bi";
 import { FaRegCreditCard, FaUserShield, FaUserTie } from "react-icons/fa";
@@ -158,6 +159,12 @@ const MenuOptions = () => {
           <HStack gap={4}>
             <HiArrowsRightLeft size={20} />
             <Text>Transfer Requests</Text>
+          </HStack>
+        </Link>
+        <Link href={"/dashboard/points/withdrawals"}>
+          <HStack gap={4}>
+            <GiTakeMyMoney size={20} />
+            <Text>Withdrawals Requests</Text>
           </HStack>
         </Link>
         <br />
