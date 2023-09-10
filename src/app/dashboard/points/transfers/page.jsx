@@ -69,7 +69,7 @@ const Transactions = () => {
   }
 
   function updateStatus({ transactionId, status }) {
-    BackendAxios.post(`/api/admin/approve-points`, {
+    BackendAxios.post(`/api/admin/approve-points/${transactionId}`, {
       transactionId: transactionId,
       status: status,
     })
