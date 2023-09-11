@@ -106,10 +106,10 @@ const page = () => {
     }
   }, [Formik.values.purpose, Formik.values.plan]);
 
-  useEffect(() => {
-    const date = new Date();
-    Formik.setFieldValue("expiry", new Date(date.setDate(date.getDate() + expiryDays)).toLocaleString());
-  }, [expiryDays]);
+  // useEffect(() => {
+  //   const date = new Date();
+  //   Formik.setFieldValue("expiry", new Date(date.setDate(date.getDate() + expiryDays)).toLocaleString());
+  // }, [expiryDays]);
 
   function fetchGiftCards() {
     BackendAxios.get(`/api/gift`)
@@ -291,7 +291,7 @@ const page = () => {
             </FormControl>
             <FormControl mb={8}>
               <FormLabel>Expiry</FormLabel>
-              <HStack gap={6}>
+              {/* <HStack gap={6}>
                 <Button
                   colorScheme={expiryDays == 30 ? "yellow" : "gray"}
                   rounded={"full"}
@@ -306,7 +306,8 @@ const page = () => {
                 >
                   60 Days
                 </Button>
-              </HStack>
+              </HStack> */}
+              <Input type="data" name="expiry" onChange={Formik.handleChange} />
             </FormControl>
           </ModalBody>
           <ModalFooter justifyContent={"flex-end"} gap={4}>
