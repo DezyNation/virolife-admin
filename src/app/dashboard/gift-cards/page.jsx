@@ -307,7 +307,7 @@ const page = () => {
                   60 Days
                 </Button>
               </HStack> */}
-              <Input type="data" name="expiry" onChange={Formik.handleChange} />
+              <Input type="date" name="expiry" onChange={Formik.handleChange} />
             </FormControl>
           </ModalBody>
           <ModalFooter justifyContent={"flex-end"} gap={4}>
