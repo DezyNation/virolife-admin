@@ -26,14 +26,16 @@ import {
   BsCurrencyRupee,
   BsMegaphoneFill,
   BsPower,
+  BsStarFill,
 } from "react-icons/bs";
 import { MdGroups, MdPersonAdd } from "react-icons/md";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { HiUserGroup } from "react-icons/hi";
 import { BiLogIn, BiMenuAltLeft, BiUser } from "react-icons/bi";
-import { FaRegCreditCard, FaUserShield, FaUserTie } from "react-icons/fa";
+import { FaPercentage, FaRegCreditCard, FaUserShield, FaUserTie } from "react-icons/fa";
 import BackendAxios from "@/utils/axios";
 import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 
 const MenuOptions = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["jwt"]);
@@ -41,13 +43,13 @@ const MenuOptions = () => {
   async function handleLogout() {
     await BackendAxios.post("/logout")
       .then(() => {
-        removeCookie("jwt");
+        Cookies.remove("jwt");
       })
       .catch((err) => {
-        removeCookie("jwt");
+        Cookies.remove("jwt");
       })
       .finally(() => {
-        removeCookie("jwt");
+        Cookies.remove("jwt");
       });
     window.location.replace("/");
   }
@@ -155,6 +157,14 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
+        {permissions.includes("donation-view") ? (
+          <Link href={"/dashboard/all-team-donation"}>
+            <HStack gap={4}>
+              <BsStarFill size={20} />
+              <Text>All Team Donations</Text>
+            </HStack>
+          </Link>
+        ) : null}
         <Link href={"/dashboard/points/transfers"}>
           <HStack gap={4}>
             <HiArrowsRightLeft size={20} />
@@ -165,6 +175,13 @@ const MenuOptions = () => {
           <HStack gap={4}>
             <GiTakeMyMoney size={20} />
             <Text>Withdrawals Requests</Text>
+          </HStack>
+        </Link>
+        <br />
+        <Link href={"/dashboard/commission-distribution"}>
+          <HStack gap={4}>
+            <FaPercentage size={20} />
+            <Text>Commission Data</Text>
           </HStack>
         </Link>
         <br />

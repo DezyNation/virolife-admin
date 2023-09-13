@@ -1,5 +1,5 @@
 "use client";
-import BackendAxios from "@/utils/axios";
+import BackendAxios, { FormAxios } from "@/utils/axios";
 import {
   Box,
   Button,
@@ -64,6 +64,9 @@ const Auth = () => {
           description: "Login successful!",
         });
         BackendAxios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${res.data?.access_token}`;
+        FormAxios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${res.data?.access_token}`;
         Cookies.set("jwt", res.data?.access_token)
