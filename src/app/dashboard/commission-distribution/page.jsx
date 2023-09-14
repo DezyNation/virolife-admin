@@ -84,11 +84,11 @@ const page = () => {
               data?.map((item, key) => (
                 <Tr key={key}>
                   <Td>{key + 1}</Td>
-                  <Td>{item?.agent_id}-{item?.agent_name}</Td>
-                  <Td>{item?.distributor_id}-{item?.distributor_name}</Td>
-                  <Td>{item?.amount}-{item?.amount}</Td>
-                  <Td>{item?.user_id}-{item?.user_name}</Td>
-                  <Td>Plan {item?.plan_name}</Td>
+                  <Td>{item?.role_name == "agent" && item?.agent_id}-{item?.role_name == "agent" && item?.agent_name}</Td>
+                  <Td>{item?.role_name == "distributor" && item?.user_id}-{item?.role_name == "distributor" && item?.user_name}</Td>
+                  <Td>{item?.credit}</Td>
+                  <Td>{item?.subscriber_id}-{item?.subscriber_name}</Td>
+                  <Td>{item?.plan_name}</Td>
                   <Td>{item?.created_at}</Td>
                 </Tr>
               ))
