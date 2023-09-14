@@ -26,7 +26,7 @@ const page = () => {
   }, []);
 
   function fetchData() {
-    BackendAxios.get(`/api/admin/agent-commission/${userId}`)
+    BackendAxios.get(`/api/admin/agent-commission${userId ? "/"+userId : ""}`)
       .then((res) => {
         setData(res.data);
       })
