@@ -248,23 +248,23 @@ const Users = () => {
               {users.map((user, key) => (
                 <Tr fontSize={"xs"} key={key}>
                   <Td>{key + 1}</Td>
-                  <Td>VCF{user.id}</Td>
+                  <Td>VCF{user?.id}</Td>
                   <Td className="sticky-left">
-                    {user.name} ({user.gender})
+                    {user?.name} ({user?.gender})
                   </Td>
                   <Td>
                     <Box>
-                      <p>{user.email}</p>
-                      <p>+91 {user.phone}</p>
+                      <p>{user?.email}</p>
+                      <p>+91 {user?.phone_number}</p>
                     </Box>
                   </Td>
                   <Td>{user?.round}</Td>
                   <Td>{user?.group_collection}</Td>
                   <Td>
-                    {user?.dob ? new Date(user.dob).toDateString() : null}
+                    {user?.dob ? new Date(user?.dob).toDateString() : null}
                   </Td>
                   <Td>{user?.role_name}</Td>
-                  <Td>{new Date(user.created_at).toLocaleString()}</Td>
+                  <Td>{new Date(user?.created_at).toLocaleString()}</Td>
                   <Td>
                     <HStack gap={4} pb={2}>
                       <Switch
