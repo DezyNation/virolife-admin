@@ -89,7 +89,7 @@ const page = () => {
                   <Td>{item?.credit}</Td>
                   <Td>{item?.subscriber_id}-{item?.subscriber_name}</Td>
                   <Td>{item?.plan_name}</Td>
-                  <Td>{item?.created_at}</Td>
+                  <Td>{item?.created_at && new Date(item?.created_at).toLocaleString()}</Td>
                 </Tr>
               ))
             }
