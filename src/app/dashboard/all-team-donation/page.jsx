@@ -81,7 +81,7 @@ const page = () => {
               data?.map((item, key) => (
                 <Tr key={key}>
                   <Td>{key + 1}</Td>
-                  <Td>{item?.amount}-{item?.amount}</Td>
+                  <Td>{item?.amount}</Td>
                   <Td>{item?.user_id}-{item?.user_name}</Td>
                   <Td>{item?.created_at}</Td>
                 </Tr>
