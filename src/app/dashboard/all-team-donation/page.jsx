@@ -26,7 +26,7 @@ const page = () => {
   }, []);
 
   function fetchData() {
-    BackendAxios.get(`/api/admin/virolife-donations`)
+    BackendAxios.get(`/api/admin/virolife-donations?purpose=all-team`)
       .then((res) => {
         setData(res.data);
       })
