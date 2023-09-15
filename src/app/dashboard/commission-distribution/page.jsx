@@ -72,7 +72,7 @@ const page = () => {
             <Tr>
               <Td>#</Td>
               <Td>Agent</Td>
-              <Td>DistdTdibutor</Td>
+              <Td>Distributor</Td>
               <Td>Amount</Td>
               <Td>User</Td>
               <Td>Plan</Td>
@@ -84,7 +84,7 @@ const page = () => {
               data?.map((item, key) => (
                 <Tr key={key}>
                   <Td>{key + 1}</Td>
-                  <Td>{item?.role_name == "agent" && item?.agent_id}-{item?.role_name == "agent" && item?.agent_name}</Td>
+                  <Td>{item?.role_name == "agent" && item?.user_id}-{item?.role_name == "agent" && item?.user_name}</Td>
                   <Td>{item?.role_name == "distributor" && item?.user_id}-{item?.role_name == "distributor" && item?.user_name}</Td>
                   <Td>{item?.credit}</Td>
                   <Td>{item?.subscriber_id}-{item?.subscriber_name}</Td>

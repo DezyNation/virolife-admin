@@ -153,7 +153,7 @@ const Users = () => {
                 <Th>ID</Th>
                 <Th className="sticky-left">User Name</Th>
                 <Th>Contact</Th>
-                <Th>Date of Birth</Th>
+                <Th>Distributor Name</Th>
                 <Th>Registered On</Th>
                 <Th>Action</Th>
               </Tr>
