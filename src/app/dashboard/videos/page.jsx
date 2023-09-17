@@ -52,7 +52,7 @@ const Users = () => {
       BackendAxios.post("/api/video", {
         ...values,
         link:
-          videoType == "bunny" &&
+          videoType == "youtube" &&
           `https://www.youtube.com/watch?v=${values.video_id}`,
       })
         .then(() => {
