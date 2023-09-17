@@ -54,6 +54,7 @@ const Info = () => {
       address: "",
       agent: "",
       distributor: "",
+      parentId: ""
     },
     onSubmit: (values) => {
       FormAxios.post(`/api/admin/user/register-user`, {
@@ -153,7 +154,7 @@ const Info = () => {
                 >
                   Agent
                 </FormLabel>
-                <Select placeholder="Please Select" name="agent" onChange={Formik.handleChange}>
+                <Select placeholder="Please Select" name="parentId" onChange={Formik.handleChange}>
                   {agents?.map((user, key) => (
                     <option key={key} value={user?.id}>
                       {user?.name}
@@ -170,7 +171,7 @@ const Info = () => {
                 >
                   Distributor
                 </FormLabel>
-                <Select placeholder="Please Select" name="distributor" onChange={Formik.handleChange}>
+                <Select placeholder="Please Select" name="parentId" onChange={Formik.handleChange}>
                   {distributors?.map((user, key) => (
                     <option key={key} value={user?.id}>
                       {user?.name}
