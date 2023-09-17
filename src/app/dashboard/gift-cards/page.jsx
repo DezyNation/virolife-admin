@@ -162,6 +162,24 @@ const page = () => {
       });
   }
 
+  function deleteGiftCard(id) {
+    BackendAxios.delete(`/api/gift`)
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Successfully deleted Gift Card",
+        });
+        fetchGiftCards();
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
   return (
     <>
       <Text fontSize={"lg"}>Manage Gift Cards</Text>
@@ -180,6 +198,7 @@ const page = () => {
               <Th>Linked User</Th>
               <Th>Created At</Th>
               <Th>Expires At</Th>
+              <Th>Delete</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -188,9 +207,7 @@ const page = () => {
                 <Td>{key + 1}</Td>
                 <Td>{item?.code}</Td>
                 {/* <Td>{item?.amount}</Td> */}
-                <Td>
-                  {item?.purpose}
-                </Td>
+                <Td>{item?.purpose}</Td>
                 <Td>{item?.redeemed ? "USED" : "PENDING"}</Td>
                 <Td>{item?.user_id}</Td>
                 <Td>
@@ -199,6 +216,15 @@ const page = () => {
                     : ""}
                 </Td>
                 <Td>{item?.expiry_at}</Td>
+                <Td>
+                  <Button
+                    size={"xs"}
+                    colorScheme="red"
+                    onClick={() => deleteGiftCard(item?.id)}
+                  >
+                    Delete
+                  </Button>
+                </Td>
               </Tr>
             ))}
           </Tbody>
