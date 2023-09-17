@@ -49,7 +49,12 @@ const Users = () => {
       isActive: false,
     },
     onSubmit: (values) => {
-      BackendAxios.post("/api/video", {...values, link: `https://www.youtube.com/watch?v=${values.video_id}`})
+      BackendAxios.post("/api/video", {
+        ...values,
+        link:
+          videoType == "bunny" &&
+          `https://www.youtube.com/watch?v=${values.video_id}`,
+      })
         .then(() => {
           fetchVideos();
           onClose();
@@ -83,6 +88,22 @@ const Users = () => {
   useEffect(() => {
     fetchVideos();
   }, []);
+
+  function deleteVideo(id){
+    BackendAxios.delete(`/api/video/${id}`).then(res => {
+      Toast({
+        status: 'success',
+        description:'Video Deleted Successfully'
+      })
+      fetchVideos()
+    }).catch(err => {
+      Toast({
+        status: "error",
+        description:
+          err?.response?.data?.message || err?.response?.data || err?.message,
+      });
+    })
+  }
 
   return (
     <>
@@ -123,10 +144,7 @@ const Users = () => {
                   <Td>{item?.title}</Td>
                   <Td>{item?.points}</Td>
                   <Td>
-                    <Link
-                      href={item?.link}
-                      target={"_blank"}
-                    >
+                    <Link href={item?.link} target={"_blank"}>
                       Click to View
                     </Link>
                   </Td>
@@ -135,7 +153,11 @@ const Users = () => {
                   <Td>{new Date(item?.created_at).toLocaleDateString()}</Td>
                   <Td>
                     <HStack gap={4}>
-                      <Switch defaultChecked={item?.is_active} colorScheme="yellow" />
+                      <Switch
+                        defaultChecked={item?.is_active}
+                        colorScheme="yellow"
+                      />
+                      <Button size={'sm'} colorScheme="red" onClick={()=>deleteVideo(item?.id)}>Delete</Button>
                     </HStack>
                   </Td>
                 </Tr>
@@ -205,12 +227,15 @@ const Users = () => {
             </FormControl>
 
             <FormControl pb={4}>
-              <HStack w={'full'} justifyContent={'space-between'}>
+              <HStack w={"full"} justifyContent={"space-between"}>
                 <FormLabel>Status</FormLabel>
-                <Switch onChange={e => Formik.setFieldValue("isActive", e.target.checked)} />
+                <Switch
+                  onChange={(e) =>
+                    Formik.setFieldValue("isActive", e.target.checked)
+                  }
+                />
               </HStack>
             </FormControl>
-
           </ModalBody>
           <ModalFooter>
             <HStack justifyContent={"flex-end"}>
