@@ -163,7 +163,7 @@ const page = () => {
   }
 
   function deleteGiftCard(id) {
-    BackendAxios.delete(`/api/gift`)
+    BackendAxios.delete(`/api/gift/${id}`)
       .then((res) => {
         Toast({
           status: "success",
