@@ -53,7 +53,7 @@ const Users = () => {
         ...values,
         link:
           videoType == "youtube" &&
-          `https://www.youtube.com/watch?v=${values.video_id}`,
+          `https://www.youtube.com/embed/${values.video_id}`,
       })
         .then(() => {
           fetchVideos();
