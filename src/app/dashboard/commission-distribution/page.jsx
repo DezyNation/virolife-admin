@@ -87,7 +87,7 @@ const page = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {data?.map((item, key) => (
+            {agentData?.map((item, key) => (
               <Tr key={key}>
                 <Td>{key + 1}</Td>
                 {/* <Td>
