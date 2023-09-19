@@ -80,7 +80,7 @@ const page = () => {
       <br />
       <HStack w={'full'} justifyContent={'space-between'}>
         <Text>Distributor Data</Text>
-        <Text>Total Commission: ₹{calculateSum(data)}</Text>
+        <Text>Total Commission: ₹{calculateSum(agentData)}</Text>
       </HStack>
       <br />
       <TableContainer>
@@ -128,7 +128,7 @@ const page = () => {
       <br />
       <HStack w={'full'} justifyContent={'space-between'}>
         <Text>Agent Data</Text>
-        <Text>Total Commission: ₹{calculateSum(agentData)}</Text>
+        <Text>Total Commission: ₹{calculateSum(data)}</Text>
       </HStack>
       <br />
       <TableContainer>
