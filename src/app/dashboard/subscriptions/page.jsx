@@ -23,11 +23,8 @@ import React, { useState, useEffect } from "react";
 const page = () => {
   const Toast = useToast({ position: "top-right" });
   const [data, setData] = useState([]);
-  const [agentData, setAgentData] = useState([]);
-
   useEffect(() => {
-    fetchSubscriptions("distributor");
-    fetchSubscriptions("agent");
+    fetchSubscriptions();
   }, []);
 
   const Formik = useFormik({
@@ -38,13 +35,14 @@ const page = () => {
     },
   });
 
-  function fetchSubscriptions(role) {
+  function fetchSubscriptions() {
     BackendAxios.get(
-      `/api/admin/subscription-info/${role}?userId=${Formik.values.userId}`
+      `/api/admin/subscription-info${
+        Formik.values.userId ? `/${Formik.values.userId}` : ""
+      }`
     )
       .then((res) => {
-        if (role == "distributor") setData(res.data);
-        if (role == "agent") setAgentData(res.data);
+        setData(res.data);
       })
       .catch((err) => {
         Toast({
@@ -102,8 +100,6 @@ const page = () => {
       </HStack>
       <br />
       <br />
-      <Text>Distributor Data</Text>
-      <br />
       <TableContainer>
         <Table colorScheme="yellow">
           <Thead>
@@ -119,39 +115,6 @@ const page = () => {
           </Thead>
           <Tbody>
             {data?.map((data, key) => (
-              <Tr>
-                <Td>{key + 1}</Td>
-                <Td>{data?.user_id}</Td>
-                <Td>{data?.user_name}</Td>
-                <Td>{data?.parent_id}</Td>
-                <Td>{data?.plan_name}</Td>
-                <Td>{data?.health_points}</Td>
-                <Td>{data?.created_at}</Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
-      <br />
-      <br />
-      <br />
-      <Text>Agent Data</Text>
-      <br />
-      <TableContainer>
-        <Table colorScheme="yellow">
-          <Thead>
-            <Tr>
-              <Th>#</Th>
-              <Th>User ID</Th>
-              <Th>User Name</Th>
-              <Th>Parent ID</Th>
-              <Th>Plan Purchased</Th>
-              <Th>Points Received</Th>
-              <Th>Timestamp</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {agentData?.map((data, key) => (
               <Tr>
                 <Td>{key + 1}</Td>
                 <Td>{data?.user_id}</Td>

@@ -20,15 +20,18 @@ const page = () => {
   const Toast = useToast({ position: "top-right" });
   const [userId, setUserId] = useState("");
   const [data, setData] = useState([]);
+  const [agentData, setAgentData] = useState([]);
 
   useEffect(() => {
-    fetchData();
+    fetchData("distributor");
+    fetchData("agent");
   }, []);
 
-  function fetchData() {
-    BackendAxios.get(`/api/admin/agent-commission${userId ? "/"+userId : ""}`)
+  function fetchData(role) {
+    BackendAxios.get(`/api/admin/agent-commission/${role}?userId=${userId}`)
       .then((res) => {
-        setData(res.data);
+        if (role == "distributor") setData(res.data);
+        if (role == "agent") setAgentData(res.data);
       })
       .catch((err) => {
         if (err?.response?.status == 401) {
@@ -66,12 +69,16 @@ const page = () => {
         </HStack>
       </HStack>
       <br />
+      <br />
+      <br />
+      <Text>Distributor Data</Text>
+      <br />
       <TableContainer>
         <Table>
           <Thead>
             <Tr>
               <Td>#</Td>
-              <Td>Agent</Td>
+              {/* <Td>Agent</Td> */}
               <Td>Distributor</Td>
               <Td>Amount</Td>
               <Td>User</Td>
@@ -80,19 +87,76 @@ const page = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {
-              data?.map((item, key) => (
-                <Tr key={key}>
-                  <Td>{key + 1}</Td>
-                  <Td>{item?.role_name == "agent" && item?.user_id}-{item?.role_name == "agent" && item?.user_name}</Td>
-                  <Td>{item?.role_name == "distributor" && item?.user_id}-{item?.role_name == "distributor" && item?.user_name}</Td>
-                  <Td>{item?.credit}</Td>
-                  <Td>{item?.subscriber_id}-{item?.subscriber_name}</Td>
-                  <Td>{item?.plan_name}</Td>
-                  <Td>{item?.created_at && new Date(item?.created_at).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</Td>
-                </Tr>
-              ))
-            }
+            {data?.map((item, key) => (
+              <Tr key={key}>
+                <Td>{key + 1}</Td>
+                {/* <Td>
+                  {item?.role_name == "agent" && item?.user_id}-
+                  {item?.role_name == "agent" && item?.user_name}
+                </Td> */}
+                <Td>
+                  {item?.role_name == "distributor" && item?.user_id}-
+                  {item?.role_name == "distributor" && item?.user_name}
+                </Td>
+                <Td>{item?.credit}</Td>
+                <Td>
+                  {item?.subscriber_id}-{item?.subscriber_name}
+                </Td>
+                <Td>{item?.plan_name}</Td>
+                <Td>
+                  {item?.created_at &&
+                    new Date(item?.created_at).toLocaleString(undefined, {
+                      timeZone: "Asia/Kolkata",
+                    })}
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+      <br />
+      <br />
+      <br />
+      <Text>Agent Data</Text>
+      <br />
+      <TableContainer>
+        <Table>
+          <Thead>
+            <Tr>
+              <Td>#</Td>
+              <Td>Agent</Td>
+              {/* <Td>Distributor</Td> */}
+              <Td>Amount</Td>
+              <Td>User</Td>
+              <Td>Plan</Td>
+              <Td>Timestamp</Td>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {data?.map((item, key) => (
+              <Tr key={key}>
+                <Td>{key + 1}</Td>
+                <Td>
+                  {item?.role_name == "agent" && item?.user_id}-
+                  {item?.role_name == "agent" && item?.user_name}
+                </Td>
+                {/* <Td>
+                  {item?.role_name == "distributor" && item?.user_id}-
+                  {item?.role_name == "distributor" && item?.user_name}
+                </Td> */}
+                <Td>{item?.credit}</Td>
+                <Td>
+                  {item?.subscriber_id}-{item?.subscriber_name}
+                </Td>
+                <Td>{item?.plan_name}</Td>
+                <Td>
+                  {item?.created_at &&
+                    new Date(item?.created_at).toLocaleString(undefined, {
+                      timeZone: "Asia/Kolkata",
+                    })}
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
