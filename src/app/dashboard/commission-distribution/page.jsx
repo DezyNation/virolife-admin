@@ -49,9 +49,9 @@ const page = () => {
       });
   }
 
-  function calculateSum(data){
-    const sum = data?.reduce((total, currentObject) => {
-      return total + currentObject?.credit;
+  function calculateSum(arrayOfObjects){
+    const sum = arrayOfObjects?.reduce((total, currentObject) => {
+      return total + parseInt(currentObject?.credit);
     }, 0);
     return sum
   }
