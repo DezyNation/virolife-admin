@@ -53,6 +53,12 @@ const page = () => {
       });
   }
 
+  function calculateSum(){
+    data?.reduce((total, currentObject) => {
+      return total + currentObject?.health_points;
+    }, 0);
+  }
+
   return (
     <>
       <Text fontSize={"lg"}>Viro Team Subscriptions</Text>
@@ -100,6 +106,7 @@ const page = () => {
       </HStack>
       <br />
       <br />
+      <Text>Total Points: ₹{calculateSum()}</Text>
       <TableContainer>
         <Table colorScheme="yellow">
           <Thead>

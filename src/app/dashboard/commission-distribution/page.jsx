@@ -49,6 +49,12 @@ const page = () => {
       });
   }
 
+  function calculateSum(data){
+    data?.reduce((total, currentObject) => {
+      return total + currentObject?.credit;
+    }, 0);
+  }
+
   return (
     <>
       <Text fontSize={"lg"} fontWeight={"semibold"}>
@@ -71,7 +77,10 @@ const page = () => {
       <br />
       <br />
       <br />
-      <Text>Distributor Data</Text>
+      <HStack w={'full'} justifyContent={'space-between'}>
+        <Text>Distributor Data</Text>
+        <Text>Total Commission: ₹{calculateSum(data)}</Text>
+      </HStack>
       <br />
       <TableContainer>
         <Table>
@@ -95,10 +104,9 @@ const page = () => {
                   {item?.role_name == "agent" && item?.user_name}
                 </Td> */}
                 <Td>
-                  {item?.user_id}-
-                  {item?.user_name}
+                  {item?.user_id}-{item?.user_name}
                 </Td>
-                <Td>{item?.credit}</Td>
+                <Td>₹{item?.credit}</Td>
                 <Td>
                   {item?.subscriber_id}-{item?.subscriber_name}
                 </Td>
@@ -117,7 +125,10 @@ const page = () => {
       <br />
       <br />
       <br />
-      <Text>Agent Data</Text>
+      <HStack w={'full'} justifyContent={'space-between'}>
+        <Text>Agent Data</Text>
+        <Text>Total Commission: ₹{calculateSum(agentData)}</Text>
+      </HStack>
       <br />
       <TableContainer>
         <Table>
@@ -137,14 +148,13 @@ const page = () => {
               <Tr key={key}>
                 <Td>{key + 1}</Td>
                 <Td>
-                  {item?.user_id}-
-                  {item?.user_name}
+                  {item?.user_id}-{item?.user_name}
                 </Td>
                 {/* <Td>
                   {item?.role_name == "distributor" && item?.user_id}-
                   {item?.role_name == "distributor" && item?.user_name}
                 </Td> */}
-                <Td>{item?.credit}</Td>
+                <Td>₹{item?.credit}</Td>
                 <Td>
                   {item?.subscriber_id}-{item?.subscriber_name}
                 </Td>
