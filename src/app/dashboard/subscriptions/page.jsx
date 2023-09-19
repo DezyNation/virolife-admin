@@ -55,7 +55,7 @@ const page = () => {
 
   function calculateSum(){
     const sum= data?.reduce((total, currentObject) => {
-      return total + currentObject?.health_points;
+      return total + parseInt(currentObject?.health_points);
     }, 0);
     return sum
   }
