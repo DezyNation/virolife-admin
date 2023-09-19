@@ -95,8 +95,8 @@ const page = () => {
                   {item?.role_name == "agent" && item?.user_name}
                 </Td> */}
                 <Td>
-                  {item?.role_name == "distributor" && item?.user_id}-
-                  {item?.role_name == "distributor" && item?.user_name}
+                  {item?.user_id}-
+                  {item?.user_name}
                 </Td>
                 <Td>{item?.credit}</Td>
                 <Td>
@@ -137,8 +137,8 @@ const page = () => {
               <Tr key={key}>
                 <Td>{key + 1}</Td>
                 <Td>
-                  {item?.role_name == "agent" && item?.user_id}-
-                  {item?.role_name == "agent" && item?.user_name}
+                  {item?.user_id}-
+                  {item?.user_name}
                 </Td>
                 {/* <Td>
                   {item?.role_name == "distributor" && item?.user_id}-
