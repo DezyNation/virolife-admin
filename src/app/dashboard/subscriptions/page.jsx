@@ -129,7 +129,10 @@ const page = () => {
       </HStack>
       <br />
       <br />
+      <HStack w={'full'} justifyContent={'space-between'}>
+      <Text>Viro Team Subscription Data</Text>
       <Text>Total Points: ₹{calculateSum()}</Text>
+      </HStack>
       <br />
       <TableContainer>
         <Table colorScheme="yellow">
@@ -161,6 +164,7 @@ const page = () => {
       </TableContainer>
       <br /><br /><br />
       <Text>Referral Points</Text>
+      <br />
       <TableContainer>
         <Table colorScheme="yellow">
           <Thead>
