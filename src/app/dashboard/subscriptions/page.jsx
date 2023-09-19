@@ -135,7 +135,7 @@ const page = () => {
       <br />
       <br />
       <br />
-      <Text>Distributor Data</Text>
+      <Text>Agent Data</Text>
       <br />
       <TableContainer>
         <Table colorScheme="yellow">
