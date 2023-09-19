@@ -50,9 +50,10 @@ const page = () => {
   }
 
   function calculateSum(data){
-    data?.reduce((total, currentObject) => {
+    const sum = data?.reduce((total, currentObject) => {
       return total + currentObject?.credit;
     }, 0);
+    return sum
   }
 
   return (
