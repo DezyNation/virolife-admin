@@ -23,8 +23,12 @@ import React, { useState, useEffect } from "react";
 const page = () => {
   const Toast = useToast({ position: "top-right" });
   const [data, setData] = useState([]);
+
+  const [referralData, setReferralData] = useState([])
+
   useEffect(() => {
     fetchSubscriptions();
+    fetchReferrals()
   }, []);
 
   const Formik = useFormik({
@@ -53,8 +57,26 @@ const page = () => {
       });
   }
 
+  function fetchReferrals() {
+    BackendAxios.get(
+      `/api/admin/subscription-info${
+        Formik.values.userId ? `/${Formik.values.userId}` : ""
+      }?purpose=referral`
+    )
+      .then((res) => {
+        setReferralData(res.data);
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err.message,
+        });
+      });
+  }
+
   function calculateSum(){
-    const sum= data?.reduce((total, currentObject) => {
+    const sum = data?.reduce((total, currentObject) => {
       return total + parseInt(currentObject?.health_points);
     }, 0);
     return sum
@@ -108,6 +130,7 @@ const page = () => {
       <br />
       <br />
       <Text>Total Points: ₹{calculateSum()}</Text>
+      <br />
       <TableContainer>
         <Table colorScheme="yellow">
           <Thead>
@@ -123,6 +146,36 @@ const page = () => {
           </Thead>
           <Tbody>
             {data?.map((data, key) => (
+              <Tr>
+                <Td>{key + 1}</Td>
+                <Td>{data?.user_id}</Td>
+                <Td>{data?.user_name}</Td>
+                <Td>{data?.parent_id}</Td>
+                <Td>{data?.plan_name}</Td>
+                <Td>{data?.health_points}</Td>
+                <Td>{data?.created_at}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+      <br /><br /><br />
+      <Text>Referral Points</Text>
+      <TableContainer>
+        <Table colorScheme="yellow">
+          <Thead>
+            <Tr>
+              <Th>#</Th>
+              <Th>User ID</Th>
+              <Th>User Name</Th>
+              <Th>Parent ID</Th>
+              <Th>Plan Purchased</Th>
+              <Th>Points Received</Th>
+              <Th>Timestamp</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {referralData?.map((data, key) => (
               <Tr>
                 <Td>{key + 1}</Td>
                 <Td>{data?.user_id}</Td>
