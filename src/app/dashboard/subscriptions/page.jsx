@@ -59,9 +59,9 @@ const page = () => {
 
   function fetchReferrals() {
     BackendAxios.get(
-      `/api/admin/subscription-info${
+      `/api/admin/referral-info${
         Formik.values.userId ? `/${Formik.values.userId}` : ""
-      }?purpose=referral`
+      }`
     )
       .then((res) => {
         setReferralData(res.data);
@@ -69,6 +69,7 @@ const page = () => {
       .catch((err) => {
         Toast({
           status: "error",
+          title: "Err while fetching referral data",
           description:
             err?.response?.data?.message || err?.response?.data || err.message,
         });
