@@ -26,7 +26,7 @@ const page = () => {
   }, []);
 
   function fetchData() {
-    BackendAxios.get(`/api/admin/virolife-donations?purpose=all-team`)
+    BackendAxios.get(`/api/admin/users-list/user`)
       .then((res) => {
         setData(res.data);
       })
@@ -46,13 +46,22 @@ const page = () => {
       });
   }
 
+  function getMonthsBetweenDates(startDate, endDate) {
+    var startYear = startDate.getFullYear();
+    var startMonth = startDate.getMonth();
+    var endYear = endDate.getFullYear();
+    var endMonth = endDate.getMonth();
+
+    return (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+  }
+
   return (
     <>
       <Text fontSize={"lg"} fontWeight={"semibold"}>
         Donations for All Team Process
       </Text>
       <br />
-      <HStack py={4} justifyContent={"flex-end"}>
+      {/* <HStack py={4} justifyContent={"flex-end"}>
         <HStack w={["full", "xs"]}>
           <Input
             name="userId"
@@ -64,29 +73,36 @@ const page = () => {
             Search
           </Button>
         </HStack>
-      </HStack>
+      </HStack> */}
       <br />
-      <TableContainer>
-        <Table>
-          <Thead>
+      <TableContainer w={"full"}>
+        <Table variant={"striped"} size={"sm"} colorScheme="gray">
+          <Thead bgColor={"yellow.400"}>
             <Tr>
-              <Td>#</Td>
-              <Td>Amount</Td>
-              <Td>User</Td>
-              <Td>Timestamp</Td>
+              <Th>#</Th>
+              <Th>ID</Th>
+              <Th>User Name</Th>
+
+              <Th>Donation Amount</Th>
+              <Th>Stars</Th>
+
+              <Th>Registered On</Th>
+              <Th>Performance</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {
-              data?.map((item, key) => (
-                <Tr key={key}>
-                  <Td>{key + 1}</Td>
-                  <Td>{item?.amount}</Td>
-                  <Td>{item?.user_id}-{item?.user_name}</Td>
-                  <Td>{item?.created_at}</Td>
-                </Tr>
-              ))
-            }
+            {data.map((user, key) => (
+              <Tr fontSize={"xs"} key={key}>
+                <Td>{key + 1}</Td>
+                <Td>VCF{user?.id}</Td>
+                <Td className="sticky-left">{user?.name}</Td>
+                <Td>₹210</Td>
+                <Td>{user?.stars}</Td>
+
+                <Td>{new Date(user?.created_at).toLocaleString()}</Td>
+                <Td>{parseInt(user?.stars)/getMonthsBetweenDates(new Date(user?.created_at), new Date())}</Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>

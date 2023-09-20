@@ -270,10 +270,10 @@ const page = () => {
                 >
                   <option value="1">Plan A</option>
                   <option value="2">Plan B</option>
-                  <option value="3">Plan D</option>
-                  <option value="4">Plan E</option>
-                  <option value="5">Plan F</option>
-                  <option value="6">Plan G</option>
+                  <option value="3">Plan C</option>
+                  <option value="4">Plan D</option>
+                  <option value="5">Plan E</option>
+                  <option value="6">Plan F</option>
                 </Select>
               </FormControl>
             ) : null}

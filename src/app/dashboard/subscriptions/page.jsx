@@ -76,8 +76,8 @@ const page = () => {
       });
   }
 
-  function calculateSum(){
-    const sum = data?.reduce((total, currentObject) => {
+  function calculateSum(arrObj){
+    const sum = arrObj?.reduce((total, currentObject) => {
       return total + parseInt(currentObject?.health_points);
     }, 0);
     return sum
@@ -132,7 +132,7 @@ const page = () => {
       <br />
       <HStack w={'full'} justifyContent={'space-between'}>
       <Text>Viro Team Subscription Data</Text>
-      <Text>Total Points: ₹{calculateSum()}</Text>
+      <Text>Total Points: ₹{calculateSum(data)}</Text>
       </HStack>
       <br />
       <TableContainer>
@@ -164,7 +164,10 @@ const page = () => {
         </Table>
       </TableContainer>
       <br /><br /><br />
-      <Text>Referral Points</Text>
+      <HStack w={'full'} justifyContent={'space-between'}>
+      <Text>Viro Team Referral Data</Text>
+      <Text>Total Points: ₹{calculateSum(referralData)}</Text>
+      </HStack>
       <br />
       <TableContainer>
         <Table colorScheme="yellow">
