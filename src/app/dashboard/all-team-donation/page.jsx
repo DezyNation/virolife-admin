@@ -9,6 +9,7 @@ import {
   Tbody,
   Td,
   Text,
+  Th,
   Thead,
   Tr,
   useToast,
