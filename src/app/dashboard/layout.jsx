@@ -19,6 +19,7 @@ import {
   AccordionIcon,
   useDisclosure,
   Hide,
+  Spacer,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { AiFillDashboard, AiFillYoutube } from "react-icons/ai";
@@ -206,12 +207,13 @@ const MenuOptions = () => {
           </HStack>
         </Link>
 
-        <Accordion allowToggle>
+        <Accordion allowToggle w={'full'}>
           <AccordionItem w={'full'}>
             <AccordionButton w={'full'} px={0}>
               <HStack w={'full'}>
-                <BsYoutube />
-                <Text w={'full'}>Videos</Text>
+                <BsYoutube size={20} />
+                <Text>Videos</Text>
+                <Spacer />
                 <AccordionIcon />
               </HStack>
             </AccordionButton>
