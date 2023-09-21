@@ -238,6 +238,7 @@ const Users = () => {
                 <Th>Contact</Th>
                 <Th>ATP Stars</Th>
                 <Th>Donation Collected</Th>
+                <Th>Ad Points</Th>
                 <Th>Date of Birth</Th>
                 
                 <Th>Registered On</Th>
@@ -260,6 +261,7 @@ const Users = () => {
                   </Td>
                   <Td>{user?.stars}</Td>
                   <Td>{user?.group_collection}</Td>
+                  <Td>{user?.ad_points}</Td>
                   <Td>
                     {user?.dob ? new Date(user?.dob).toDateString() : null}
                   </Td>
