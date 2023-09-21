@@ -148,7 +148,7 @@ const Users = () => {
                       Click to View
                     </Link>
                   </Td>
-                  <Td>{key % 3 == 0 ? "Bunny" : "Link"}</Td>
+                  <Td>{item?.type}</Td>
                   {/* <Td>{item?.points}</Td> */}
                   <Td>{new Date(item?.created_at).toLocaleDateString()}</Td>
                   <Td>

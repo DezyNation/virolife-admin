@@ -12,8 +12,11 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerBody,
-  DrawerFooter,
-  DrawerCloseButton,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
   useDisclosure,
   Hide,
 } from "@chakra-ui/react";
@@ -32,7 +35,12 @@ import { MdGroups, MdPersonAdd } from "react-icons/md";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { HiUserGroup } from "react-icons/hi";
 import { BiLogIn, BiMenuAltLeft, BiUser } from "react-icons/bi";
-import { FaPercentage, FaRegCreditCard, FaUserShield, FaUserTie } from "react-icons/fa";
+import {
+  FaPercentage,
+  FaRegCreditCard,
+  FaUserShield,
+  FaUserTie,
+} from "react-icons/fa";
 import BackendAxios from "@/utils/axios";
 import { useCookies } from "react-cookie";
 import Cookies from "js-cookie";
@@ -197,12 +205,38 @@ const MenuOptions = () => {
             <Text>Invitations</Text>
           </HStack>
         </Link>
+
         <Link href={"/dashboard/videos"}>
           <HStack gap={4}>
             <AiFillYoutube size={20} />
             <Text>Manage Videos</Text>
           </HStack>
         </Link>
+        <Accordion allowToggle>
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box as="span" flex="1" textAlign="left">
+                  Manage Videos
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              <Link href={"/dashboard/videos"} style={{paddingBottom: '8px'}}>
+                <HStack gap={4}>
+                  <Text>All Videos</Text>
+                </HStack>
+              </Link>
+              <Link href={"/dashboard/videos/video-views"} style={{paddingBottom: '8px'}}>
+                <HStack gap={4}>
+                  <Text>Video Views</Text>
+                </HStack>
+              </Link>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+
         <Link href={"/dashboard/logins"}>
           <HStack gap={4}>
             <BiLogIn size={20} />
