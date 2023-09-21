@@ -131,7 +131,7 @@ const page = () => {
       <br />
       <br />
       <HStack w={'full'} justifyContent={'space-between'}>
-      <Text>Viro Team Subscription Data</Text>
+      <Text>Viro Team Subscription Data {Formik.values.userId && `for User ${Formik.values.userId}`}</Text>
       <Text>Total Points: ₹{calculateSum(data)}</Text>
       </HStack>
       <br />
@@ -142,7 +142,7 @@ const page = () => {
               <Th>#</Th>
               <Th>User ID</Th>
               <Th>User Name</Th>
-              <Th>Parent ID</Th>
+              <Th>Senior ID</Th>
               <Th>Plan Purchased</Th>
               <Th>Points Received</Th>
               <Th>Timestamp</Th>
@@ -165,7 +165,7 @@ const page = () => {
       </TableContainer>
       <br /><br /><br />
       <HStack w={'full'} justifyContent={'space-between'}>
-      <Text>Viro Team Referral Data</Text>
+      <Text>Viro Team Referral Data {Formik.values.userId && `for User ${Formik.values.userId}`}</Text>
       <Text>Total Points: ₹{calculateSum(referralData)}</Text>
       </HStack>
       <br />
