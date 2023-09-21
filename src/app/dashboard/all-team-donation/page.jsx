@@ -84,7 +84,7 @@ const page = () => {
               <Th>ID</Th>
               <Th>User Name</Th>
 
-              <Th>Donation Amount</Th>
+              {/* <Th>Donation Amount</Th> */}
               <Th>Stars</Th>
 
               <Th>Registered On</Th>
@@ -97,7 +97,7 @@ const page = () => {
                 <Td>{key + 1}</Td>
                 <Td>VCF{user?.id}</Td>
                 <Td className="sticky-left">{user?.name}</Td>
-                <Td>₹210</Td>
+                {/* <Td>₹210</Td> */}
                 <Td>{user?.stars}</Td>
 
                 <Td>{new Date(user?.created_at).toLocaleString()}</Td>
