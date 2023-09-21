@@ -30,6 +30,7 @@ import {
   BsMegaphoneFill,
   BsPower,
   BsStarFill,
+  BsYoutube,
 } from "react-icons/bs";
 import { MdGroups, MdPersonAdd } from "react-icons/md";
 import { GiTakeMyMoney } from "react-icons/gi";
@@ -206,33 +207,32 @@ const MenuOptions = () => {
           </HStack>
         </Link>
 
-        <Link href={"/dashboard/videos"}>
-          <HStack gap={4}>
-            <AiFillYoutube size={20} />
-            <Text>Manage Videos</Text>
-          </HStack>
-        </Link>
         <Accordion allowToggle>
           <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
-                  Manage Videos
-                </Box>
+            <AccordionButton>
+              <HStack w={'full'}>
+                <BsYoutube />
+                <Text flex={1} w={'full'}>YouTube Channel</Text>
                 <AccordionIcon />
-              </AccordionButton>
-            </h2>
+              </HStack>
+            </AccordionButton>
             <AccordionPanel pb={4}>
-              <Link href={"/dashboard/videos"} style={{paddingBottom: '8px'}}>
-                <HStack gap={4}>
-                  <Text>All Videos</Text>
-                </HStack>
-              </Link>
-              <Link href={"/dashboard/videos/video-views"} style={{paddingBottom: '8px'}}>
-                <HStack gap={4}>
-                  <Text>Video Views</Text>
-                </HStack>
-              </Link>
+              <VStack
+                alignItems={"flex-start"}
+                justifyContent={"center"}
+                gap={6} w={'full'}
+              >
+                <Link href={"/dashboard/videos"}>
+                  <HStack gap={4}>
+                    <Text>All Videos</Text>
+                  </HStack>
+                </Link>
+                <Link href={"/dashboard/videos/video-views"}>
+                  <HStack gap={4}>
+                    <Text>Video Views</Text>
+                  </HStack>
+                </Link>
+              </VStack>
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
