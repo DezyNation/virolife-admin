@@ -47,7 +47,6 @@ import { useCookies } from "react-cookie";
 import Cookies from "js-cookie";
 
 const MenuOptions = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(["jwt"]);
   const [permissions, setPermissions] = useState([]);
   async function handleLogout() {
     await BackendAxios.post("/logout")
