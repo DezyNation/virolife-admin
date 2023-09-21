@@ -26,15 +26,12 @@ import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { isExpired } from "react-jwt";
 
 const Auth = () => {
   const Toast = useToast({ position: "top-right" });
   const router = useRouter();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [cookies, setCookie] = useCookies(["jwt"]);
+  const { isOpen, onClose } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false)
 
   const Formik = useFormik({
@@ -45,7 +42,7 @@ const Auth = () => {
   });
 
   useEffect(() => {
-    if (!isExpired(Cookies.get("jwt"))) {
+    if (Cookies.get("jwt")) {
       router.push("/dashboard");
     }
   }, []);

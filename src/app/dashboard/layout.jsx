@@ -228,16 +228,19 @@ const MenuOptions = () => {
                     <Text>All Videos</Text>
                   </HStack>
                 </Link>
+                
                 <Link href={"/dashboard/videos/video-views"}>
                   <HStack gap={4}>
                     <Text>Video Views</Text>
                   </HStack>
                 </Link>
+
                 <Link href={"/dashboard/videos/user-views"}>
                   <HStack gap={4}>
                     <Text>Users Data</Text>
                   </HStack>
                 </Link>
+
               </VStack>
             </AccordionPanel>
           </AccordionItem>

@@ -14,25 +14,12 @@ import {
   Th,
   Thead,
   Tr,
-  Switch,
-  Box,
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  FormControl,
-  FormLabel,
   useToast,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { BsDownload, BsPlus } from "react-icons/bs";
 import BackendAxios from "@/utils/axios";
-import { useFormik } from "formik";
 
-const Views = () => {
+const page = () => {
     
   const Toast = useToast({ position: "top-right" });
   const [videos, setVideos] = useState([]);
@@ -61,10 +48,6 @@ const Views = () => {
         <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
           Videos
         </Text>
-        <HStack alignItems={"flex-end"}>
-          <Input placeholder={"Search Videos"} />
-          <Button colorScheme={"yellow"}>Search</Button>
-        </HStack>
       </HStack>
       <Stack
         w={"full"}
@@ -80,7 +63,7 @@ const Views = () => {
                 <Th>#</Th>
                 <Th>Type</Th>
                 <Th>Title</Th>
-                <Th>Link</Th>
+                <Th>User</Th>
                 <Th>Views</Th>
               </Tr>
             </Thead>
@@ -90,11 +73,7 @@ const Views = () => {
                   <Td>{key + 1}</Td>
                   <Td>{item?.type}</Td>
                   <Td>{item?.title}</Td>
-                  <Td>
-                    <Link href={item?.link} target={"_blank"}>
-                      Click to View
-                    </Link>
-                  </Td>
+                  <Td>{item?.user_unique}-{item?.name}</Td>
                   <Td>{item?.views}</Td>
                  </Tr>
               ))}
@@ -106,4 +85,4 @@ const Views = () => {
   );
 };
 
-export default Views;
+export default page;

@@ -61,10 +61,6 @@ const Views = () => {
         <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
           Videos
         </Text>
-        <HStack alignItems={"flex-end"}>
-          <Input placeholder={"Search Videos"} />
-          <Button colorScheme={"yellow"}>Search</Button>
-        </HStack>
       </HStack>
       <Stack
         w={"full"}
