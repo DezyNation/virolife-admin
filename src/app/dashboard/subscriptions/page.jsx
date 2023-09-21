@@ -27,8 +27,7 @@ const page = () => {
   const [referralData, setReferralData] = useState([])
 
   useEffect(() => {
-    fetchSubscriptions();
-    fetchReferrals()
+    fetchSubscriptions()
   }, []);
 
   const Formik = useFormik({
@@ -47,6 +46,7 @@ const page = () => {
     )
       .then((res) => {
         setData(res.data);
+        fetchReferrals()
       })
       .catch((err) => {
         Toast({
