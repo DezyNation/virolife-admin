@@ -208,11 +208,11 @@ const MenuOptions = () => {
         </Link>
 
         <Accordion allowToggle>
-          <AccordionItem>
-            <AccordionButton px={0}>
+          <AccordionItem w={'full'}>
+            <AccordionButton w={'full'} px={0}>
               <HStack w={'full'}>
                 <BsYoutube />
-                <Text flex={1} w={'full'}>Videos</Text>
+                <Text w={'full'}>Videos</Text>
                 <AccordionIcon />
               </HStack>
             </AccordionButton>
