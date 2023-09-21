@@ -174,10 +174,9 @@ const page = () => {
           <Thead>
             <Tr>
               <Th>#</Th>
-              <Th>User ID</Th>
-              <Th>User Name</Th>
-              <Th>Parent ID</Th>
-              <Th>Plan Purchased</Th>
+              <Th>Referred By</Th>
+              <Th>Plan Purchased By</Th>
+              <Th>Plan</Th>
               <Th>Points Received</Th>
               <Th>Timestamp</Th>
             </Tr>
@@ -186,9 +185,9 @@ const page = () => {
             {referralData?.map((data, key) => (
               <Tr>
                 <Td>{key + 1}</Td>
-                <Td>{data?.user_id}</Td>
-                <Td>{data?.user_name}</Td>
-                <Td>{data?.parent_id}</Td>
+                <Td></Td>
+                <Td>{data?.beneficiary_id}-{data?.beneficiary_name}</Td>
+                <Td>{data?.user_id}-{data?.user_name}</Td>
                 <Td>{data?.plan_name}</Td>
                 <Td>{data?.health_points}</Td>
                 <Td>{data?.created_at}</Td>
