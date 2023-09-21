@@ -71,10 +71,10 @@ const page = () => {
               {videos.map((item, key) => (
                 <Tr fontSize={"xs"} key={key}>
                   <Td>{key + 1}</Td>
-                  <Td>{item?.type}</Td>
+                  <Td>{item?.provider}</Td>
                   <Td>{item?.title}</Td>
                   <Td>{item?.user_unique}-{item?.name}</Td>
-                  <Td>{item?.views}</Td>
+                  <Td>{item?.watch_count}</Td>
                  </Tr>
               ))}
             </Tbody>
