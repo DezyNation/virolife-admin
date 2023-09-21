@@ -209,7 +209,7 @@ const MenuOptions = () => {
 
         <Accordion allowToggle>
           <AccordionItem>
-            <AccordionButton>
+            <AccordionButton px={0}>
               <HStack w={'full'}>
                 <BsYoutube />
                 <Text flex={1} w={'full'}>Videos</Text>
