@@ -212,7 +212,7 @@ const MenuOptions = () => {
             <AccordionButton>
               <HStack w={'full'}>
                 <BsYoutube />
-                <Text flex={1} w={'full'}>YouTube Channel</Text>
+                <Text flex={1} w={'full'}>Videos</Text>
                 <AccordionIcon />
               </HStack>
             </AccordionButton>
@@ -230,6 +230,11 @@ const MenuOptions = () => {
                 <Link href={"/dashboard/videos/video-views"}>
                   <HStack gap={4}>
                     <Text>Video Views</Text>
+                  </HStack>
+                </Link>
+                <Link href={"/dashboard/videos/user-views"}>
+                  <HStack gap={4}>
+                    <Text>Users Data</Text>
                   </HStack>
                 </Link>
               </VStack>

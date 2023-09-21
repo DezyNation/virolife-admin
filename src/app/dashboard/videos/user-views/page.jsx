@@ -38,7 +38,7 @@ const Views = () => {
   const [videos, setVideos] = useState([]);
 
   function fetchVideos() {
-    BackendAxios.get("/api/admin/video-views")
+    BackendAxios.get("/api/admin/video-history")
       .then((res) => {
         setVideos(res.data);
       })
