@@ -88,14 +88,14 @@ const Views = () => {
               {videos.map((item, key) => (
                 <Tr fontSize={"xs"} key={key}>
                   <Td>{key + 1}</Td>
-                  <Td>{item?.type}</Td>
+                  <Td>{item?.provider}</Td>
                   <Td>{item?.title}</Td>
                   <Td>
                     <Link href={item?.link} target={"_blank"}>
                       Click to View
                     </Link>
                   </Td>
-                  <Td>{item?.views}</Td>
+                  <Td>{item?.watch_count}</Td>
                  </Tr>
               ))}
             </Tbody>
