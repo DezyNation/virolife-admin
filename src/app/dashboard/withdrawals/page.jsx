@@ -2,12 +2,14 @@
 import React from 'react'
 import { Button, HStack, Stack, Table, TableCaption, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
 import Link from 'next/link'
+import PrintButtons from '@/components/dashboard/PrintButtons'
 
 const Withdrawals = () => {
     const arr = [1, 1, 1, 1, 11, 2]
     return (
         <>
             <Text className='serif' fontSize={'2xl'} py={4} textTransform={'capitalize'}>Withdrawals</Text>
+      <PrintButtons />
             <Stack w={'full'} direction={['column']} justifyContent={'space-between'} gap={8}>
                 <TableContainer rounded={'16'} w={'full'}>
                     <Table variant={'striped'} colorScheme='gray'>

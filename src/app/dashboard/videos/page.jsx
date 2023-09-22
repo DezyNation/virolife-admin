@@ -31,6 +31,7 @@ import Link from "next/link";
 import { BsDownload, BsPlus } from "react-icons/bs";
 import BackendAxios from "@/utils/axios";
 import { useFormik } from "formik";
+import PrintButtons from "@/components/dashboard/PrintButtons";
 
 const Users = () => {
   const arr = [1, 1, 1, 1, 1, 1, 2, 0];
@@ -116,6 +117,7 @@ const Users = () => {
           <Button colorScheme={"yellow"}>Search</Button>
         </HStack>
       </HStack>
+      <PrintButtons />
       <Stack
         w={"full"}
         direction={["column"]}

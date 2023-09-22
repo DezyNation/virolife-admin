@@ -1,4 +1,5 @@
 "use client";
+import PrintButtons from "@/components/dashboard/PrintButtons";
 import BackendAxios from "@/utils/axios";
 import {
   Button,
@@ -134,6 +135,7 @@ const page = () => {
       <Text>Viro Team Subscription Data {Formik.values.userId && `for User ${Formik.values.userId}`}</Text>
       <Text>Total Points: ₹{calculateSum(data)}</Text>
       </HStack>
+      <PrintButtons />
       <br />
       <TableContainer>
         <Table colorScheme="yellow">
@@ -168,6 +170,7 @@ const page = () => {
       <Text>Viro Team Referral Data {Formik.values.userId && `for User ${Formik.values.userId}`}</Text>
       <Text>Total Points: ₹{calculateSum(referralData)}</Text>
       </HStack>
+      <PrintButtons />
       <br />
       <TableContainer>
         <Table colorScheme="yellow">

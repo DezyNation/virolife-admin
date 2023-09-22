@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import BackendAxios from "@/utils/axios";
+import PrintButtons from "@/components/dashboard/PrintButtons";
 
 const page = () => {
     
@@ -49,6 +50,7 @@ const page = () => {
           Videos
         </Text>
       </HStack>
+      <PrintButtons />
       <Stack
         w={"full"}
         direction={["column"]}

@@ -15,6 +15,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import BackendAxios from "@/utils/axios";
+import PrintButtons from "@/components/dashboard/PrintButtons";
 
 const DonationTable = ({ groupType }) => {
   const [user, setUser] = useState("");
@@ -22,6 +23,9 @@ const DonationTable = ({ groupType }) => {
   const Toast = useToast({
     position: "top-right",
   });
+
+  const now = new Date();
+
   function fetchMyCollections() {
     BackendAxios.get(`/api/admin/user-collections${user ? `/${user}` : ""}`)
       .then((res) => {
@@ -89,6 +93,7 @@ const DonationTable = ({ groupType }) => {
           Search
         </Button>
       </HStack>
+      <PrintButtons />
       <TableContainer height={"lg"} overflowY={"scroll"}>
         <Table variant={"striped"} colorScheme="gray">
           <Thead>
@@ -112,27 +117,29 @@ const DonationTable = ({ groupType }) => {
                   </Td>
                   <Td>{item?.remarks}</Td>
                   <Td>₹ {item?.amount}</Td>
-                  <Td>{new Date(item?.created_at).toLocaleDateString()}</Td>
+                  <Td>{new Date(item?.created_at).toLocaleString()}</Td>
                   <Td>
                     {!item?.approved && !item?.deleted_at ? (
-                      <HStack>
-                        <Button
-                          size={"sm"}
-                          rounded={"full"}
-                          colorScheme="yellow"
-                          onClick={() => approveDonation(item.id)}
-                        >
-                          Confirm
-                        </Button>
-                        <Button
-                          size={"sm"}
-                          rounded={"full"}
-                          colorScheme="red"
-                          onClick={() => deleteDonation(item.id)}
-                        >
-                          Cancel
-                        </Button>
-                      </HStack>
+                      now - new Date(item?.created_at) >= 86400000 ? (
+                        <HStack>
+                          <Button
+                            size={"sm"}
+                            rounded={"full"}
+                            colorScheme="yellow"
+                            onClick={() => approveDonation(item.id)}
+                          >
+                            Confirm
+                          </Button>
+                          <Button
+                            size={"sm"}
+                            rounded={"full"}
+                            colorScheme="red"
+                            onClick={() => deleteDonation(item.id)}
+                          >
+                            Cancel
+                          </Button>
+                        </HStack>
+                      ) : null
                     ) : null}
                   </Td>
                 </Tr>
@@ -145,7 +152,6 @@ const DonationTable = ({ groupType }) => {
 };
 
 const page = () => {
-
   return (
     <>
       <Text fontSize={["2xl", "3xl"]}>Group Donations</Text>

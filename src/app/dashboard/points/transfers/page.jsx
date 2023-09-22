@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import BackendAxios from "@/utils/axios";
+import PrintButtons from "@/components/dashboard/PrintButtons";
 
 const Transactions = () => {
   const [requests, setRequests] = useState([]);
@@ -110,6 +111,7 @@ const Transactions = () => {
       <HStack justifyContent={"flex-end"} py={4}>
         <Button onClick={fetchRequests}>Reload Data</Button>
       </HStack>
+      <PrintButtons />
       <Stack
         w={"full"}
         direction={["column", "row"]}

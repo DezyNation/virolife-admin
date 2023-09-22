@@ -31,6 +31,7 @@ import Link from "next/link";
 import { BsDownload, BsPlus } from "react-icons/bs";
 import BackendAxios from "@/utils/axios";
 import { useFormik } from "formik";
+import PrintButtons from "@/components/dashboard/PrintButtons";
 
 const Views = () => {
     
@@ -62,6 +63,7 @@ const Views = () => {
           Videos
         </Text>
       </HStack>
+      <PrintButtons />
       <Stack
         w={"full"}
         direction={["column"]}

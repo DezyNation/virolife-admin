@@ -1,4 +1,5 @@
 "use client";
+import PrintButtons from "@/components/dashboard/PrintButtons";
 import BackendAxios from "@/utils/axios";
 import {
   Button,
@@ -62,6 +63,7 @@ const page = () => {
         Donations for All Team Process
       </Text>
       <br />
+      <PrintButtons />
       {/* <HStack py={4} justifyContent={"flex-end"}>
         <HStack w={["full", "xs"]}>
           <Input

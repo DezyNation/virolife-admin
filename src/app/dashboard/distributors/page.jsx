@@ -33,6 +33,7 @@ import { BsDownload, BsEye, BsPlus } from "react-icons/bs";
 import BackendAxios from "@/utils/axios";
 import QRCode from "react-qr-code";
 import TreeModal from "@/components/dashboard/users/TreeModal";
+import PrintButtons from "@/components/dashboard/PrintButtons";
 
 const Users = () => {
   const arr = [1, 1, 1, 1, 1, 1, 2, 0];
@@ -138,6 +139,7 @@ const Users = () => {
           </Button>
         </HStack>
       </HStack>
+      <PrintButtons />
       <Stack
         w={"full"}
         direction={["column"]}
