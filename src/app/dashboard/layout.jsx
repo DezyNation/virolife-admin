@@ -28,6 +28,7 @@ import {
   BsCalendarCheck,
   BsCashCoin,
   BsCurrencyRupee,
+  BsGearFill,
   BsMegaphoneFill,
   BsPower,
   BsStarFill,
@@ -250,6 +251,13 @@ const MenuOptions = () => {
           <HStack gap={4}>
             <BiLogIn size={20} />
             <Text>Login Report</Text>
+          </HStack>
+        </Link>
+
+        <Link href={"/dashboard/controls"}>
+          <HStack gap={4}>
+            <BsGearFill size={20} />
+            <Text>Website Controls</Text>
           </HStack>
         </Link>
         <br />
