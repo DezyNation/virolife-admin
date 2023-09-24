@@ -139,7 +139,7 @@ const Users = () => {
           </Button>
         </HStack>
       </HStack>
-      <PrintButtons />
+      <PrintButtons keyword={"users"} bodyParams={{role: "distributor"}} fileName={"DistributorsList"} />
       <Stack
         w={"full"}
         direction={["column"]}

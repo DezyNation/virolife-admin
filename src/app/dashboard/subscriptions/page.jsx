@@ -25,10 +25,10 @@ const page = () => {
   const Toast = useToast({ position: "top-right" });
   const [data, setData] = useState([]);
 
-  const [referralData, setReferralData] = useState([])
+  const [referralData, setReferralData] = useState([]);
 
   useEffect(() => {
-    fetchSubscriptions()
+    fetchSubscriptions();
   }, []);
 
   const Formik = useFormik({
@@ -47,7 +47,7 @@ const page = () => {
     )
       .then((res) => {
         setData(res.data);
-        fetchReferrals()
+        fetchReferrals();
       })
       .catch((err) => {
         Toast({
@@ -77,11 +77,11 @@ const page = () => {
       });
   }
 
-  function calculateSum(arrObj){
+  function calculateSum(arrObj) {
     const sum = arrObj?.reduce((total, currentObject) => {
       return total + parseInt(currentObject?.health_points);
     }, 0);
-    return sum
+    return sum;
   }
 
   return (
@@ -131,11 +131,18 @@ const page = () => {
       </HStack>
       <br />
       <br />
-      <HStack w={'full'} justifyContent={'space-between'}>
-      <Text>Viro Team Subscription Data {Formik.values.userId && `for User ${Formik.values.userId}`}</Text>
-      <Text>Total Points: ₹{calculateSum(data)}</Text>
+      <HStack w={"full"} justifyContent={"space-between"}>
+        <Text>
+          Viro Team Subscription Data{" "}
+          {Formik.values.userId && `for User ${Formik.values.userId}`}
+        </Text>
+        <Text>Total Points: ₹{calculateSum(data)}</Text>
       </HStack>
-      <PrintButtons />
+      <PrintButtons
+        keyword={"subscription"}
+        bodyParams={{ userId: Formik.values.userId }}
+        fileName={`SubscriptionsData${Formik.values.userId}`}
+      />
       <br />
       <TableContainer>
         <Table colorScheme="yellow">
@@ -165,12 +172,21 @@ const page = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <br /><br /><br />
-      <HStack w={'full'} justifyContent={'space-between'}>
-      <Text>Viro Team Referral Data {Formik.values.userId && `for User ${Formik.values.userId}`}</Text>
-      <Text>Total Points: ₹{calculateSum(referralData)}</Text>
+      <br />
+      <br />
+      <br />
+      <HStack w={"full"} justifyContent={"space-between"}>
+        <Text>
+          Viro Team Referral Data{" "}
+          {Formik.values.userId && `for User ${Formik.values.userId}`}
+        </Text>
+        <Text>Total Points: ₹{calculateSum(referralData)}</Text>
       </HStack>
-      <PrintButtons />
+      <PrintButtons
+        keyword={"referral"}
+        bodyParams={{ userId: Formik.values.userId }}
+        fileName={`ReferralsData${Formik.values.userId}`}
+      />
       <br />
       <TableContainer>
         <Table colorScheme="yellow">
@@ -189,8 +205,12 @@ const page = () => {
               <Tr>
                 <Td>{key + 1}</Td>
                 <Td></Td>
-                <Td>{data?.beneficiary_id}-{data?.beneficiary_name}</Td>
-                <Td>{data?.user_id}-{data?.user_name}</Td>
+                <Td>
+                  {data?.beneficiary_id}-{data?.beneficiary_name}
+                </Td>
+                <Td>
+                  {data?.user_id}-{data?.user_name}
+                </Td>
                 <Td>{data?.plan_name}</Td>
                 <Td>{data?.health_points}</Td>
                 <Td>{data?.created_at}</Td>

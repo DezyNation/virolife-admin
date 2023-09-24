@@ -63,7 +63,7 @@ const page = () => {
         Donations for All Team Process
       </Text>
       <br />
-      <PrintButtons />
+      <PrintButtons keyword={"all-team-donation"} bodyParams={{purpose: "all-team"}} fileName={"AllTeamDonation"} />
       {/* <HStack py={4} justifyContent={"flex-end"}>
         <HStack w={["full", "xs"]}>
           <Input

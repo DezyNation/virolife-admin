@@ -1,28 +1,44 @@
-'use client'
-import { Button, HStack, useToast } from '@chakra-ui/react'
-import React from 'react'
+"use client";
+import BackendAxios from "@/utils/axios";
+import { Button, HStack, useToast } from "@chakra-ui/react";
+import fileDownload from "js-file-download";
+import React, { useState } from "react";
 
-const PrintButtons = () => {
-    const Toast =useToast({position: 'top-right'})
+const PrintButtons = ({ keyword, queryParams, bodyParams, fileName }) => {
+  const Toast = useToast({ position: "top-right" });
+  const [isLoading, setIsLoading] = useState(false)
 
-    function handleExport(){
+  function handleExport(extension) {
+    setIsLoading(true)
+    BackendAxios.post(
+      `/api/admin/print-reports/${keyword}${queryParams && `?${queryParams}`}`,
+      { ...bodyParams, extension: extension },
+      { responseType: "blob" }
+    ).then((res) => {
+        fileDownload(res.data, `${fileName}.${extension}`)
+        setIsLoading(false)
+    }).catch(err => {
+        setIsLoading(false)
         Toast({
-            description: "Work in Progress"
+            status: 'error',
+            title: "Err while downloading file",
+            description: err?.response?.data?.message || err?.response?.data || err?.message
         })
-    }
+    });
+  }
 
   return (
     <>
-    <HStack py={4}>
-        <Button colorScheme='red' onClick={handleExport}>
-            PDF
+      <HStack py={4}>
+        <Button colorScheme="red" onClick={()=>handleExport("pdf")} isLoading={isLoading}>
+          PDF
         </Button>
-        <Button colorScheme='whatsapp' onClick={handleExport}>
-            Excel
+        <Button colorScheme="whatsapp" onClick={()=>handleExport("xlsx")} isLoading={isLoading}>
+          Excel
         </Button>
-    </HStack>
+      </HStack>
     </>
-  )
-}
+  );
+};
 
-export default PrintButtons
+export default PrintButtons;

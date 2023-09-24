@@ -111,7 +111,7 @@ const Transactions = () => {
       <HStack justifyContent={"flex-end"} py={4}>
         <Button onClick={fetchRequests}>Reload Data</Button>
       </HStack>
-      <PrintButtons />
+      <PrintButtons keyword={"withdrawal-request"} bodyParams={{status: "approved"}} fileName={"PointsWithdrawals(Approved)"} />
       <Stack
         w={"full"}
         direction={["column", "row"]}
