@@ -11,7 +11,7 @@ const PrintButtons = ({ keyword, queryParams, bodyParams, fileName }) => {
   function handleExport(extension) {
     setIsLoading(true)
     BackendAxios.post(
-      `/api/admin/print-reports/${keyword}${queryParams && `?${queryParams}`}`,
+      `/api/admin/print-reports/${keyword}${queryParams ? `?${queryParams}` : ""}`,
       { ...bodyParams, extension: extension },
       { responseType: "blob" }
     ).then((res) => {
