@@ -28,7 +28,7 @@ const page = () => {
   }, []);
 
   function fetchData() {
-    BackendAxios.get(`/api/admin/users-list/user`)
+    BackendAxios.get(`/api/admin/all-team-donations`)
       .then((res) => {
         setData(res.data);
       })
@@ -109,18 +109,13 @@ const page = () => {
                 <Td>{key + 1}</Td>
                 <Td>VCF{user?.id}</Td>
                 <Td className="sticky-left">{user?.name}</Td>
-                {/* <Td>₹210</Td> */}
                 <Td>{user?.stars}</Td>
                 <Td>
-                  {calculateDonation(user?.stars, 20, user?.amount || 210)}
+                  {user?.amount}
                 </Td>
                 <Td>{new Date(user?.created_at).toLocaleString()}</Td>
                 <Td>
-                  {(parseInt(user?.stars) /
-                    getMonthsBetweenDates(
-                      new Date(user?.created_at),
-                      new Date()
-                    ))?.toFixed(2)}
+                  {user?.performance}
                 </Td>
               </Tr>
             ))}
