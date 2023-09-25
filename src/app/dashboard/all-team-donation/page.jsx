@@ -116,11 +116,11 @@ const page = () => {
                 </Td>
                 <Td>{new Date(user?.created_at).toLocaleString()}</Td>
                 <Td>
-                  {parseInt(user?.stars) /
+                  {(parseInt(user?.stars) /
                     getMonthsBetweenDates(
                       new Date(user?.created_at),
                       new Date()
-                    )?.toFixed(2)}
+                    ))?.toFixed(2)}
                 </Td>
               </Tr>
             ))}
