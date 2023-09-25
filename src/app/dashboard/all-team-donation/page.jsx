@@ -57,6 +57,12 @@ const page = () => {
     return (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
   }
 
+  function calculateDonation(stars, starsPerDonation, donationAmount) {
+    // Calculate the donation amount based on the given number of stars
+    const donation = (stars / starsPerDonation) * donationAmount;
+    return donation;
+  }
+
   return (
     <>
       <Text fontSize={"lg"} fontWeight={"semibold"}>
@@ -101,9 +107,9 @@ const page = () => {
                 <Td className="sticky-left">{user?.name}</Td>
                 {/* <Td>₹210</Td> */}
                 <Td>{user?.stars}</Td>
-
+<Td>{calculateDonation(user?.stars, 20, user?.amount || 210)}</Td>
                 <Td>{new Date(user?.created_at).toLocaleString()}</Td>
-                <Td>{parseInt(user?.stars)/getMonthsBetweenDates(new Date(user?.created_at), new Date())}</Td>
+                <Td>{parseInt(user?.stars)/getMonthsBetweenDates(new Date(user?.created_at), new Date())?.toFixed(2)}</Td>
               </Tr>
             ))}
           </Tbody>
