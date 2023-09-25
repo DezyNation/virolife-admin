@@ -96,8 +96,8 @@ const page = () => {
               <Th>ID</Th>
               <Th>User Name</Th>
 
-              {/* <Th>Donation Amount</Th> */}
               <Th>Stars</Th>
+              <Th>Donation Amount</Th>
 
               <Th>Registered On</Th>
               <Th>Performance</Th>
