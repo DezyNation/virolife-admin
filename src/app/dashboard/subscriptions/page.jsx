@@ -204,7 +204,6 @@ const page = () => {
             {referralData?.map((data, key) => (
               <Tr>
                 <Td>{key + 1}</Td>
-                <Td></Td>
                 <Td>
                   {data?.beneficiary_id}-{data?.beneficiary_name}
                 </Td>

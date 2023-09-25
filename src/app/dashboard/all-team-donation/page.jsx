@@ -69,7 +69,11 @@ const page = () => {
         Donations for All Team Process
       </Text>
       <br />
-      <PrintButtons keyword={"all-team-donation"} bodyParams={{purpose: "all-team"}} fileName={"AllTeamDonation"} />
+      <PrintButtons
+        keyword={"all-team-donation"}
+        bodyParams={{ purpose: "all-team" }}
+        fileName={"AllTeamDonation"}
+      />
       {/* <HStack py={4} justifyContent={"flex-end"}>
         <HStack w={["full", "xs"]}>
           <Input
@@ -107,9 +111,17 @@ const page = () => {
                 <Td className="sticky-left">{user?.name}</Td>
                 {/* <Td>₹210</Td> */}
                 <Td>{user?.stars}</Td>
-<Td>{calculateDonation(user?.stars, 20, user?.amount || 210)}</Td>
+                <Td>
+                  {calculateDonation(user?.stars, 20, user?.amount || 210)}
+                </Td>
                 <Td>{new Date(user?.created_at).toLocaleString()}</Td>
-                <Td>{parseInt(user?.stars)/getMonthsBetweenDates(new Date(user?.created_at), new Date())?.toFixed(2)}</Td>
+                <Td>
+                  {parseInt(user?.stars) /
+                    getMonthsBetweenDates(
+                      new Date(user?.created_at),
+                      new Date()
+                    )?.toFixed(2)}
+                </Td>
               </Tr>
             ))}
           </Tbody>
