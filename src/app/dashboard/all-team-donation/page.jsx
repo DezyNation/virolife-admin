@@ -115,7 +115,7 @@ const page = () => {
                 </Td>
                 <Td>{new Date(user?.created_at).toLocaleString()}</Td>
                 <Td>
-                  {user?.performance}
+                  {Number(user?.performance)?.toFixed(2)}
                 </Td>
               </Tr>
             ))}
