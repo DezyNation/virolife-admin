@@ -34,9 +34,8 @@ import { BsPlus } from "react-icons/bs";
 const page = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [giftCards, setGiftCards] = useState([]);
+  const [wantMultipleCards, setWantMultipleCards] = useState(false);
   const Toast = useToast({ position: "top-right" });
-
-  const [expiryDays, setExpiryDays] = useState("30");
 
   const plans = [
     { id: 1, amount: 1200 },
@@ -53,8 +52,12 @@ const page = () => {
 
   const Formik = useFormik({
     initialValues: {
+      giftCardId: "",
+      count: "",
       code: "",
       userId: "",
+      agentId: "",
+      distributorId: "",
       amount: "",
       purpose: "",
       plan: "",
@@ -106,10 +109,22 @@ const page = () => {
     }
   }, [Formik.values.purpose, Formik.values.plan]);
 
-  // useEffect(() => {
-  //   const date = new Date();
-  //   Formik.setFieldValue("expiry", new Date(date.setDate(date.getDate() + expiryDays)).toLocaleString());
-  // }, [expiryDays]);
+  useEffect(() => {
+    if (Formik.values.count >= 2) {
+      Formik.setFieldValue("distributorId", "");
+      Formik.setFieldValue("agentId", "");
+      Formik.setFieldValue("userId", "");
+      Formik.setFieldValue("code", "");
+      Formik.setFieldValue("giftCardId", "");
+      setWantMultipleCards(true);
+    }
+  }, [Formik.values.count]);
+
+  async function handleEdit(id) {
+    Toast({
+      description: "Work in progress",
+    });
+  }
 
   function fetchGiftCards() {
     BackendAxios.get(`/api/gift`)
@@ -133,14 +148,14 @@ const page = () => {
     Formik.setFieldValue("code", randomNum);
   }
 
-  function verifyUser() {
-    if (!Formik.values.userId) {
+  function verifyUser(id) {
+    if (!id) {
       Toast({
-        description: "Please enter User ID",
+        description: "Please enter ID",
       });
       return;
     }
-    BackendAxios.get(`/api/users/${Formik.values.userId}`)
+    BackendAxios.get(`/api/users/${id}`)
       .then((res) => {
         if (res.data?.length) {
           Toast({
@@ -192,9 +207,11 @@ const page = () => {
             <Tr>
               <Th>#</Th>
               <Th>Card No.</Th>
-              {/* <Th>Amount</Th> */}
+
               <Th>Purpose</Th>
               <Th>Status</Th>
+              <Th>Distributor</Th>
+              <Th>Agent</Th>
               <Th>Linked User</Th>
               <Th>Created At</Th>
               <Th>Expires At</Th>
@@ -209,6 +226,8 @@ const page = () => {
                 {/* <Td>{item?.amount}</Td> */}
                 <Td>{item?.purpose}</Td>
                 <Td>{item?.redeemed ? "USED" : "PENDING"}</Td>
+                <Td>{item?.distributor_id}</Td>
+                <Td>{item?.agent_id}</Td>
                 <Td>{item?.user_id}</Td>
                 <Td>
                   {item?.created_at
@@ -217,13 +236,22 @@ const page = () => {
                 </Td>
                 <Td>{item?.expiry_at}</Td>
                 <Td>
-                  <Button
-                    size={"xs"}
-                    colorScheme="red"
-                    onClick={() => deleteGiftCard(item?.id)}
-                  >
-                    Delete
-                  </Button>
+                  <HStack gap={6}>
+                    <Button
+                      size={"xs"}
+                      colorScheme="twitter"
+                      onClick={() => handleEdit(item?.id)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size={"xs"}
+                      colorScheme="red"
+                      onClick={() => deleteGiftCard(item?.id)}
+                    >
+                      Delete
+                    </Button>
+                  </HStack>
                 </Td>
               </Tr>
             ))}
@@ -245,13 +273,24 @@ const page = () => {
       <Modal isOpen={isOpen} onClose={onClose} size={"sm"}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create New Gift Card</ModalHeader>
+          <ModalHeader>
+            {Formik.values.giftCardId
+              ? "Update Gift Card"
+              : "Create New Gift Card"}
+          </ModalHeader>
           <ModalBody>
-            <FormControl mb={8}>
+            {Formik.values.giftCardId ? null : (
+              <FormControl mb={4}>
+                <FormLabel>How many gift cards?</FormLabel>
+                <Input name="count" onChange={Formik.handleChange} />
+              </FormControl>
+            )}
+            <FormControl mb={4}>
               <FormLabel>Purpose</FormLabel>
               <Select
                 placeholder="Please Select"
                 name="purpose"
+                value={Formik.values.purpose}
                 onChange={Formik.handleChange}
               >
                 <option value="viroteam-funding">Viro Team Funding</option>
@@ -261,11 +300,12 @@ const page = () => {
               </Select>
             </FormControl>
             {Formik.values.purpose == "viroteam-funding" ? (
-              <FormControl mb={8}>
+              <FormControl mb={4}>
                 <FormLabel>Select Plan</FormLabel>
                 <Select
                   placeholder="Please Select"
                   name="plan"
+                  value={Formik.values.plan}
                   onChange={Formik.handleChange}
                 >
                   <option value="1">Plan A</option>
@@ -277,62 +317,101 @@ const page = () => {
                 </Select>
               </FormControl>
             ) : null}
-            <FormControl mb={8}>
-              <FormLabel>Card No.</FormLabel>
-              <HStack>
-                <Input
-                  name="code"
-                  value={Formik.values.code}
-                  onChange={Formik.handleChange}
-                />
-                <Button size={"xs"} onClick={generateGiftCard}>
-                  Random
-                </Button>
-              </HStack>
-            </FormControl>
-            <FormControl mb={8}>
+            {wantMultipleCards ? null : (
+              <FormControl mb={4}>
+                <FormLabel>Card No.</FormLabel>
+                <HStack>
+                  <Input
+                    name="code"
+                    value={Formik.values.code}
+                    onChange={Formik.handleChange}
+                  />
+                  <Button size={"xs"} onClick={generateGiftCard}>
+                    Random
+                  </Button>
+                </HStack>
+              </FormControl>
+            )}
+            <FormControl mb={4}>
               <FormLabel>Amount</FormLabel>
               <Input
                 name="amount"
                 value={Formik.values.amount}
-                onChange={Formik.handleChange}
+                // onChange={Formik.handleChange}
               />
             </FormControl>
-            <FormControl mb={8}>
-              <FormLabel>Authorised User</FormLabel>
-              <HStack>
-                <InputGroup>
-                  <InputLeftAddon children={"VCF"} />
-                  <Input
-                    name="userId"
-                    placeholder="Enter User ID"
-                    value={Formik.values.userId}
-                    onChange={Formik.handleChange}
-                  />
-                </InputGroup>
-                <Button size={"xs"} onClick={verifyUser}>
-                  Verify
-                </Button>
-              </HStack>
-            </FormControl>
-            <FormControl mb={8}>
+
+            {wantMultipleCards ? null : (
+              <FormControl mb={4}>
+                <FormLabel>Distributor</FormLabel>
+                <HStack>
+                  <InputGroup>
+                    <InputLeftAddon children={"VCF"} />
+                    <Input
+                      name="distributorId"
+                      placeholder="Enter Distributor ID"
+                      value={Formik.values.distributorId}
+                      onChange={Formik.handleChange}
+                    />
+                  </InputGroup>
+                  <Button
+                    size={"xs"}
+                    onClick={() => verifyUser(Formik.values.distributorId)}
+                  >
+                    Verify
+                  </Button>
+                </HStack>
+              </FormControl>
+            )}
+
+            {wantMultipleCards ? null : (
+              <FormControl mb={4}>
+                <FormLabel>Agent</FormLabel>
+                <HStack>
+                  <InputGroup>
+                    <InputLeftAddon children={"VCF"} />
+                    <Input
+                      name="agentId"
+                      placeholder="Enter Agent ID"
+                      value={Formik.values.agentId}
+                      onChange={Formik.handleChange}
+                    />
+                  </InputGroup>
+                  <Button
+                    size={"xs"}
+                    onClick={() => verifyUser(Formik.values.agentId)}
+                  >
+                    Verify
+                  </Button>
+                </HStack>
+              </FormControl>
+            )}
+
+            {wantMultipleCards ? null : (
+              <FormControl mb={4}>
+                <FormLabel>Authorised User</FormLabel>
+                <HStack>
+                  <InputGroup>
+                    <InputLeftAddon children={"VCF"} />
+                    <Input
+                      name="userId"
+                      placeholder="Enter User ID"
+                      value={Formik.values.userId}
+                      onChange={Formik.handleChange}
+                    />
+                  </InputGroup>
+                  <Button
+                    size={"xs"}
+                    onClick={() => verifyUser(Formik.values.userId)}
+                  >
+                    Verify
+                  </Button>
+                </HStack>
+              </FormControl>
+            )}
+
+            <FormControl mb={4}>
               <FormLabel>Expiry</FormLabel>
-              {/* <HStack gap={6}>
-                <Button
-                  colorScheme={expiryDays == 30 ? "yellow" : "gray"}
-                  rounded={"full"}
-                  onClick={() => setExpiryDays(30)}
-                >
-                  30 Days
-                </Button>
-                <Button
-                  colorScheme={expiryDays == 60 ? "yellow" : "gray"}
-                  onClick={() => setExpiryDays(60)}
-                  rounded={"full"}
-                >
-                  60 Days
-                </Button>
-              </HStack> */}
               <Input type="date" name="expiry" onChange={Formik.handleChange} />
             </FormControl>
           </ModalBody>
