@@ -9,7 +9,7 @@ export default function RootLayout({ children }) {
         <title>Virolife Admin</title>
       </head>
       <body>
-        <ChakraProvider>
+        <ChakraProvider toastOptions={{defaultOptions: {position: 'top-right'}}}>
           {children}
         </ChakraProvider>
       </body>

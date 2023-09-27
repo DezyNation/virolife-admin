@@ -32,6 +32,7 @@ import {
   BsMegaphoneFill,
   BsPower,
   BsStarFill,
+  BsWallet,
   BsYoutube,
 } from "react-icons/bs";
 import { MdGroups, MdPersonAdd } from "react-icons/md";
@@ -192,6 +193,12 @@ const MenuOptions = () => {
           <HStack gap={4}>
             <FaPercentage size={20} />
             <Text>Commission Data</Text>
+          </HStack>
+        </Link>
+        <Link href={"/dashboard/payouts"}>
+          <HStack gap={4}>
+            <BsWallet size={20} />
+            <Text>Payouts</Text>
           </HStack>
         </Link>
         <br />
