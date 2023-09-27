@@ -111,9 +111,6 @@ const page = () => {
 
   useEffect(() => {
     if (Formik.values.count >= 2) {
-      Formik.setFieldValue("distributorId", "");
-      Formik.setFieldValue("agentId", "");
-      Formik.setFieldValue("userId", "");
       Formik.setFieldValue("code", "");
       Formik.setFieldValue("giftCardId", "");
       setWantMultipleCards(true);
@@ -341,74 +338,68 @@ const page = () => {
               />
             </FormControl>
 
-            {wantMultipleCards ? null : (
-              <FormControl mb={4}>
-                <FormLabel>Distributor</FormLabel>
-                <HStack>
-                  <InputGroup>
-                    <InputLeftAddon children={"VCF"} />
-                    <Input
-                      name="distributorId"
-                      placeholder="Enter Distributor ID"
-                      value={Formik.values.distributorId}
-                      onChange={Formik.handleChange}
-                    />
-                  </InputGroup>
-                  <Button
-                    size={"xs"}
-                    onClick={() => verifyUser(Formik.values.distributorId)}
-                  >
-                    Verify
-                  </Button>
-                </HStack>
-              </FormControl>
-            )}
+            <FormControl mb={4}>
+              <FormLabel>Distributor</FormLabel>
+              <HStack>
+                <InputGroup>
+                  <InputLeftAddon children={"VCF"} />
+                  <Input
+                    name="distributorId"
+                    placeholder="Enter Distributor ID"
+                    value={Formik.values.distributorId}
+                    onChange={Formik.handleChange}
+                  />
+                </InputGroup>
+                <Button
+                  size={"xs"}
+                  onClick={() => verifyUser(Formik.values.distributorId)}
+                >
+                  Verify
+                </Button>
+              </HStack>
+            </FormControl>
 
-            {wantMultipleCards ? null : (
-              <FormControl mb={4}>
-                <FormLabel>Agent</FormLabel>
-                <HStack>
-                  <InputGroup>
-                    <InputLeftAddon children={"VCF"} />
-                    <Input
-                      name="agentId"
-                      placeholder="Enter Agent ID"
-                      value={Formik.values.agentId}
-                      onChange={Formik.handleChange}
-                    />
-                  </InputGroup>
-                  <Button
-                    size={"xs"}
-                    onClick={() => verifyUser(Formik.values.agentId)}
-                  >
-                    Verify
-                  </Button>
-                </HStack>
-              </FormControl>
-            )}
+            <FormControl mb={4}>
+              <FormLabel>Agent</FormLabel>
+              <HStack>
+                <InputGroup>
+                  <InputLeftAddon children={"VCF"} />
+                  <Input
+                    name="agentId"
+                    placeholder="Enter Agent ID"
+                    value={Formik.values.agentId}
+                    onChange={Formik.handleChange}
+                  />
+                </InputGroup>
+                <Button
+                  size={"xs"}
+                  onClick={() => verifyUser(Formik.values.agentId)}
+                >
+                  Verify
+                </Button>
+              </HStack>
+            </FormControl>
 
-            {wantMultipleCards ? null : (
-              <FormControl mb={4}>
-                <FormLabel>Authorised User</FormLabel>
-                <HStack>
-                  <InputGroup>
-                    <InputLeftAddon children={"VCF"} />
-                    <Input
-                      name="userId"
-                      placeholder="Enter User ID"
-                      value={Formik.values.userId}
-                      onChange={Formik.handleChange}
-                    />
-                  </InputGroup>
-                  <Button
-                    size={"xs"}
-                    onClick={() => verifyUser(Formik.values.userId)}
-                  >
-                    Verify
-                  </Button>
-                </HStack>
-              </FormControl>
-            )}
+            <FormControl mb={4}>
+              <FormLabel>Authorised User</FormLabel>
+              <HStack>
+                <InputGroup>
+                  <InputLeftAddon children={"VCF"} />
+                  <Input
+                    name="userId"
+                    placeholder="Enter User ID"
+                    value={Formik.values.userId}
+                    onChange={Formik.handleChange}
+                  />
+                </InputGroup>
+                <Button
+                  size={"xs"}
+                  onClick={() => verifyUser(Formik.values.userId)}
+                >
+                  Verify
+                </Button>
+              </HStack>
+            </FormControl>
 
             <FormControl mb={4}>
               <FormLabel>Expiry</FormLabel>
