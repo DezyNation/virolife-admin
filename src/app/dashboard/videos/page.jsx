@@ -48,6 +48,7 @@ const Users = () => {
       link: "",
       points: "",
       isActive: false,
+      duration: ""
     },
     onSubmit: (values) => {
       BackendAxios.post("/api/video", {
@@ -212,6 +213,12 @@ const Users = () => {
             <FormControl pb={4}>
               <FormLabel>Video ID</FormLabel>
               <Input name="video_id" onChange={Formik.handleChange} />
+            </FormControl>
+            <br />
+
+            <FormControl pb={4}>
+              <FormLabel>Minimum Duration</FormLabel>
+              <Input name="duration" onChange={Formik.handleChange} />
             </FormControl>
 
             <FormControl pb={4}>
