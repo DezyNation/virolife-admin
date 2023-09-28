@@ -114,6 +114,8 @@ const page = () => {
       Formik.setFieldValue("code", "");
       Formik.setFieldValue("giftCardId", "");
       setWantMultipleCards(true);
+    } else {
+      setWantMultipleCards(false);
     }
   }, [Formik.values.count]);
 
