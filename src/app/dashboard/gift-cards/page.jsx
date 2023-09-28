@@ -379,28 +379,28 @@ const page = () => {
                 </Button>
               </HStack>
             </FormControl>
-
-            <FormControl mb={4}>
-              <FormLabel>Authorised User</FormLabel>
-              <HStack>
-                <InputGroup>
-                  <InputLeftAddon children={"VCF"} />
-                  <Input
-                    name="userId"
-                    placeholder="Enter User ID"
-                    value={Formik.values.userId}
-                    onChange={Formik.handleChange}
-                  />
-                </InputGroup>
-                <Button
-                  size={"xs"}
-                  onClick={() => verifyUser(Formik.values.userId)}
-                >
-                  Verify
-                </Button>
-              </HStack>
-            </FormControl>
-
+            {wantMultipleCards ? null : (
+              <FormControl mb={4}>
+                <FormLabel>Authorised User</FormLabel>
+                <HStack>
+                  <InputGroup>
+                    <InputLeftAddon children={"VCF"} />
+                    <Input
+                      name="userId"
+                      placeholder="Enter User ID"
+                      value={Formik.values.userId}
+                      onChange={Formik.handleChange}
+                    />
+                  </InputGroup>
+                  <Button
+                    size={"xs"}
+                    onClick={() => verifyUser(Formik.values.userId)}
+                  >
+                    Verify
+                  </Button>
+                </HStack>
+              </FormControl>
+            )}
             <FormControl mb={4}>
               <FormLabel>Expiry</FormLabel>
               <Input type="date" name="expiry" onChange={Formik.handleChange} />
