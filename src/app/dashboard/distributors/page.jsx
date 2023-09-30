@@ -61,7 +61,8 @@ const Users = () => {
   function fetchUsers() {
     BackendAxios.get("/api/admin/all-payouts")
       .then((res) => {
-        setUsers(res.data);
+        const data = Object.values(res.data)?.map(item => ({...item[1], id: item[0]}))
+        setUsers(data);
       })
       .catch((err) => {
         Toast({
@@ -157,6 +158,7 @@ const Users = () => {
                 <Th>Contact</Th>
                 <Th>Commission Earned</Th>
                 <Th>Payout Received</Th>
+                <Th>Current Balance</Th>
                 <Th>Registered On</Th>
                 <Th>Action</Th>
               </Tr>
@@ -167,7 +169,7 @@ const Users = () => {
                   <Td>{key + 1}</Td>
                   <Td>VCF{user?.id}</Td>
                   <Td className="sticky-left">
-                    {user?.name} ({user?.gender})
+                    {user?.name}
                   </Td>
                   <Td>
                     <Box>
@@ -175,8 +177,9 @@ const Users = () => {
                       <p>+91 {user?.phone_number}</p>
                     </Box>
                   </Td>
-                  <Td>{user?.total_commission}</Td>
-                  <Td>{user?.payout_received}</Td>
+                  <Td>{user?.wallet}+{user?.payout}</Td>
+                  <Td>{user?.payout}</Td>
+                  <Td>{user?.wallet}</Td>
                   <Td>{new Date(user?.created_at).toLocaleString()}</Td>
                   <Td>
                     <HStack gap={4} pb={2}>
