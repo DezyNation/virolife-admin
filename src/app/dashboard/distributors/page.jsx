@@ -61,7 +61,7 @@ const Users = () => {
   function fetchUsers() {
     BackendAxios.get("/api/admin/all-payouts")
       .then((res) => {
-        const data = Object.values(res.data)?.map(item => ({...item[1], id: item[0]}))
+        const data = Object.entries(res.data)?.map(item => ({...item[1], id: item[0]}))
         setUsers(data);
       })
       .catch((err) => {
