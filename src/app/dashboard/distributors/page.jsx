@@ -59,7 +59,7 @@ const Users = () => {
   }
 
   function fetchUsers() {
-    BackendAxios.get("/api/admin/users-list/distributor")
+    BackendAxios.get("/api/admin/all-payouts")
       .then((res) => {
         setUsers(res.data);
       })
