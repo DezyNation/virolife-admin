@@ -177,7 +177,7 @@ const Users = () => {
                       <p>+91 {user?.phone_number}</p>
                     </Box>
                   </Td>
-                  <Td>{user?.wallet}+{user?.payout}</Td>
+                  <Td>{Number(user?.wallet) + Number(user?.payout)}</Td>
                   <Td>{user?.payout}</Td>
                   <Td>{user?.wallet}</Td>
                   <Td>{new Date(user?.created_at).toLocaleString()}</Td>
