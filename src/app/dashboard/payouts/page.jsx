@@ -111,7 +111,7 @@ const page = () => {
                 <Td>{item?.created_at}</Td>
                 <Td>{item?.updated_at}</Td>
                 <Td>
-                  <HStack gap={6}>
+                  {item?.status == "pending" ? <HStack gap={6}>
                     <Button
                       size={"sm"}
                       colorScheme="yellow"
@@ -128,7 +128,7 @@ const page = () => {
                     >
                       Reject
                     </Button>
-                  </HStack>
+                  </HStack> : null }
                 </Td>
               </Tr>
             ))}
