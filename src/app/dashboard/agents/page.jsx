@@ -156,6 +156,8 @@ const Users = () => {
                 <Th className="sticky-left">User Name</Th>
                 <Th>Contact</Th>
                 <Th>Distributor Name</Th>
+                <Th>Commission Earned</Th>
+                <Th>Payout Received</Th>
                 <Th>Registered On</Th>
                 <Th>Action</Th>
               </Tr>
@@ -174,6 +176,9 @@ const Users = () => {
                       <p>+91 {user?.phone_number}</p>
                     </Box>
                   </Td>
+                  <Td>{user?.parent_name}-({user?.parent_id})</Td>
+                  <Td>{user?.total_commission}</Td>
+                  <Td>{user?.payout_received}</Td>
                   <Td>
                     {user?.dob ? new Date(user?.dob).toDateString() : null}
                   </Td>
