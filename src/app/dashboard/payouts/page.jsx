@@ -89,6 +89,7 @@ const page = () => {
           <Thead>
             <Tr>
               <Th>#</Th>
+              <Th>User</Th>
               <Th>Requested Amount</Th>
               <Th>Opening Balance</Th>
               <Th>Closing Balance</Th>
@@ -103,6 +104,7 @@ const page = () => {
             {data?.map((item, key) => (
               <Tr key={key}>
                 <Td>{key + 1}</Td>
+                <Td>{item?.name} - {item?.user_id}</Td>
                 <Td>{item?.request_amount}</Td>
                 <Td>{item?.opening_amount}</Td>
                 <Td>{item?.closing_amount}</Td>
