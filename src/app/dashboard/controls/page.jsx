@@ -22,7 +22,7 @@ const page = () => {
   function getData() {
     BackendAxios.get(`/api/content`)
       .then((res) => {
-        const parsedData = JSON.parse(res.data[0]);
+        const parsedData = JSON.parse(res.data[0]?.content);
         Formik.setFieldValue("telegramLink", parsedData?.telegramLink)
         Formik.setFieldValue("whatsappLink", parsedData?.whatsappLink)
         Formik.setFieldValue("telegramStatus", parsedData?.telegramStatus)
