@@ -37,6 +37,8 @@ const page = () => {
   const [wantMultipleCards, setWantMultipleCards] = useState(false);
   const Toast = useToast({ position: "top-right" });
 
+  const [selectedGiftCard, setSelectedGiftCard] = useState(null);
+
   const plans = [
     { id: 1, amount: 1200 },
     { id: 2, amount: 2400 },
@@ -65,6 +67,10 @@ const page = () => {
       purpose: "",
     },
     onSubmit: (values) => {
+      if(values.giftCardId){
+        handleEdit()
+        return
+      }
       BackendAxios.post(`/api/gift`, values)
         .then((res) => {
           Toast({
@@ -72,6 +78,8 @@ const page = () => {
             title: "Gift card created successfully!",
           });
           fetchGiftCards();
+          setWantMultipleCards(false)
+          Formik.handleReset()
           onClose();
         })
         .catch((err) => {
@@ -119,10 +127,37 @@ const page = () => {
     }
   }, [Formik.values.count]);
 
-  async function handleEdit(id) {
-    Toast({
-      description: "Work in progress",
-    });
+  useEffect(() => {
+    if (selectedGiftCard) {
+      Formik.setFieldValue("giftCardId", selectedGiftCard?.id);
+      Formik.setFieldValue("userId", selectedGiftCard?.user_id);
+      Formik.setFieldValue("agentId", selectedGiftCard?.agent_id);
+      Formik.setFieldValue("distributorId", selectedGiftCard?.distributor_id);
+      isOpen();
+    }
+  }, [selectedGiftCard]);
+
+  function handleEdit() {
+    BackendAxios.post(`/api/gift/${Formik.values.giftCardId}`, Formik.values)
+        .then((res) => {
+          Toast({
+            status: "success",
+            title: "Gift card edited successfully!",
+          });
+          fetchGiftCards();
+          setWantMultipleCards(false)
+          Formik.handleReset()
+          onClose();
+        })
+        .catch((err) => {
+          Toast({
+            status: "error",
+            description:
+              err?.response?.data?.message ||
+              err?.response?.data ||
+              err?.message,
+          });
+        });
   }
 
   function fetchGiftCards() {
@@ -239,7 +274,9 @@ const page = () => {
                     <Button
                       size={"xs"}
                       colorScheme="twitter"
-                      onClick={() => handleEdit(item?.id)}
+                      onClick={() => {
+                        setSelectedGiftCard(item);
+                      }}
                     >
                       Edit
                     </Button>
@@ -284,21 +321,24 @@ const page = () => {
                 <Input name="count" onChange={Formik.handleChange} />
               </FormControl>
             )}
-            <FormControl mb={4}>
-              <FormLabel>Purpose</FormLabel>
-              <Select
-                placeholder="Please Select"
-                name="purpose"
-                value={Formik.values.purpose}
-                onChange={Formik.handleChange}
-              >
-                <option value="viroteam-funding">Viro Team Funding</option>
-                <option value="all-team-process">All Team Processing</option>
-                <option value="primary-group">Primary Group</option>
-                <option value="secondary-group">Secondary Group</option>
-              </Select>
-            </FormControl>
-            {Formik.values.purpose == "viroteam-funding" ? (
+            {Formik.values.giftCardId ? null : (
+              <FormControl mb={4}>
+                <FormLabel>Purpose</FormLabel>
+                <Select
+                  placeholder="Please Select"
+                  name="purpose"
+                  value={Formik.values.purpose}
+                  onChange={Formik.handleChange}
+                >
+                  <option value="viroteam-funding">Viro Team Funding</option>
+                  <option value="all-team-process">All Team Processing</option>
+                  <option value="primary-group">Primary Group</option>
+                  <option value="secondary-group">Secondary Group</option>
+                </Select>
+              </FormControl>
+            )}
+            {Formik.values.purpose == "viroteam-funding" &&
+            !Formik.values.giftCardId ? (
               <FormControl mb={4}>
                 <FormLabel>Select Plan</FormLabel>
                 <Select
@@ -324,6 +364,7 @@ const page = () => {
                     name="code"
                     value={Formik.values.code}
                     onChange={Formik.handleChange}
+                    isDisabled={Boolean(Formik.values.giftCardId)}
                   />
                   <Button size={"xs"} onClick={generateGiftCard}>
                     Random
@@ -331,14 +372,16 @@ const page = () => {
                 </HStack>
               </FormControl>
             )}
-            <FormControl mb={4}>
-              <FormLabel>Amount</FormLabel>
-              <Input
-                name="amount"
-                value={Formik.values.amount}
-                // onChange={Formik.handleChange}
-              />
-            </FormControl>
+            {Formik.values.giftCardId ? null : (
+              <FormControl mb={4}>
+                <FormLabel>Amount</FormLabel>
+                <Input
+                  name="amount"
+                  value={Formik.values.amount}
+                  // onChange={Formik.handleChange}
+                />
+              </FormControl>
+            )}
 
             <FormControl mb={4}>
               <FormLabel>Distributor</FormLabel>
