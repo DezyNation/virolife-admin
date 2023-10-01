@@ -67,9 +67,9 @@ const page = () => {
       purpose: "",
     },
     onSubmit: (values) => {
-      if(values.giftCardId){
-        handleEdit()
-        return
+      if (values.giftCardId) {
+        handleEdit();
+        return;
       }
       BackendAxios.post(`/api/gift`, values)
         .then((res) => {
@@ -78,8 +78,8 @@ const page = () => {
             title: "Gift card created successfully!",
           });
           fetchGiftCards();
-          setWantMultipleCards(false)
-          Formik.handleReset()
+          setWantMultipleCards(false);
+          Formik.handleReset();
           onClose();
         })
         .catch((err) => {
@@ -133,31 +133,29 @@ const page = () => {
       Formik.setFieldValue("userId", selectedGiftCard?.user_id);
       Formik.setFieldValue("agentId", selectedGiftCard?.agent_id);
       Formik.setFieldValue("distributorId", selectedGiftCard?.distributor_id);
-      isOpen();
+      onOpen();
     }
   }, [selectedGiftCard]);
 
   function handleEdit() {
     BackendAxios.post(`/api/gift/${Formik.values.giftCardId}`, Formik.values)
-        .then((res) => {
-          Toast({
-            status: "success",
-            title: "Gift card edited successfully!",
-          });
-          fetchGiftCards();
-          setWantMultipleCards(false)
-          Formik.handleReset()
-          onClose();
-        })
-        .catch((err) => {
-          Toast({
-            status: "error",
-            description:
-              err?.response?.data?.message ||
-              err?.response?.data ||
-              err?.message,
-          });
+      .then((res) => {
+        Toast({
+          status: "success",
+          title: "Gift card edited successfully!",
         });
+        fetchGiftCards();
+        setWantMultipleCards(false);
+        Formik.handleReset();
+        onClose();
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
   }
 
   function fetchGiftCards() {
@@ -274,9 +272,7 @@ const page = () => {
                     <Button
                       size={"xs"}
                       colorScheme="twitter"
-                      onClick={() => {
-                        setSelectedGiftCard(item);
-                      }}
+                      onClick={() => setSelectedGiftCard(item)}
                     >
                       Edit
                     </Button>
