@@ -1,4 +1,5 @@
 'use client'
+import PrintButtons from "@/components/dashboard/PrintButtons";
 import BackendAxios from "@/utils/axios";
 import {
   Button,
@@ -83,6 +84,8 @@ const page = () => {
         Payout Requests
       </Text>
       <br />
+      <br />
+      <PrintButtons keyword={"payouts"} fileName={"ApprovedPayouts"} />
       <br />
       <TableContainer>
         <Table size={"sm"}>

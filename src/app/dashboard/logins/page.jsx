@@ -1,4 +1,5 @@
 "use client";
+import PrintButtons from "@/components/dashboard/PrintButtons";
 import BackendAxios from "@/utils/axios";
 import {
   Button,
@@ -57,6 +58,7 @@ const page = () => {
         </Button>
       ))}
       </HStack>
+      <PrintButtons keyword={"logins"} fileName={"Logins"} />
       <TableContainer>
         <Table size={"sm"}>
           <Thead>
