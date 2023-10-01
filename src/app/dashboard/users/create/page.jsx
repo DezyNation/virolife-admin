@@ -120,6 +120,14 @@ const Info = () => {
       });
   }
 
+  useEffect(()=>{
+    if(Formik.values.role == "distributor"){
+      Formik.setFieldValue("parentId", 185)
+    } else {
+      Formik.setFieldValue("parentId", "")
+    }
+  },[Formik.values.role])
+
   return (
     <>
       <form action="#" onSubmit={Formik.handleSubmit}>
