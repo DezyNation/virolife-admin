@@ -139,7 +139,7 @@ const page = () => {
   }, [selectedGiftCard]);
 
   function handleEdit() {
-    BackendAxios.post(`/api/gift/${Formik.values.giftCardId}`, Formik.values)
+    BackendAxios.put(`/api/gift/${Formik.values.giftCardId}`, Formik.values)
       .then((res) => {
         Toast({
           status: "success",
