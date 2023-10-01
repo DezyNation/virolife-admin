@@ -59,9 +59,10 @@ const Users = () => {
   }
 
   function fetchUsers() {
-    BackendAxios.get("/api/admin/users-list/agent")
+    BackendAxios.get("/api/admin/all-payouts/agent")
       .then((res) => {
-        setUsers(res.data);
+        const data = Object.entries(res.data)?.map(item => ({...item[1], id: item[0]}))
+        setUsers(data);
       })
       .catch((err) => {
         Toast({
@@ -127,11 +128,11 @@ const Users = () => {
     <>
       <HStack justifyContent={["space-between"]} py={8}>
         <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
-          Agents
+          Distributors
         </Text>
         <HStack alignItems={"flex-end"}>
           <Input
-            placeholder={"Search Agents"}
+            placeholder={"Search Distributors"}
             onChange={(e) => setQuery(e.target.value)}
           />
           <Button colorScheme={"yellow"} onClick={searchUser}>
@@ -139,7 +140,7 @@ const Users = () => {
           </Button>
         </HStack>
       </HStack>
-      <PrintButtons keyword={"users"} bodyParams={{role: "agent"}} fileName={"AgentsList"} />
+      <PrintButtons keyword={"users"} bodyParams={{role: "distributor"}} fileName={"DistributorsList"} />
       <Stack
         w={"full"}
         direction={["column"]}
@@ -148,16 +149,16 @@ const Users = () => {
       >
         <TableContainer rounded={"16"} w={"full"}>
           <Table variant={"striped"} colorScheme="gray">
-            <TableCaption>Agents on Virolife</TableCaption>
+            <TableCaption>Distributors on Virolife</TableCaption>
             <Thead bgColor={"yellow.400"}>
               <Tr>
                 <Th>#</Th>
                 <Th>ID</Th>
                 <Th className="sticky-left">User Name</Th>
                 <Th>Contact</Th>
-                <Th>Distributor Name</Th>
                 <Th>Commission Earned</Th>
                 <Th>Payout Received</Th>
+                <Th>Current Balance</Th>
                 <Th>Registered On</Th>
                 <Th>Action</Th>
               </Tr>
@@ -168,7 +169,7 @@ const Users = () => {
                   <Td>{key + 1}</Td>
                   <Td>VCF{user?.id}</Td>
                   <Td className="sticky-left">
-                    {user?.name} ({user?.gender})
+                    {user?.name}
                   </Td>
                   <Td>
                     <Box>
@@ -176,12 +177,9 @@ const Users = () => {
                       <p>+91 {user?.phone_number}</p>
                     </Box>
                   </Td>
-                  <Td>{user?.parent_name}-({user?.parent_id})</Td>
-                  <Td>{user?.total_commission}</Td>
-                  <Td>{user?.payout_received}</Td>
-                  <Td>
-                    {user?.dob ? new Date(user?.dob).toDateString() : null}
-                  </Td>
+                  <Td>{Number(user?.wallet) + Number(user?.payout)}</Td>
+                  <Td>{user?.payout}</Td>
+                  <Td>{user?.wallet}</Td>
                   <Td>{new Date(user?.created_at).toLocaleString()}</Td>
                   <Td>
                     <HStack gap={4} pb={2}>
