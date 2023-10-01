@@ -128,7 +128,7 @@ const Users = () => {
     <>
       <HStack justifyContent={["space-between"]} py={8}>
         <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
-          Distributors
+          Agents
         </Text>
         <HStack alignItems={"flex-end"}>
           <Input
@@ -149,13 +149,14 @@ const Users = () => {
       >
         <TableContainer rounded={"16"} w={"full"}>
           <Table variant={"striped"} colorScheme="gray">
-            <TableCaption>Distributors on Virolife</TableCaption>
+            <TableCaption>Agents on Virolife</TableCaption>
             <Thead bgColor={"yellow.400"}>
               <Tr>
                 <Th>#</Th>
                 <Th>ID</Th>
-                <Th className="sticky-left">User Name</Th>
+                <Th>User Name</Th>
                 <Th>Contact</Th>
+                <Th>Distributor</Th>
                 <Th>Commission Earned</Th>
                 <Th>Payout Received</Th>
                 <Th>Current Balance</Th>
@@ -176,6 +177,9 @@ const Users = () => {
                       <p>{user?.email}</p>
                       <p>+91 {user?.phone_number}</p>
                     </Box>
+                  </Td>
+                  <Td>
+                    {user?.parent_id}-{user?.parent_name}
                   </Td>
                   <Td>{Number(user?.wallet) + Number(user?.payout)}</Td>
                   <Td>{user?.payout}</Td>
