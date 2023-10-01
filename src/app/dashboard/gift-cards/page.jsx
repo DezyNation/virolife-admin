@@ -131,6 +131,7 @@ const page = () => {
     if (selectedGiftCard) {
       Formik.setFieldValue("giftCardId", selectedGiftCard?.id);
       Formik.setFieldValue("userId", selectedGiftCard?.user_id);
+      Formik.setFieldValue("code", selectedGiftCard?.code);
       Formik.setFieldValue("agentId", selectedGiftCard?.agent_id);
       Formik.setFieldValue("distributorId", selectedGiftCard?.distributor_id);
       onOpen();
@@ -442,10 +443,16 @@ const page = () => {
                 </HStack>
               </FormControl>
             )}
-            <FormControl mb={4}>
-              <FormLabel>Expiry</FormLabel>
-              <Input type="date" name="expiry" onChange={Formik.handleChange} />
-            </FormControl>
+            {Formik.values.giftCardId ? null : (
+              <FormControl mb={4}>
+                <FormLabel>Expiry</FormLabel>
+                <Input
+                  type="date"
+                  name="expiry"
+                  onChange={Formik.handleChange}
+                />
+              </FormControl>
+            )}
           </ModalBody>
           <ModalFooter justifyContent={"flex-end"} gap={4}>
             <Button onClick={onClose}>Cancel</Button>
