@@ -87,7 +87,7 @@ const page = () => {
           <Switch
             name="telegramStatus"
             isChecked={Formik.values.telegramStatus}
-            onChange={(e) => Formik.setFieldValue("whatsappStatus", e.target.checked)}
+            onChange={(e) => Formik.setFieldValue("telegramStatus", e.target.checked)}
           />
         </Box>
       </HStack>
@@ -113,7 +113,7 @@ const page = () => {
       <br />
       <br />
       <HStack justifyContent={"flex-end"}>
-        <Button colorScheme="yellow">Save</Button>
+        <Button colorScheme="yellow" onClick={Formik.handleSubmit}>Save</Button>
       </HStack>
     </>
   );
