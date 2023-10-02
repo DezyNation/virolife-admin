@@ -107,7 +107,7 @@ const page = () => {
             {data.map((user, key) => (
               <Tr fontSize={"xs"} key={key}>
                 <Td>{key + 1}</Td>
-                <Td>VCF{user?.id}</Td>
+                <Td>VCF{user?.user_id}</Td>
                 <Td className="sticky-left">{user?.name}</Td>
                 <Td>{user?.stars}</Td>
                 <Td>
