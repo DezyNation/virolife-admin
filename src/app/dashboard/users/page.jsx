@@ -123,25 +123,6 @@ const Users = () => {
       });
   }
 
-  function updateUserRole(id, role) {
-    BackendAxios.post(`/api/admin/change-role/${id}`, { role: role })
-      .then((res) => {
-        onToggle();
-        Toast({
-          status: "success",
-          description: `The user role was updated successfully!`,
-        });
-        fetchUsers();
-      })
-      .catch((err) => {
-        Toast({
-          status: "error",
-          description:
-            err?.response?.data?.message || err?.response?.data || err?.message,
-        });
-      });
-  }
-
   function viewSecondaryTree(id, name) {
     function buildHierarchy(items, parentId) {
       const nestedArray = [];
@@ -239,6 +220,7 @@ const Users = () => {
                 <Th className="sticky-left">User Name</Th>
                 <Th>Contact</Th>
                 <Th>ATP Stars</Th>
+                <Th>Star Performance</Th>
                 <Th>Donation Collected</Th>
                 <Th>Health Points</Th>
                 <Th>Ad Points</Th>
@@ -263,6 +245,7 @@ const Users = () => {
                     </Box>
                   </Td>
                   <Td>{user?.stars}</Td>
+                  <Td>{Number(user?.performance)?.toFixed(2)}</Td>
                   <Td>{user?.group_collection}</Td>
                   <Td>{user?.health_points}</Td>
                   <Td>{parseInt(user?.ad_points)}</Td>
