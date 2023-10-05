@@ -119,7 +119,7 @@ const DonationTable = ({ groupType }) => {
                   <Td>{item?.remarks}</Td>
                   <Td>₹ {item?.amount}</Td>
                   <Td>{new Date(item?.created_at).toLocaleString()}</Td>
-                  <Td></Td>
+                  <Td>{item?.updated_by} {item?.updated_user}</Td>
                   <Td>
                     {!item?.approved && !item?.deleted_at ? (
                       now - new Date(item?.created_at) >= 86400000 ? (
