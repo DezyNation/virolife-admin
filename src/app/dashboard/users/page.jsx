@@ -221,7 +221,9 @@ const Users = () => {
                 <Th>Contact</Th>
                 <Th>ATP Stars</Th>
                 <Th>Star Performance</Th>
-                <Th>Donation Collected</Th>
+                <Th>Primary Collection</Th>
+                <Th>Secondary Collection</Th>
+                <Th>Total Collection</Th>
                 <Th>Health Points</Th>
                 <Th>Ad Points</Th>
                 <Th>Date of Birth</Th>
@@ -246,7 +248,9 @@ const Users = () => {
                   </Td>
                   <Td>{user?.stars}</Td>
                   <Td>{Number(user?.performance)?.toFixed(2)}</Td>
-                  <Td>{user?.group_collection}</Td>
+                  <Td>{Number(user?.sum_primary)}</Td>
+                  <Td>{Number(user?.sum_secondary)}</Td>
+                  <Td>{Number(user?.sum_primary)+Number(user?.sum_secondary)}</Td>
                   <Td>{user?.health_points}</Td>
                   <Td>{parseInt(user?.ad_points)}</Td>
                   <Td>
