@@ -26,6 +26,7 @@ import { AiFillDashboard, AiFillYoutube } from "react-icons/ai";
 import { HiArrowsRightLeft } from "react-icons/hi2";
 import {
   BsCalendarCheck,
+  BsCartCheckFill,
   BsCashCoin,
   BsCurrencyRupee,
   BsGearFill,
@@ -246,6 +247,45 @@ const MenuOptions = () => {
                 <Link href={"/dashboard/videos/user-views"}>
                   <HStack gap={4}>
                     <Text>Users Data</Text>
+                  </HStack>
+                </Link>
+
+              </VStack>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+
+        <Accordion allowToggle w={'full'}>
+          <AccordionItem w={'full'}>
+            <AccordionButton w={'full'} px={0}>
+              <HStack w={'full'}>
+                <BsCartCheckFill size={20} />
+                <Text>Ecommerce</Text>
+                <Spacer />
+                <AccordionIcon />
+              </HStack>
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <VStack
+                alignItems={"flex-start"}
+                justifyContent={"center"}
+                gap={6} w={'full'}
+              >
+                <Link href={"#"}>
+                  <HStack gap={4}>
+                    <Text>Products</Text>
+                  </HStack>
+                </Link>
+                
+                <Link href={"#"}>
+                  <HStack gap={4}>
+                    <Text>Orders</Text>
+                  </HStack>
+                </Link>
+
+                <Link href={"#"}>
+                  <HStack gap={4}>
+                    <Text>Gift Cards</Text>
                   </HStack>
                 </Link>
 
