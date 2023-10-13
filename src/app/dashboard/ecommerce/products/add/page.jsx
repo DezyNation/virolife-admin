@@ -85,7 +85,7 @@ const Page = () => {
       status: true,
     },
     onSubmit: (values) => {
-      if(values.minimumPayableAmount < values.price){
+      if(values.minimumPayableAmount > values.price){
         Toast({
           description: "Min. Amount must be less than the price"
         })
