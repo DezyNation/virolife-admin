@@ -87,6 +87,11 @@ const Page = () => {
       setLoading(true);
       FormAxios.post("/api/product", {
         ...values,
+        healthPointStatus: values?.healthPointStatus ? 1 : 0,
+        adPointStatus: values?.adPointStatus ? 1 : 0,
+        atpPointStatus: values?.atpPointStatus ? 1 : 0,
+        giftCardStatus: values?.giftCardStatus ? 1 : 0,
+        status: values?.status ? 1 : 0,
       })
         .then((res) => {
           setLoading(false);
@@ -233,9 +238,7 @@ const Page = () => {
           <QuillNoSSRWrapper
             theme="snow"
             value={Formik.values.longDescription}
-            onChange={(value) =>
-              Formik.setFieldValue("longDescription", value)
-            }
+            onChange={(value) => Formik.setFieldValue("longDescription", value)}
             style={{ height: "400px" }}
           />
         ) : null}
