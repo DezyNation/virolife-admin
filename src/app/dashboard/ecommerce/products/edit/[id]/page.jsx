@@ -189,7 +189,7 @@ const Page = ({ params }) => {
     if (!index) return;
     const newArr = imgsArr?.splice(index, 1);
     BackendAxios?.post(`/api/product/update-attachment/${id}`, {
-      file_path: JSON.stringify(newArr),
+      filePath: JSON.stringify(newArr),
     })
       .then((res) => {
         Toast({
