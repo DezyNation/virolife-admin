@@ -188,7 +188,7 @@ const Page = ({ params }) => {
     const index = imgsArr?.indexOf(img);
     if (!index) return;
     const newArr = imgsArr?.splice(index, 1);
-    BackendAxios?.post(`/api/product/update-attachment/${id}`, {
+    BackendAxios.post(`/api/product/update-attachment/${id}`, {
       filePath: JSON.stringify(newArr),
     })
       .then((res) => {
@@ -196,6 +196,7 @@ const Page = ({ params }) => {
           status: "success",
           description: "Images updated successfully!",
         });
+        setConfirmationModal(false)
         fetchCampaignInfo();
       })
       .catch((err) => {

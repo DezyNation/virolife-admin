@@ -168,6 +168,7 @@ const Page = ({ params }) => {
     if(!index) return
     const newArr = imgsArr?.splice(index, 1)
     BackendAxios?.post(`/api/campaign/update-attachment/${id}`, {filePath: JSON.stringify(newArr)}).then(res => {
+      setConfirmationModal(false)
       Toast({
         status: "success",
         description: "Images updated successfully!"
