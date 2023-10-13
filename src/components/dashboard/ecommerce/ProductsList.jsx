@@ -27,9 +27,9 @@ const ProductsList = () => {
   }, []);
 
   function fetchProducts() {
-    BackendAxios.get(`/api/ecommerce/products?search=${search}`)
+    BackendAxios.get(`/api/product?search=${search}`)
       .then((res) => {
-        // setProducts(res.data);
+        setProducts(res.data);
       })
       .catch((err) => {
         Toast({
@@ -77,9 +77,9 @@ const ProductsList = () => {
                 <Td>{product?.images}</Td>
                 <Td>{product?.title}</Td>
                 <Td>{product?.price}</Td>
-                {/* <Td>{product?.health_points_status}</Td> */}
-                <Td>{product?.ad_points_status}</Td>
-                <Td>{product?.atp_points_status}</Td>
+                {/* <Td>{product?.health_point_status}</Td> */}
+                <Td>{product?.ad_point_status}</Td>
+                <Td>{product?.atp_point_status}</Td>
                 <Td>{product?.gift_card_status}</Td>
               </Tr>
             ))}

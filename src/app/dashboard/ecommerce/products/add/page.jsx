@@ -76,21 +76,22 @@ const Page = () => {
       full_description: "",
       category_id: "",
       price: "",
-      health_points_status: true,
-      ad_points_status: true,
-      atp_points_status: true,
+      health_point_status: true,
+      ad_point_status: true,
+      atp_point_status: true,
       gift_card_status: true,
+      status: true,
     },
     onSubmit: (values) => {
       setLoading(true);
-      FormAxios.post("/api/campaign", {
+      FormAxios.post("/api/product", {
         ...values,
       })
         .then((res) => {
           setLoading(false);
           Toast({
             status: "success",
-            description: "Your campaign was sent for review!",
+            description: "Product added successfully!",
           });
         })
         .catch((err) => {
@@ -235,11 +236,11 @@ const Page = () => {
         <HStack gap={4} wrap={"wrap"}>
           <Button
             colorScheme="yellow"
-            variant={Formik.values.health_points_status ? "solid" : "outline"}
+            variant={Formik.values.health_point_status ? "solid" : "outline"}
             onClick={() =>
               Formik.setFieldValue(
-                "health_points_status",
-                !Formik.values.health_points_status
+                "health_point_status",
+                !Formik.values.health_point_status
               )
             }
           >
@@ -247,11 +248,11 @@ const Page = () => {
           </Button>
           <Button
             colorScheme="yellow"
-            variant={Formik.values.ad_points_status ? "solid" : "outline"}
+            variant={Formik.values.ad_point_status ? "solid" : "outline"}
             onClick={() =>
               Formik.setFieldValue(
-                "ad_points_status",
-                !Formik.values.ad_points_status
+                "ad_point_status",
+                !Formik.values.ad_point_status
               )
             }
           >
@@ -259,11 +260,11 @@ const Page = () => {
           </Button>
           <Button
             colorScheme="yellow"
-            variant={Formik.values.atp_points_status ? "solid" : "outline"}
+            variant={Formik.values.atp_point_status ? "solid" : "outline"}
             onClick={() =>
               Formik.setFieldValue(
-                "atp_points_status",
-                !Formik.values.atp_points_status
+                "atp_point_status",
+                !Formik.values.atp_point_status
               )
             }
           >
@@ -287,7 +288,13 @@ const Page = () => {
         <Button
           colorScheme="yellow"
           isLoading={loading}
-          onClick={Formik.handleSubmit}
+          onClick={() => {
+            Formik.setFieldValue("status", false);
+            setLoading(true);
+            setTimeout(() => {
+              Formik.handleSubmit();
+            }, 200);
+          }}
           variant={"outline"}
         >
           Save as Draft
