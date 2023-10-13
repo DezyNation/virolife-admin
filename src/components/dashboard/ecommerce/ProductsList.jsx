@@ -3,6 +3,7 @@ import BackendAxios from "@/utils/axios";
 import {
   Button,
   HStack,
+  Image,
   Input,
   Stack,
   Table,
@@ -74,7 +75,18 @@ const ProductsList = () => {
             {products?.map((product, key) => (
               <Tr key={key}>
                 <Td>{key + 1}</Td>
-                <Td>{product?.images}</Td>
+                <Td>
+                  {JSON.parse(product?.images)?.length ? (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${
+                        JSON.parse(product?.images)[0]
+                      }`}
+                      boxSize={8}
+                    />
+                  ) : (
+                    "NO IMG"
+                  )}
+                </Td>
                 <Td>{product?.title}</Td>
                 <Td>{product?.price}</Td>
                 {/* <Td>{product?.health_point_status}</Td> */}
