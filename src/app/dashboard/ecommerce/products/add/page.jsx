@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import {
   Text,
@@ -31,6 +31,7 @@ const QuillNoSSRWrapper = dynamic(async () => {
 });
 
 const Page = () => {
+  const [isClient, setIsClient] = useState(false);
   const Toast = useToast({ position: "top-right" });
   const [loading, setLoading] = useState(false);
 
@@ -106,6 +107,10 @@ const Page = () => {
         });
     },
   });
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <>
@@ -213,12 +218,16 @@ const Page = () => {
       </FormControl>
       <FormControl py={4}>
         <FormLabel>Full description</FormLabel>
-        <QuillNoSSRWrapper
-          theme="snow"
-          value={Formik.values.full_description}
-          onChange={(value) => Formik.setFieldValue("full_description", value)}
-          style={{ height: "400px" }}
-        />
+        {isClient ? (
+          <QuillNoSSRWrapper
+            theme="snow"
+            value={Formik.values.full_description}
+            onChange={(value) =>
+              Formik.setFieldValue("full_description", value)
+            }
+            style={{ height: "400px" }}
+          />
+        ) : null}
       </FormControl>
       <br />
       <br />
