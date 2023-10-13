@@ -442,30 +442,28 @@ const Page = ({ params }) => {
         </HStack>
       </VStack>
       <HStack justifyContent={"flex-end"} py={4}>
-        {campaign?.status === 1 ? (
-          <Button
-            colorScheme="yellow"
-            isLoading={loading}
-            onClick={() => {
-              Formik.setFieldValue("status", false);
-              setLoading(true);
-              setTimeout(() => {
-                Formik.handleSubmit();
-              }, 200);
-            }}
-            variant={"outline"}
-          >
-            Change to Draft
-          </Button>
-        ) : (
-          <Button
-            colorScheme="yellow"
-            isLoading={loading}
-            onClick={Formik.handleSubmit}
-          >
-            Publish
-          </Button>
-        )}
+        <Button
+          colorScheme="yellow"
+          isLoading={loading}
+          onClick={() => {
+            Formik.setFieldValue("status", false);
+            setLoading(true);
+            setTimeout(() => {
+              Formik.handleSubmit();
+            }, 200);
+          }}
+          variant={"outline"}
+        >
+          Change to Draft
+        </Button>
+
+        <Button
+          colorScheme="yellow"
+          isLoading={loading}
+          onClick={Formik.handleSubmit}
+        >
+          Publish
+        </Button>
       </HStack>
 
       {/* Delete confirmation modal */}
