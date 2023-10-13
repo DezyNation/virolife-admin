@@ -375,7 +375,7 @@ const Page = ({ params }) => {
       <FormControl py={4}>
         <FormLabel>Your message</FormLabel>
         <QuillNoSSRWrapper
-          value={Formik.values.description}
+          value={Formik.values.longDescription}
           onChange={(value) => Formik.setFieldValue("longDescription", value)}
         />
       </FormControl>
