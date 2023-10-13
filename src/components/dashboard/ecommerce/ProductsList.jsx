@@ -5,7 +5,13 @@ import {
   HStack,
   Image,
   Input,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Stack,
+  Switch,
   Table,
   TableContainer,
   Tbody,
@@ -14,14 +20,19 @@ import {
   Th,
   Thead,
   Tr,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { BsCheckCircleFill } from "react-icons/bs";
 
 const ProductsList = () => {
   const Toast = useToast();
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState([]);
+  const [targetProductId, setTargetProductId] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     fetchProducts();
@@ -31,6 +42,44 @@ const ProductsList = () => {
     BackendAxios.get(`/api/product?search=${search}`)
       .then((res) => {
         setProducts(res.data);
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function updateProduct(id, data) {
+    BackendAxios.put(`/api/product/${id}`, {
+      ...data,
+    })
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Product updated successfully!",
+        });
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function deleteProduct(id) {
+    BackendAxios.delete(`/api/product/${id}`)
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Product deleted successfully!",
+        });
+        onClose();
+        fetchProducts();
       })
       .catch((err) => {
         Toast({
@@ -69,6 +118,7 @@ const ProductsList = () => {
               <Th>Ad Points</Th>
               <Th>All Team Points</Th>
               <Th>Gift Card</Th>
+              <Th>Actions</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -87,17 +137,80 @@ const ProductsList = () => {
                     "NO IMG"
                   )}
                 </Td>
-                <Td>{product?.title}</Td>
+                <Td>{product?.name}</Td>
                 <Td>{product?.price}</Td>
-                {/* <Td>{product?.health_point_status}</Td> */}
-                <Td>{product?.ad_point_status}</Td>
-                <Td>{product?.atp_point_status}</Td>
-                <Td>{product?.gift_card_status}</Td>
+                {/* <Td>{product?.health_point_status ? <BsCheckCircleFill color={'green'} /> : null}</Td> */}
+                <Td>
+                  {product?.ad_point_status ? (
+                    <BsCheckCircleFill color={"green"} />
+                  ) : null}
+                </Td>
+                <Td>
+                  {product?.atp_point_status ? (
+                    <BsCheckCircleFill color={"green"} />
+                  ) : null}
+                </Td>
+                <Td>
+                  {product?.gift_card_status ? (
+                    <BsCheckCircleFill color={"green"} />
+                  ) : null}
+                </Td>
+                <Td>
+                  <HStack>
+                    <Switch
+                      defaultChecked={product?.status === 1}
+                      onChange={() =>
+                        updateProduct(product?.id, {
+                          status: product?.status === 1 ? 0 : 1,
+                        })
+                      }
+                    />
+                    <Link
+                      href={`/dashboard/ecommerce/products/edit/${product?.id}`}
+                      target="_blank"
+                    >
+                      <Button size={"xs"}>Edit</Button>
+                    </Link>
+                    <Button
+                      size={"xs"}
+                      colorScheme="red"
+                      onClick={() => {
+                        setTargetProductId(product?.id);
+                        onOpen();
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </HStack>
+                </Td>
               </Tr>
             ))}
           </Tbody>
         </Table>
       </TableContainer>
+
+      {/* Delete confirmation modal */}
+      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+        1
+        <ModalOverlay />
+        <ModalHeader>Delte Product?</ModalHeader>
+        <ModalBody>
+          <Text>
+            Are you sure to delete this product? This action cannot be undone.
+          </Text>
+        </ModalBody>
+        <ModalFooter>
+          <HStack justifyContent={"flex-end"}>
+            <Button onClick={onClose}>Cancel</Button>
+            <Button
+              colorScheme="red"
+              onClick={() => deleteProduct(targetProductId)}
+            >
+              Yes, Delete
+            </Button>
+          </HStack>
+        </ModalFooter>
+      </Modal>
     </>
   );
 };
