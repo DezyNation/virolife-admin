@@ -74,7 +74,7 @@ const Page = () => {
       name: "",
       files: null,
       description: "",
-      fullDescription: "",
+      longDescription: "",
       categoryId: "",
       price: "",
       healthPointStatus: true,
@@ -232,9 +232,9 @@ const Page = () => {
         {isClient ? (
           <QuillNoSSRWrapper
             theme="snow"
-            value={Formik.values.fullDescription}
+            value={Formik.values.longDescription}
             onChange={(value) =>
-              Formik.setFieldValue("fullDescription", value)
+              Formik.setFieldValue("longDescription", value)
             }
             style={{ height: "400px" }}
           />
