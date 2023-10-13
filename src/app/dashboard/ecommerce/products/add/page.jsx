@@ -71,16 +71,16 @@ const Page = () => {
 
   const Formik = useFormik({
     initialValues: {
-      title: "",
+      name: "",
       files: null,
       description: "",
-      full_description: "",
-      category_id: "",
+      fullDescription: "",
+      categoryId: "",
       price: "",
-      health_point_status: true,
-      ad_point_status: true,
-      atp_point_status: true,
-      gift_card_status: true,
+      healthPointStatus: true,
+      adPointStatus: true,
+      atpPointStatus: true,
+      giftCardStatus: true,
       status: true,
     },
     onSubmit: (values) => {
@@ -127,7 +127,7 @@ const Page = () => {
         <FormControl py={4} w={["full", "xs"]}>
           <FormLabel>Select Category</FormLabel>
           <Select
-            name="category_id"
+            name="categoryId"
             placeholder="Select Here"
             onChange={Formik.handleChange}
           >
@@ -136,6 +136,17 @@ const Page = () => {
             <option value="3">New Startup</option>
             <option value="4">Sports Help</option>
           </Select>
+        </FormControl>
+        <FormControl py={4} w={["full", "xs"]}>
+          <FormLabel>Min. Payable Amount</FormLabel>
+          <InputGroup>
+            <InputLeftElement children={"₹"} />
+            <Input
+              type="number"
+              name={"minimumPayableAmount"}
+              onChange={Formik.handleChange}
+            />
+          </InputGroup>
         </FormControl>
         <FormControl py={4} w={["full", "xs"]}>
           <FormLabel>Price</FormLabel>
@@ -157,7 +168,7 @@ const Page = () => {
           fontSize={["xl", "2xl", "3xl"]}
           className="serif"
           p={2}
-          name="title"
+          name="name"
           placeholder="e.g: Set of 6 Notebooks"
           onChange={Formik.handleChange}
         />
@@ -221,9 +232,9 @@ const Page = () => {
         {isClient ? (
           <QuillNoSSRWrapper
             theme="snow"
-            value={Formik.values.full_description}
+            value={Formik.values.fullDescription}
             onChange={(value) =>
-              Formik.setFieldValue("full_description", value)
+              Formik.setFieldValue("fullDescription", value)
             }
             style={{ height: "400px" }}
           />
@@ -245,11 +256,11 @@ const Page = () => {
         <HStack gap={4} wrap={"wrap"}>
           <Button
             colorScheme="yellow"
-            variant={Formik.values.health_point_status ? "solid" : "outline"}
+            variant={Formik.values.healthPointStatus ? "solid" : "outline"}
             onClick={() =>
               Formik.setFieldValue(
-                "health_point_status",
-                !Formik.values.health_point_status
+                "healthPointStatus",
+                !Formik.values.healthPointStatus
               )
             }
           >
@@ -257,11 +268,11 @@ const Page = () => {
           </Button>
           <Button
             colorScheme="yellow"
-            variant={Formik.values.ad_point_status ? "solid" : "outline"}
+            variant={Formik.values.adPointStatus ? "solid" : "outline"}
             onClick={() =>
               Formik.setFieldValue(
-                "ad_point_status",
-                !Formik.values.ad_point_status
+                "adPointStatus",
+                !Formik.values.adPointStatus
               )
             }
           >
@@ -269,11 +280,11 @@ const Page = () => {
           </Button>
           <Button
             colorScheme="yellow"
-            variant={Formik.values.atp_point_status ? "solid" : "outline"}
+            variant={Formik.values.atpPointStatus ? "solid" : "outline"}
             onClick={() =>
               Formik.setFieldValue(
-                "atp_point_status",
-                !Formik.values.atp_point_status
+                "atpPointStatus",
+                !Formik.values.atpPointStatus
               )
             }
           >
@@ -281,11 +292,11 @@ const Page = () => {
           </Button>
           <Button
             colorScheme="yellow"
-            variant={Formik.values.gift_card_status ? "solid" : "outline"}
+            variant={Formik.values.giftCardStatus ? "solid" : "outline"}
             onClick={() =>
               Formik.setFieldValue(
-                "gift_card_status",
-                !Formik.values.gift_card_status
+                "giftCardStatus",
+                !Formik.values.giftCardStatus
               )
             }
           >
