@@ -61,7 +61,7 @@ const page = () => {
       agentId: "",
       distributorId: "",
       amount: "",
-      purpose: "",
+      purpose: "ecommerce",
       plan: "",
       expiry: "",
       purpose: "",
@@ -160,7 +160,7 @@ const page = () => {
   }
 
   function fetchGiftCards() {
-    BackendAxios.get(`/api/gift`)
+    BackendAxios.get(`/api/gift?purpose=ecommerce`)
       .then((res) => {
         setGiftCards(res.data);
       })
@@ -252,44 +252,42 @@ const page = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {giftCards
-              ?.filter((gift) => gift?.purpose != "ecommerce")
-              ?.map((item, key) => (
-                <Tr key={key}>
-                  <Td>{key + 1}</Td>
-                  <Td>{item?.code}</Td>
-                  {/* <Td>{item?.amount}</Td> */}
-                  <Td>{item?.purpose}</Td>
-                  <Td>{item?.redeemed ? "USED" : "PENDING"}</Td>
-                  <Td>{item?.distributor_id}</Td>
-                  <Td>{item?.agent_id}</Td>
-                  <Td>{item?.user_id}</Td>
-                  <Td>
-                    {item?.created_at
-                      ? new Date(item?.created_at).toLocaleDateString()
-                      : ""}
-                  </Td>
-                  <Td>{item?.expiry_at}</Td>
-                  <Td>
-                    <HStack gap={6}>
-                      <Button
-                        size={"xs"}
-                        colorScheme="twitter"
-                        onClick={() => setSelectedGiftCard(item)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        size={"xs"}
-                        colorScheme="red"
-                        onClick={() => deleteGiftCard(item?.id)}
-                      >
-                        Delete
-                      </Button>
-                    </HStack>
-                  </Td>
-                </Tr>
-              ))}
+            {giftCards?.map((item, key) => (
+              <Tr key={key}>
+                <Td>{key + 1}</Td>
+                <Td>{item?.code}</Td>
+                {/* <Td>{item?.amount}</Td> */}
+                <Td>{item?.purpose}</Td>
+                <Td>{item?.redeemed ? "USED" : "PENDING"}</Td>
+                <Td>{item?.distributor_id}</Td>
+                <Td>{item?.agent_id}</Td>
+                <Td>{item?.user_id}</Td>
+                <Td>
+                  {item?.created_at
+                    ? new Date(item?.created_at).toLocaleDateString()
+                    : ""}
+                </Td>
+                <Td>{item?.expiry_at}</Td>
+                <Td>
+                  <HStack gap={6}>
+                    <Button
+                      size={"xs"}
+                      colorScheme="twitter"
+                      onClick={() => setSelectedGiftCard(item)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size={"xs"}
+                      colorScheme="red"
+                      onClick={() => deleteGiftCard(item?.id)}
+                    >
+                      Delete
+                    </Button>
+                  </HStack>
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
@@ -320,7 +318,7 @@ const page = () => {
                 <Input name="count" onChange={Formik.handleChange} />
               </FormControl>
             )}
-            {Formik.values.giftCardId ? null : (
+            {/* {Formik.values.giftCardId ? null : (
               <FormControl mb={4}>
                 <FormLabel>Purpose</FormLabel>
                 <Select
@@ -354,7 +352,7 @@ const page = () => {
                   <option value="6">Plan F</option>
                 </Select>
               </FormControl>
-            ) : null}
+            ) : null} */}
             {wantMultipleCards ? null : (
               <FormControl mb={4}>
                 <FormLabel>Card No.</FormLabel>

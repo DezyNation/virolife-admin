@@ -216,10 +216,10 @@ const MenuOptions = () => {
           </HStack>
         </Link>
 
-        <Accordion allowToggle w={'full'}>
-          <AccordionItem w={'full'}>
-            <AccordionButton w={'full'} px={0}>
-              <HStack w={'full'}>
+        <Accordion allowToggle w={"full"}>
+          <AccordionItem w={"full"}>
+            <AccordionButton w={"full"} px={0}>
+              <HStack w={"full"}>
                 <BsYoutube size={20} />
                 <Text>Videos</Text>
                 <Spacer />
@@ -230,14 +230,15 @@ const MenuOptions = () => {
               <VStack
                 alignItems={"flex-start"}
                 justifyContent={"center"}
-                gap={6} w={'full'}
+                gap={6}
+                w={"full"}
               >
                 <Link href={"/dashboard/videos"}>
                   <HStack gap={4}>
                     <Text>All Videos</Text>
                   </HStack>
                 </Link>
-                
+
                 <Link href={"/dashboard/videos/video-views"}>
                   <HStack gap={4}>
                     <Text>Video Views</Text>
@@ -249,16 +250,15 @@ const MenuOptions = () => {
                     <Text>Users Data</Text>
                   </HStack>
                 </Link>
-
               </VStack>
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
 
-        <Accordion allowToggle w={'full'}>
-          <AccordionItem w={'full'}>
-            <AccordionButton w={'full'} px={0}>
-              <HStack w={'full'}>
+        <Accordion allowToggle w={"full"}>
+          <AccordionItem w={"full"}>
+            <AccordionButton w={"full"} px={0}>
+              <HStack w={"full"}>
                 <BsCartCheckFill size={20} />
                 <Text>Ecommerce</Text>
                 <Spacer />
@@ -269,14 +269,22 @@ const MenuOptions = () => {
               <VStack
                 alignItems={"flex-start"}
                 justifyContent={"center"}
-                gap={6} w={'full'}
+                gap={6}
+                w={"full"}
+                py={4}
               >
-                <Link href={"#"}>
+                <Link href={"/dashboard/ecommerce/categories"}>
+                  <HStack gap={4}>
+                    <Text>Categories</Text>
+                  </HStack>
+                </Link>
+
+                <Link href={"/dashboard/ecommerce/products"}>
                   <HStack gap={4}>
                     <Text>Products</Text>
                   </HStack>
                 </Link>
-                
+
                 <Link href={"#"}>
                   <HStack gap={4}>
                     <Text>Orders</Text>
@@ -288,7 +296,6 @@ const MenuOptions = () => {
                     <Text>Gift Cards</Text>
                   </HStack>
                 </Link>
-
               </VStack>
             </AccordionPanel>
           </AccordionItem>
