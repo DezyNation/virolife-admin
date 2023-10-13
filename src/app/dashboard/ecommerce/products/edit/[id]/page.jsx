@@ -60,11 +60,11 @@ const Page = ({ params }) => {
   }, []);
 
   function fetchCampaignInfo() {
-    BackendAxios.get(`/api/campaign/${id}`)
+    BackendAxios.get(`/api/product/${id}`)
       .then((res) => {
         setCampaign(res.data[0]);
-        if (res?.data[0]?.file_path) {
-          setCampaignImages(JSON.parse(res?.data[0]?.file_path));
+        if (res?.data[0]?.images) {
+          setCampaignImages(JSON.parse(res?.data[0]?.images));
         }
       })
       .catch((err) => {
