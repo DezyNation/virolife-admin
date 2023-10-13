@@ -42,10 +42,10 @@ const Page = ({ params }) => {
   const Toast = useToast({ position: "top-right" });
   const [loading, setLoading] = useState(false);
   const [campaign, setCampaign] = useState({});
-  const [campaignImages, setCampaignImages] = useState(null)
+  const [campaignImages, setCampaignImages] = useState(null);
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
-  const [imageToDelete, setImageToDelete] = useState("")
-  const [confirmationModal, setConfirmationModal] = useState(false)
+  const [imageToDelete, setImageToDelete] = useState("");
+  const [confirmationModal, setConfirmationModal] = useState(false);
   const [beneficiaryDetails, setBeneficiaryDetails] = useState({
     type: "myself",
     name: "",
@@ -63,8 +63,8 @@ const Page = ({ params }) => {
     BackendAxios.get(`/api/campaign/${id}`)
       .then((res) => {
         setCampaign(res.data[0]);
-        if(res?.data[0]?.file_path){
-          setCampaignImages(JSON.parse(res?.data[0]?.file_path))
+        if (res?.data[0]?.file_path) {
+          setCampaignImages(JSON.parse(res?.data[0]?.file_path));
         }
       })
       .catch((err) => {
@@ -163,26 +163,28 @@ const Page = ({ params }) => {
   }, [campaign]);
 
   function removeFile(img) {
-    const imgsArr = campaignImages
-    const index =  imgsArr?.indexOf(img)
-    if(!index) return
-    const newArr = imgsArr?.splice(index, 1)
-    BackendAxios?.post(`/api/campaign/update-attachment/${id}`, {filePath: JSON.stringify(newArr)}).then(res => {
-      setConfirmationModal(false)
-      Toast({
-        status: "success",
-        description: "Images updated successfully!"
-      })
-      fetchCampaignInfo()
-    }).catch(err => {
-      Toast({
-        status: "error",
-        description:
-          err?.response?.data?.message ||
-          err?.response?.data ||
-          err?.message,
-      });
+    const imgsArr = campaignImages;
+    const index = imgsArr?.indexOf(img);
+    if (!index) return;
+    const newArr = imgsArr?.splice(index, 1);
+    BackendAxios?.post(`/api/campaign/update-attachment/${id}`, {
+      filePath: JSON.stringify(newArr),
     })
+      .then((res) => {
+        setConfirmationModal(false);
+        Toast({
+          status: "success",
+          description: "Images updated successfully!",
+        });
+        fetchCampaignInfo();
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
   }
 
   return (
@@ -245,7 +247,12 @@ const Page = ({ params }) => {
           value={Formik.values.title}
         />
       </FormControl>
-      <HStack w={"full"} flexWrap={"wrap"} alignItems={'flex-start'} justifyContent={"space-between"}>
+      <HStack
+        w={"full"}
+        flexWrap={"wrap"}
+        alignItems={"flex-start"}
+        justifyContent={"space-between"}
+      >
         <Box p={4}>
           <Text fontWeight={"semibold"}>Upload Image</Text>
           <Text pb={4} color={"darkslategray"}>
@@ -296,36 +303,39 @@ const Page = ({ params }) => {
         </Box>
         <Box>
           <Text>Existing Images</Text>
-          {campaign?.file_path ? JSON.parse(campaign?.file_path)?.map((img, key) => (
-            <HStack
-              justifyContent={"space-between"}
-              p={4}
-              key={key}
-              rounded={4}
-              bgColor={"#FFF"}
-              boxShadow={"md"}
-            >
-              <Image
-                boxSize={'24'}
-                src={process.env.NEXT_PUBLIC_BACKEND_URL + "/" + img}
-                rounded={6}
-              />
-              <Box>
-                <Button
-                  rounded={"full"}
-                  colorScheme="red"
-                  leftIcon={<FaTrashAlt />}
-                  size={'sm'}
-                  onClick={() => {
-                    setConfirmationModal(true)
-                    setImageToDelete(img)
-                  }}
+          {campaign?.file_path
+            ? JSON.parse(campaign?.file_path)?.map((img, key) => (
+                <HStack
+                  justifyContent={"space-between"}
+                  p={4}
+                  key={key}
+                  rounded={4}
+                  bgColor={"#FFF"}
+                  boxShadow={"md"}
                 >
-                  Remove File
-                </Button>
-              </Box>
-            </HStack>
-          )) : null}
+                  <Image
+                    boxSize={"24"}
+                    src={process.env.NEXT_PUBLIC_BACKEND_URL + "/" + img}
+                    rounded={6}
+                  />
+                  <Box>
+                    <Button
+                      rounded={"full"}
+                      colorScheme="red"
+                      leftIcon={<FaTrashAlt />}
+                      size={"sm"}
+                      onClick={() => {
+                        // setConfirmationModal(true)
+                        // setImageToDelete(img)
+                        removeFile(img);
+                      }}
+                    >
+                      Remove File
+                    </Button>
+                  </Box>
+                </HStack>
+              ))
+            : null}
         </Box>
       </HStack>
       <FormControl py={4}>

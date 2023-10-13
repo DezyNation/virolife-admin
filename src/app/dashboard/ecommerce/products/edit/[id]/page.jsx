@@ -351,8 +351,9 @@ const Page = ({ params }) => {
                       leftIcon={<FaTrashAlt />}
                       size={"sm"}
                       onClick={() => {
-                        setConfirmationModal(true);
-                        setImageToDelete(img);
+                        // setConfirmationModal(true);
+                        // setImageToDelete(img);
+                        removeFile(img)
                       }}
                     >
                       Remove File
