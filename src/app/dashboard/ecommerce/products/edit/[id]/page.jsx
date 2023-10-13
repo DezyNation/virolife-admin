@@ -62,9 +62,9 @@ const Page = ({ params }) => {
   function fetchCampaignInfo() {
     BackendAxios.get(`/api/product/${id}`)
       .then((res) => {
-        setCampaign(res.data[0]);
-        if (res?.data[0]?.images) {
-          setCampaignImages(JSON.parse(res?.data[0]?.images));
+        setCampaign(res.data);
+        if (res?.data?.images) {
+          setCampaignImages(JSON.parse(res?.data?.images));
         }
       })
       .catch((err) => {
