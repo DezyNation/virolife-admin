@@ -76,6 +76,7 @@ const Page = () => {
       description: "",
       longDescription: "",
       categoryId: "",
+      minimumPayableAmount: "",
       price: "",
       healthPointStatus: true,
       adPointStatus: true,
@@ -84,6 +85,18 @@ const Page = () => {
       status: true,
     },
     onSubmit: (values) => {
+      if(values.minimumPayableAmount < values.price){
+        Toast({
+          description: "Min. Amount must be less than the price"
+        })
+        return
+      }
+      if(!values.files?.length){
+        Toast({
+          description: "You must upload atleast 1 image"
+        })
+        return
+      }
       setLoading(true);
       FormAxios.post("/api/product", {
         ...values,
