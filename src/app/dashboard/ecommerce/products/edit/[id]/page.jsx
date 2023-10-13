@@ -126,7 +126,7 @@ const Page = ({ params }) => {
     },
     onSubmit: (values) => {
       setLoading(true);
-      FormAxios.put(`/api/product/${id}`, {
+      BackendAxios.put(`/api/product/${id}`, {
         ...values,
         healthPointStatus: values?.healthPointStatus ? 1 : 0,
         adPointStatus: values?.adPointStatus ? 1 : 0,
