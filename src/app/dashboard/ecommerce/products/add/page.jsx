@@ -78,24 +78,24 @@ const Page = () => {
       categoryId: "",
       minimumPayableAmount: "",
       price: "",
-      healthPointStatus: true,
-      adPointStatus: true,
-      atpPointStatus: true,
+      healthPoint: "",
+      adPoint: "",
+      atpPoint: "",
       giftCardStatus: true,
       status: true,
     },
     onSubmit: (values) => {
-      if(values.minimumPayableAmount > values.price){
+      if (values.minimumPayableAmount > values.price) {
         Toast({
-          description: "Min. Amount must be less than the price"
-        })
-        return
+          description: "Min. Amount must be less than the price",
+        });
+        return;
       }
-      if(!values.files?.length){
+      if (!values.files?.length) {
         Toast({
-          description: "You must upload atleast 1 image"
-        })
-        return
+          description: "You must upload atleast 1 image",
+        });
+        return;
       }
       setLoading(true);
       FormAxios.post("/api/product", {
@@ -269,43 +269,34 @@ const Page = () => {
           Which payment methods will be allowed?
         </Text>
         <br />
-        <HStack gap={4} wrap={"wrap"}>
-          <Button
-            colorScheme="yellow"
-            variant={Formik.values.healthPointStatus ? "solid" : "outline"}
-            onClick={() =>
-              Formik.setFieldValue(
-                "healthPointStatus",
-                !Formik.values.healthPointStatus
-              )
-            }
-          >
-            Health Points
-          </Button>
-          <Button
-            colorScheme="yellow"
-            variant={Formik.values.adPointStatus ? "solid" : "outline"}
-            onClick={() =>
-              Formik.setFieldValue(
-                "adPointStatus",
-                !Formik.values.adPointStatus
-              )
-            }
-          >
-            Ad Points
-          </Button>
-          <Button
-            colorScheme="yellow"
-            variant={Formik.values.atpPointStatus ? "solid" : "outline"}
-            onClick={() =>
-              Formik.setFieldValue(
-                "atpPointStatus",
-                !Formik.values.atpPointStatus
-              )
-            }
-          >
-            All Team Points
-          </Button>
+        <HStack alignItems={'flex-end'} gap={6} wrap={"wrap"}>
+          <FormControl maxW={["full", "xs"]}>
+            <FormLabel fontSize={"xs"}>Health Points</FormLabel>
+            <Input
+              type="number"
+              name="healthPoint"
+              onChange={Formik.handleChange}
+            />
+          </FormControl>
+
+          <FormControl maxW={["full", "xs"]}>
+            <FormLabel fontSize={"xs"}>Ad Points</FormLabel>
+            <Input
+              type="number"
+              name="adPoint"
+              onChange={Formik.handleChange}
+            />
+          </FormControl>
+
+          <FormControl maxW={["full", "xs"]}>
+            <FormLabel fontSize={"xs"}>All Team Points</FormLabel>
+            <Input
+              type="number"
+              name="atpPoint"
+              onChange={Formik.handleChange}
+            />
+          </FormControl>
+
           <Button
             colorScheme="yellow"
             variant={Formik.values.giftCardStatus ? "solid" : "outline"}
