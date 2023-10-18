@@ -114,7 +114,7 @@ const ProductsList = () => {
               <Th>Img</Th>
               <Th>Title</Th>
               <Th>Price</Th>
-              {/* <Th>Health Points</Th> */}
+              <Th>Health Points</Th>
               <Th>Ad Points</Th>
               <Th>All Team Points</Th>
               <Th>Gift Card</Th>
@@ -139,18 +139,14 @@ const ProductsList = () => {
                 </Td>
                 <Td>{product?.name}</Td>
                 <Td>{product?.price}</Td>
-                {/* <Td>{product?.health_point_status ? <BsCheckCircleFill color={'green'} /> : null}</Td> */}
+                <Td>{product?.health_point}</Td>
                 <Td>
-                  {product?.ad_point_status ? (
-                    <BsCheckCircleFill color={"green"} />
-                  ) : null}
+                  {product?.ad_point}
                 </Td>
                 <Td>
-                  {product?.atp_point_status ? (
-                    <BsCheckCircleFill color={"green"} />
-                  ) : null}
+                  {product?.atp_point}
                 </Td>
-                <Td>
+                <Td textAlign={'center'}>
                   {product?.gift_card_status ? (
                     <BsCheckCircleFill color={"green"} />
                   ) : null}

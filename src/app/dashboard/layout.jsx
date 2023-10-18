@@ -285,13 +285,13 @@ const MenuOptions = () => {
                   </HStack>
                 </Link>
 
-                <Link href={"#"}>
+                <Link href={"/dashboard/ecommerce/orders"}>
                   <HStack gap={4}>
                     <Text>Orders</Text>
                   </HStack>
                 </Link>
 
-                <Link href={"#"}>
+                <Link href={"/dashboard/ecommerce/gift-cards"}>
                   <HStack gap={4}>
                     <Text>Gift Cards</Text>
                   </HStack>
