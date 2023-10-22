@@ -28,6 +28,7 @@ import {
   BsCalendarCheck,
   BsCartCheckFill,
   BsCashCoin,
+  BsClipboardDataFill,
   BsCurrencyRupee,
   BsGearFill,
   BsMegaphoneFill,
@@ -39,7 +40,7 @@ import {
 import { MdGroups, MdPersonAdd } from "react-icons/md";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { HiUserGroup } from "react-icons/hi";
-import { BiLogIn, BiMenuAltLeft, BiUser } from "react-icons/bi";
+import { BiDonateHeart, BiLogIn, BiMenuAltLeft, BiUser } from "react-icons/bi";
 import {
   FaPercentage,
   FaRegCreditCard,
@@ -203,6 +204,18 @@ const MenuOptions = () => {
           </HStack>
         </Link>
         <br />
+        <Link href={"/dashboard/transactions/campaign-donations"}>
+          <HStack gap={4}>
+            <BiDonateHeart size={20} />
+            <Text>Campaign Donations</Text>
+          </HStack>
+        </Link>
+        <Link href={"/dashboard/transactions/gateway-transactions"}>
+          <HStack gap={4}>
+            <BsClipboardDataFill size={20} />
+            <Text>Gateway Transactions</Text>
+          </HStack>
+        </Link>
         <Link href={"/dashboard/gift-cards"}>
           <HStack gap={4}>
             <FaRegCreditCard size={20} />
@@ -215,7 +228,7 @@ const MenuOptions = () => {
             <Text>Invitations</Text>
           </HStack>
         </Link>
-
+        <br />
         <Accordion allowToggle w={"full"}>
           <AccordionItem w={"full"}>
             <AccordionButton w={"full"} px={0}>
