@@ -42,9 +42,9 @@ const Auth = () => {
   });
 
   useEffect(() => {
-    if (Boolean(Cookies.get("jwt"))) {
-      router.push("/dashboard");
-    }
+    // if (Boolean(Cookies.get("jwt"))) {
+    //   router.push("/dashboard");
+    // }
   }, []);
 
   function handleLogin() {
