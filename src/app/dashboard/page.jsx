@@ -21,6 +21,7 @@ import {
 } from "react-icons/bs";
 import Link from "next/link";
 import BackendAxios from "@/utils/axios";
+import Cookies from "js-cookie";
 
 const DashboardHome = () => {
   const [selectedImg, setSelectedImg] = useState(
@@ -37,7 +38,7 @@ const DashboardHome = () => {
       .catch((err) => {
         if(err?.response?.status == 401){
           localStorage.clear()
-          Cookies.set("jwt", "")
+          Cookies.remove("jwt")
           setTimeout(() => {
             window.location.replace("/auth")
           }, 500);
