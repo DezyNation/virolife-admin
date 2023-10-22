@@ -38,7 +38,9 @@ const DashboardHome = () => {
         if(err?.response?.status == 401){
           localStorage.clear()
           Cookies.remove("jwt")
-          window.location.replace("/auth")
+          setTimeout(() => {
+            window.location.replace("/auth")
+          }, 500);
         }
         console.log(err);
       });
