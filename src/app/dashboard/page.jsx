@@ -35,6 +35,11 @@ const DashboardHome = () => {
         setOverviewData(res.data);
       })
       .catch((err) => {
+        if(err?.response?.status == 401){
+          localStorage.clear()
+          Cookies.remove("jwt")
+          window.location.replace("/auth")
+        }
         console.log(err);
       });
   }, []);
