@@ -213,7 +213,7 @@ const Page = ({ params }) => {
           <Select
             name="category_id"
             placeholder="Select Here"
-            onChange={value =>Formik.setFieldValue("categoryId", value)}
+            onChange={(e) => Formik.setFieldValue("categoryId", e.target.value)}
             value={Formik.values.categoryId}
           >
             <option value="1">Medical</option>
