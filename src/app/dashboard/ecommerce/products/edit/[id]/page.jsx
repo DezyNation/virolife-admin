@@ -161,7 +161,7 @@ const Page = ({ params }) => {
     Formik.setFieldValue("description", campaign?.description);
     Formik.setFieldValue("longDescription", campaign?.longDescription);
     Formik.setFieldValue("categoryId", campaign?.category?.id);
-    Formik.setFieldValue("healthPoint", campaign?.health_point_sta);
+    Formik.setFieldValue("healthPoint", campaign?.health_point);
     Formik.setFieldValue("adPoint", campaign?.ad_point);
     Formik.setFieldValue("atpPoint", campaign?.atp_point);
     Formik.setFieldValue(
@@ -386,6 +386,7 @@ const Page = ({ params }) => {
             <Input
               type="number"
               name="healthPoint"
+              value={Formik.values.healthPoint}
               onChange={Formik.handleChange}
             />
           </FormControl>
@@ -395,6 +396,7 @@ const Page = ({ params }) => {
             <Input
               type="number"
               name="adPoint"
+              value={Formik.values.adPoint}
               onChange={Formik.handleChange}
             />
           </FormControl>
@@ -404,26 +406,43 @@ const Page = ({ params }) => {
             <Input
               type="number"
               name="atpPoint"
+              value={Formik.values.atpPoint}
               onChange={Formik.handleChange}
             />
           </FormControl>
 
-          <Button
+          <FormControl maxW={["full", "xs"]}>
+            <FormLabel fontSize={"xs"}>Allow Gift Card</FormLabel>
+            <Button
             colorScheme="yellow"
             variant={Formik.values.giftCardStatus ? "solid" : "outline"}
             onClick={() =>
               Formik.setFieldValue(
                 "giftCardStatus",
-                !Formik.values.giftCardStatus
+                true
               )
             }
           >
-            Gift Card
+            Yes
           </Button>
+            <Button
+            colorScheme="yellow"
+            variant={!Formik.values.giftCardStatus ? "solid" : "outline"}
+            onClick={() =>
+              Formik.setFieldValue(
+                "giftCardStatus",
+                false
+              )
+            }
+          >
+            No
+          </Button>
+          </FormControl>
+          
         </HStack>
       </VStack>
       <HStack justifyContent={"flex-end"} py={4}>
-        <Button
+        {/* <Button
           colorScheme="yellow"
           isLoading={loading}
           onClick={() => {
@@ -436,14 +455,14 @@ const Page = ({ params }) => {
           variant={"outline"}
         >
           Change to Draft
-        </Button>
+        </Button> */}
 
         <Button
           colorScheme="yellow"
           isLoading={loading}
           onClick={Formik.handleSubmit}
         >
-          Publish
+          Save
         </Button>
       </HStack>
 

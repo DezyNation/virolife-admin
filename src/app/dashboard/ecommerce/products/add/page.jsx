@@ -269,7 +269,7 @@ const Page = () => {
           Which payment methods will be allowed?
         </Text>
         <br />
-        <HStack alignItems={'flex-end'} gap={6} wrap={"wrap"}>
+        <HStack alignItems={"flex-end"} gap={6} wrap={"wrap"}>
           <FormControl maxW={["full", "xs"]}>
             <FormLabel fontSize={"xs"}>Health Points</FormLabel>
             <Input
@@ -297,22 +297,27 @@ const Page = () => {
             />
           </FormControl>
 
-          <Button
-            colorScheme="yellow"
-            variant={Formik.values.giftCardStatus ? "solid" : "outline"}
-            onClick={() =>
-              Formik.setFieldValue(
-                "giftCardStatus",
-                !Formik.values.giftCardStatus
-              )
-            }
-          >
-            Gift Card
-          </Button>
+          <FormControl maxW={["full", "xs"]}>
+            <FormLabel fontSize={"xs"}>Allow Gift Card</FormLabel>
+            <Button
+              colorScheme="yellow"
+              variant={Formik.values.giftCardStatus ? "solid" : "outline"}
+              onClick={() => Formik.setFieldValue("giftCardStatus", true)}
+            >
+              Yes
+            </Button>
+            <Button
+              colorScheme="yellow"
+              variant={!Formik.values.giftCardStatus ? "solid" : "outline"}
+              onClick={() => Formik.setFieldValue("giftCardStatus", false)}
+            >
+              No
+            </Button>
+          </FormControl>
         </HStack>
       </VStack>
       <HStack justifyContent={"flex-end"} py={4}>
-        <Button
+        {/* <Button
           colorScheme="yellow"
           isLoading={loading}
           onClick={() => {
@@ -325,7 +330,7 @@ const Page = () => {
           variant={"outline"}
         >
           Save as Draft
-        </Button>
+        </Button> */}
         <Button
           colorScheme="yellow"
           isLoading={loading}
