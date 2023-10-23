@@ -7,6 +7,7 @@ import {
   Input,
   Modal,
   ModalBody,
+  ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
@@ -140,13 +141,9 @@ const ProductsList = () => {
                 <Td>{product?.name}</Td>
                 <Td>{product?.price}</Td>
                 <Td>{product?.health_point}</Td>
-                <Td>
-                  {product?.ad_point}
-                </Td>
-                <Td>
-                  {product?.atp_point}
-                </Td>
-                <Td textAlign={'center'}>
+                <Td>{product?.ad_point}</Td>
+                <Td>{product?.atp_point}</Td>
+                <Td textAlign={"center"}>
                   {product?.gift_card_status ? (
                     <BsCheckCircleFill color={"green"} />
                   ) : null}
@@ -187,25 +184,26 @@ const ProductsList = () => {
 
       {/* Delete confirmation modal */}
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
-        1
         <ModalOverlay />
-        <ModalHeader>Delte Product?</ModalHeader>
-        <ModalBody>
-          <Text>
-            Are you sure to delete this product? This action cannot be undone.
-          </Text>
-        </ModalBody>
-        <ModalFooter>
-          <HStack justifyContent={"flex-end"}>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button
-              colorScheme="red"
-              onClick={() => deleteProduct(targetProductId)}
-            >
-              Yes, Delete
-            </Button>
-          </HStack>
-        </ModalFooter>
+        <ModalContent>
+          <ModalHeader>Delte Product?</ModalHeader>
+          <ModalBody>
+            <Text>
+              Are you sure to delete this product? This action cannot be undone.
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <HStack justifyContent={"flex-end"}>
+              <Button onClick={onClose}>Cancel</Button>
+              <Button
+                colorScheme="red"
+                onClick={() => deleteProduct(targetProductId)}
+              >
+                Yes, Delete
+              </Button>
+            </HStack>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
     </>
   );
