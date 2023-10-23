@@ -118,9 +118,9 @@ const Page = ({ params }) => {
       categoryId: "",
       price: "",
       minimumPayableAmount: "",
-      healthPointStatus: true,
-      adPointStatus: true,
-      atpPointStatus: true,
+      healthPoint: "",
+      adPoint: "",
+      atpPoint: "",
       giftCardStatus: true,
       status: true,
     },
@@ -128,9 +128,6 @@ const Page = ({ params }) => {
       setLoading(true);
       BackendAxios.put(`/api/product/${id}`, {
         ...values,
-        healthPointStatus: values?.healthPointStatus ? 1 : 0,
-        adPointStatus: values?.adPointStatus ? 1 : 0,
-        atpPointStatus: values?.atpPointStatus ? 1 : 0,
         giftCardStatus: values?.giftCardStatus ? 1 : 0,
         status: values?.status ? 1 : 0,
       })
@@ -138,7 +135,7 @@ const Page = ({ params }) => {
           setLoading(false);
           Toast({
             status: "success",
-            description: "Campaign was updated successfully!",
+            description: "Product was updated successfully!",
           });
         })
         .catch((err) => {
@@ -164,18 +161,9 @@ const Page = ({ params }) => {
     Formik.setFieldValue("description", campaign?.description);
     Formik.setFieldValue("longDescription", campaign?.longDescription);
     Formik.setFieldValue("categoryId", campaign?.category?.id);
-    Formik.setFieldValue(
-      "healthPointStatus",
-      campaign?.health_point_status === 1 ? true : false
-    );
-    Formik.setFieldValue(
-      "adPointStatus",
-      campaign?.ad_point_status === 1 ? true : false
-    );
-    Formik.setFieldValue(
-      "atpPointStatus",
-      campaign?.atp_point_status === 1 ? true : false
-    );
+    Formik.setFieldValue("healthPoint", campaign?.health_point_sta);
+    Formik.setFieldValue("adPoint", campaign?.ad_point);
+    Formik.setFieldValue("atpPoint", campaign?.atp_point);
     Formik.setFieldValue(
       "giftCardStatus",
       campaign?.gift_card_status === 1 ? true : false
@@ -196,7 +184,7 @@ const Page = ({ params }) => {
           status: "success",
           description: "Images updated successfully!",
         });
-        setConfirmationModal(false)
+        setConfirmationModal(false);
         fetchCampaignInfo();
       })
       .catch((err) => {
@@ -353,7 +341,7 @@ const Page = ({ params }) => {
                       onClick={() => {
                         // setConfirmationModal(true);
                         // setImageToDelete(img);
-                        removeFile(img)
+                        removeFile(img);
                       }}
                     >
                       Remove File
@@ -392,43 +380,34 @@ const Page = ({ params }) => {
           Which payment methods will be allowed?
         </Text>
         <br />
-        <HStack gap={4} wrap={"wrap"}>
-          <Button
-            colorScheme="yellow"
-            variant={Formik.values.healthPointStatus ? "solid" : "outline"}
-            onClick={() =>
-              Formik.setFieldValue(
-                "healthPointStatus",
-                !Formik.values.healthPointStatus
-              )
-            }
-          >
-            Health Points
-          </Button>
-          <Button
-            colorScheme="yellow"
-            variant={Formik.values.adPointStatus ? "solid" : "outline"}
-            onClick={() =>
-              Formik.setFieldValue(
-                "adPointStatus",
-                !Formik.values.adPointStatus
-              )
-            }
-          >
-            Ad Points
-          </Button>
-          <Button
-            colorScheme="yellow"
-            variant={Formik.values.atpPointStatus ? "solid" : "outline"}
-            onClick={() =>
-              Formik.setFieldValue(
-                "atpPointStatus",
-                !Formik.values.atpPointStatus
-              )
-            }
-          >
-            All Team Points
-          </Button>
+        <HStack alignItems={"flex-end"} gap={6} wrap={"wrap"}>
+          <FormControl maxW={["full", "xs"]}>
+            <FormLabel fontSize={"xs"}>Health Points</FormLabel>
+            <Input
+              type="number"
+              name="healthPoint"
+              onChange={Formik.handleChange}
+            />
+          </FormControl>
+
+          <FormControl maxW={["full", "xs"]}>
+            <FormLabel fontSize={"xs"}>Ad Points</FormLabel>
+            <Input
+              type="number"
+              name="adPoint"
+              onChange={Formik.handleChange}
+            />
+          </FormControl>
+
+          <FormControl maxW={["full", "xs"]}>
+            <FormLabel fontSize={"xs"}>All Team Points</FormLabel>
+            <Input
+              type="number"
+              name="atpPoint"
+              onChange={Formik.handleChange}
+            />
+          </FormControl>
+
           <Button
             colorScheme="yellow"
             variant={Formik.values.giftCardStatus ? "solid" : "outline"}
