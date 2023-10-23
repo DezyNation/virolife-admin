@@ -375,7 +375,7 @@ const page = () => {
                 <Input
                   name="amount"
                   value={Formik.values.amount}
-                  // onChange={Formik.handleChange}
+                  onChange={Formik.handleChange}
                 />
               </FormControl>
             )}
