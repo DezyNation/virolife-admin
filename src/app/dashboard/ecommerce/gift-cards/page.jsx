@@ -160,7 +160,7 @@ const page = () => {
   }
 
   function fetchGiftCards() {
-    BackendAxios.get(`/api/gift?purpose=ecommerce`)
+    BackendAxios.get(`/api/gift/ecommerce`)
       .then((res) => {
         setGiftCards(res.data);
       })
@@ -240,8 +240,8 @@ const page = () => {
             <Tr>
               <Th>#</Th>
               <Th>Card No.</Th>
-
-              <Th>Purpose</Th>
+              <Th>Amount</Th>
+              {/* <Th>Purpose</Th> */}
               <Th>Status</Th>
               <Th>Distributor</Th>
               <Th>Agent</Th>
@@ -256,8 +256,8 @@ const page = () => {
               <Tr key={key}>
                 <Td>{key + 1}</Td>
                 <Td>{item?.code}</Td>
-                {/* <Td>{item?.amount}</Td> */}
-                <Td>{item?.purpose}</Td>
+                <Td>{item?.amount}</Td>
+                {/* <Td>{item?.purpose}</Td> */}
                 <Td>{item?.redeemed ? "USED" : "PENDING"}</Td>
                 <Td>{item?.distributor_id}</Td>
                 <Td>{item?.agent_id}</Td>
