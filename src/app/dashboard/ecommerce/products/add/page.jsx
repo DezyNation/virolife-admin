@@ -147,7 +147,8 @@ const Page = () => {
           <Select
             name="categoryId"
             placeholder="Select Here"
-            onChange={Formik.handleChange}
+            onChange={(value) => Formik.setFieldValue("categoryId", value)}
+            value={Formik.values.categoryId}
           >
             <option value="1">Medical</option>
             <option value="2">Education</option>
@@ -299,20 +300,22 @@ const Page = () => {
 
           <FormControl maxW={["full", "xs"]}>
             <FormLabel fontSize={"xs"}>Allow Gift Card</FormLabel>
-            <Button
-              colorScheme="yellow"
-              variant={Formik.values.giftCardStatus ? "solid" : "outline"}
-              onClick={() => Formik.setFieldValue("giftCardStatus", true)}
-            >
-              Yes
-            </Button>
-            <Button
-              colorScheme="yellow"
-              variant={!Formik.values.giftCardStatus ? "solid" : "outline"}
-              onClick={() => Formik.setFieldValue("giftCardStatus", false)}
-            >
-              No
-            </Button>
+            <HStack gap={6}>
+              <Button
+                colorScheme="yellow"
+                variant={Formik.values.giftCardStatus ? "solid" : "outline"}
+                onClick={() => Formik.setFieldValue("giftCardStatus", true)}
+              >
+                Yes
+              </Button>
+              <Button
+                colorScheme="yellow"
+                variant={!Formik.values.giftCardStatus ? "solid" : "outline"}
+                onClick={() => Formik.setFieldValue("giftCardStatus", false)}
+              >
+                No
+              </Button>
+            </HStack>
           </FormControl>
         </HStack>
       </VStack>
