@@ -71,7 +71,7 @@ const page = () => {
         handleEdit();
         return;
       }
-      BackendAxios.post(`/api/gift`, values)
+      BackendAxios.post(`/api/gift`, {...values, purpose: "ecommerce"})
         .then((res) => {
           Toast({
             status: "success",
@@ -94,29 +94,7 @@ const page = () => {
     },
   });
 
-  useEffect(() => {
-    if (Formik.values.purpose == "viroteam-funding") {
-      if (Formik.values.plan) {
-        const amount = plans.find(
-          (plan) => plan.id == Formik.values.plan
-        )?.amount;
-        Formik.setFieldValue("amount", amount);
-      }
-    }
-    if (Formik.values.purpose == "all-team-process") {
-      const amount = 210;
-      Formik.setFieldValue("amount", amount);
-    }
-    if (Formik.values.purpose == "primary-group") {
-      const amount = 250;
-      Formik.setFieldValue("amount", amount);
-    }
-    if (Formik.values.purpose == "secondary-group") {
-      const amount = 500;
-      Formik.setFieldValue("amount", amount);
-    }
-  }, [Formik.values.purpose, Formik.values.plan]);
-
+  
   useEffect(() => {
     if (Formik.values.count >= 2) {
       Formik.setFieldValue("code", "");
