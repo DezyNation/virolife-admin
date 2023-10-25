@@ -117,6 +117,8 @@ const Page = ({ params }) => {
       longDescription: "",
       categoryId: "",
       price: "",
+      strikedPrice: "",
+      deliveryCharge: "",
       minimumPayableAmount: "",
       healthPoint: "",
       adPoint: "",
@@ -153,6 +155,8 @@ const Page = ({ params }) => {
 
   useEffect(() => {
     Formik.setFieldValue("price", campaign?.price);
+    Formik.setFieldValue("strikedPrice", campaign?.striked_price);
+    Formik.setFieldValue("deliveryCharge", campaign?.delivery_charge);
     Formik.setFieldValue(
       "minimumPayableAmount",
       campaign?.minimum_payable_amount
@@ -247,6 +251,39 @@ const Page = ({ params }) => {
           </InputGroup>
         </FormControl>
       </Stack>
+
+      <Stack
+        direction={["column", "row"]}
+        justifyContent={"space-between"}
+        gap={8}
+        py={6}
+      >
+        <FormControl py={4} w={["full", "xs"]}>
+          <FormLabel>Cancelled Price</FormLabel>
+          <InputGroup>
+            <InputLeftElement children={"₹"} />
+            <Input
+              type="number"
+              name={"strikedPrice"}
+              value={Formik.values.strikedPrice}
+              onChange={Formik.handleChange}
+            />
+          </InputGroup>
+        </FormControl>
+        <FormControl py={4} w={["full", "xs"]}>
+          <FormLabel>Shipping Price</FormLabel>
+          <InputGroup>
+            <InputLeftElement children={"₹"} />
+            <Input
+              type="number"
+              name={"deliveryCharge"}
+              value={Formik.values.deliveryCharge}
+              onChange={Formik.handleChange}
+            />
+          </InputGroup>
+        </FormControl>
+      </Stack>
+
       <FormControl py={4}>
         <FormLabel>Product Name</FormLabel>
         <Input
@@ -430,7 +467,6 @@ const Page = ({ params }) => {
               </Button>
             </HStack>
           </FormControl>
-          
         </HStack>
       </VStack>
       <HStack justifyContent={"flex-end"} py={4}>

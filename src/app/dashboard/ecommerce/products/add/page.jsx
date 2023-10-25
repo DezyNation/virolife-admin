@@ -78,6 +78,8 @@ const Page = () => {
       categoryId: "",
       minimumPayableAmount: "",
       price: "",
+      strikedPrice: "",
+      deliveryCharge: "",
       healthPoint: "",
       adPoint: "",
       atpPoint: "",
@@ -168,7 +170,7 @@ const Page = () => {
           </InputGroup>
         </FormControl>
         <FormControl py={4} w={["full", "xs"]}>
-          <FormLabel>Price</FormLabel>
+          <FormLabel>Display Price</FormLabel>
           <InputGroup>
             <InputLeftElement children={"₹"} />
             <Input
@@ -179,6 +181,37 @@ const Page = () => {
           </InputGroup>
         </FormControl>
       </Stack>
+
+      <Stack
+        direction={["column", "row"]}
+        justifyContent={"space-between"}
+        gap={8}
+        py={6}
+      >
+        <FormControl py={4} w={["full", "xs"]}>
+          <FormLabel>Cancelled Price</FormLabel>
+          <InputGroup>
+            <InputLeftElement children={"₹"} />
+            <Input
+              type="number"
+              name={"strikedPrice"}
+              onChange={Formik.handleChange}
+            />
+          </InputGroup>
+        </FormControl>
+        <FormControl py={4} w={["full", "xs"]}>
+          <FormLabel>Shipping Price</FormLabel>
+          <InputGroup>
+            <InputLeftElement children={"₹"} />
+            <Input
+              type="number"
+              name={"deliveryCharge"}
+              onChange={Formik.handleChange}
+            />
+          </InputGroup>
+        </FormControl>
+      </Stack>
+      
       <FormControl py={4}>
         <FormLabel>Product Name</FormLabel>
         <Input
