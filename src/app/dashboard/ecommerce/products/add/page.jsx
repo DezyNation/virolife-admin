@@ -79,7 +79,7 @@ const Page = () => {
       minimumPayableAmount: "",
       price: "",
       strikedPrice: "",
-      deliveryCharge: "",
+      deliveryCharges: "",
       healthPoint: "",
       adPoint: "",
       atpPoint: "",
@@ -205,13 +205,13 @@ const Page = () => {
             <InputLeftElement children={"₹"} />
             <Input
               type="number"
-              name={"deliveryCharge"}
+              name={"deliveryCharges"}
               onChange={Formik.handleChange}
             />
           </InputGroup>
         </FormControl>
       </Stack>
-      
+
       <FormControl py={4}>
         <FormLabel>Product Name</FormLabel>
         <Input

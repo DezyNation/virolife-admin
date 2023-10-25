@@ -118,7 +118,7 @@ const Page = ({ params }) => {
       categoryId: "",
       price: "",
       strikedPrice: "",
-      deliveryCharge: "",
+      deliveryCharges: "",
       minimumPayableAmount: "",
       healthPoint: "",
       adPoint: "",
@@ -156,7 +156,7 @@ const Page = ({ params }) => {
   useEffect(() => {
     Formik.setFieldValue("price", campaign?.price);
     Formik.setFieldValue("strikedPrice", campaign?.striked_price);
-    Formik.setFieldValue("deliveryCharge", campaign?.delivery_charge);
+    Formik.setFieldValue("deliveryCharges", campaign?.delivery_charges);
     Formik.setFieldValue(
       "minimumPayableAmount",
       campaign?.minimum_payable_amount
@@ -276,8 +276,8 @@ const Page = ({ params }) => {
             <InputLeftElement children={"₹"} />
             <Input
               type="number"
-              name={"deliveryCharge"}
-              value={Formik.values.deliveryCharge}
+              name={"deliveryCharges"}
+              value={Formik.values.deliveryCharges}
               onChange={Formik.handleChange}
             />
           </InputGroup>
