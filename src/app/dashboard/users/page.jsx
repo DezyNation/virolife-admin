@@ -261,10 +261,10 @@ const Users = () => {
                   <Td>
                     <HStack gap={4} pb={2}>
                       <Switch
-                        defaultChecked={user?.active === 1}
+                        isChecked={user?.active === 1}
                         colorScheme="yellow"
                         onChange={(e) =>
-                          updateUser(user?.id, { active: e.target.checked })
+                          updateUser(user?.id, { active: user?.active == 1 ? false : true })
                         }
                       />
                       <Button
