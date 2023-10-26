@@ -118,7 +118,7 @@ const ProductsList = () => {
               <Th>Health Points</Th>
               <Th>Ad Points</Th>
               <Th>All Team Points</Th>
-              <Th>Gift Card</Th>
+              <Th>Discount Card</Th>
               <Th>Actions</Th>
             </Tr>
           </Thead>

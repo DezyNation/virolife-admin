@@ -449,7 +449,7 @@ const Page = ({ params }) => {
           </FormControl>
 
           <FormControl maxW={["full", "xs"]}>
-            <FormLabel fontSize={"xs"}>Allow Gift Card</FormLabel>
+            <FormLabel fontSize={"xs"}>Allow Discount Card</FormLabel>
             <HStack gap={6}>
               <Button
                 colorScheme="yellow"
