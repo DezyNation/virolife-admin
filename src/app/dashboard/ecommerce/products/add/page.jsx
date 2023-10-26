@@ -114,6 +114,7 @@ const Page = () => {
             status: "success",
             description: "Product added successfully!",
           });
+          window.location.href("/dashboard/ecommerce/products")
         })
         .catch((err) => {
           setLoading(false);

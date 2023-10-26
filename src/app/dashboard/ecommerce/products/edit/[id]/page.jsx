@@ -189,7 +189,7 @@ const Page = ({ params }) => {
           description: "Images updated successfully!",
         });
         setConfirmationModal(false);
-        fetchCampaignInfo();
+        window.location.href("/dashboard/ecommerce/products")
       })
       .catch((err) => {
         Toast({
