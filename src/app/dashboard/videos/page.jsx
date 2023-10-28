@@ -176,7 +176,7 @@ const Users = () => {
                   <Td>
                     <HStack gap={4}>
                       <Switch
-                        defaultChecked={item?.is_active}
+                        defaultChecked={item?.is_active === 1}
                         colorScheme="yellow"
                         onChange={(e) =>
                           updateVideo({
