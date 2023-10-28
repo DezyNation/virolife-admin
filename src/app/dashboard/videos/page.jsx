@@ -48,7 +48,7 @@ const Users = () => {
       link: "",
       points: "",
       isActive: false,
-      duration: ""
+      duration: "",
     },
     onSubmit: (values) => {
       BackendAxios.post("/api/video", {
@@ -91,20 +91,39 @@ const Users = () => {
     fetchVideos();
   }, []);
 
-  function deleteVideo(id){
-    BackendAxios.delete(`/api/video/${id}`).then(res => {
-      Toast({
-        status: 'success',
-        description:'Video Deleted Successfully'
+  function deleteVideo(id) {
+    BackendAxios.delete(`/api/video/${id}`)
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Video Deleted Successfully",
+        });
+        fetchVideos();
       })
-      fetchVideos()
-    }).catch(err => {
-      Toast({
-        status: "error",
-        description:
-          err?.response?.data?.message || err?.response?.data || err?.message,
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
       });
-    })
+  }
+
+  function updateVideo({ data, id }) {
+    BackendAxios.put(`/api/video/${id}`, { ...data })
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Video updated successfully!",
+        });
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
   }
 
   return (
@@ -159,8 +178,20 @@ const Users = () => {
                       <Switch
                         defaultChecked={item?.is_active}
                         colorScheme="yellow"
+                        onChange={(e) =>
+                          updateVideo({
+                            data: { is_active: e.target.checked ? 1 : 0 },
+                            id: item?.id
+                          })
+                        }
                       />
-                      <Button size={'sm'} colorScheme="red" onClick={()=>deleteVideo(item?.id)}>Delete</Button>
+                      <Button
+                        size={"sm"}
+                        colorScheme="red"
+                        onClick={() => deleteVideo(item?.id)}
+                      >
+                        Delete
+                      </Button>
                     </HStack>
                   </Td>
                 </Tr>
