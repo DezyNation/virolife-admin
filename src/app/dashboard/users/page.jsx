@@ -248,9 +248,9 @@ const Users = () => {
                   </Td>
                   <Td>{user?.stars}</Td>
                   <Td>{Number(user?.performance)?.toFixed(2)}</Td>
-                  <Td>{Number(user?.sum_primary)}</Td>
-                  <Td>{Number(user?.sum_secondary)}</Td>
-                  <Td>{Number(user?.sum_primary)+Number(user?.sum_secondary)}</Td>
+                  <Td>{Number(user?.primary_sum)}</Td>
+                  <Td>{Number(user?.secondary_sum)}</Td>
+                  <Td>{Number(user?.primary_sum)+Number(user?.secondary_sum)}</Td>
                   <Td>{user?.health_points}</Td>
                   <Td>{parseInt(user?.ad_points)}</Td>
                   <Td>
