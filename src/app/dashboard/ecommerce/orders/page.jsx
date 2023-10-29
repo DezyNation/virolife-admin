@@ -58,7 +58,7 @@ const page = () => {
             {orders?.map((order, key) => (
               <Tr key={key}>
                 <Td>{order.id}</Td>
-                <Td>{order.product_title}</Td>
+                <Td>({order?.product_id}) - {order?.product_name}</Td>
                 <Td>
                   {order.user_name} - ({order?.user_id})
                 </Td>
