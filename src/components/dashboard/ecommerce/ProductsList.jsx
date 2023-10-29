@@ -115,6 +115,7 @@ const ProductsList = () => {
               <Th>Img</Th>
               <Th>Title</Th>
               <Th>Price</Th>
+              <Th>Min. Payable</Th>
               <Th>Health Points</Th>
               <Th>Ad Points</Th>
               <Th>All Team Points</Th>
@@ -138,8 +139,13 @@ const ProductsList = () => {
                     "NO IMG"
                   )}
                 </Td>
-                <Td>{product?.name}</Td>
-                <Td>{product?.price}</Td>
+                <Td>({product?.id}) - {product?.name}</Td>
+                <Td>
+                  {product?.price}
+                </Td>
+                <Td>
+                  {product?.minimum_payable_amount}
+                </Td>
                 <Td>{product?.health_point}</Td>
                 <Td>{product?.ad_point}</Td>
                 <Td>{product?.atp_point}</Td>
