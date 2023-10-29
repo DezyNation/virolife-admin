@@ -4,6 +4,7 @@ import {
   Table,
   TableContainer,
   Tbody,
+  Td,
   Text,
   Th,
   Thead,
