@@ -1,4 +1,5 @@
 "use client";
+import BackendAxios from "@/utils/axios";
 import {
   Button,
   HStack,
@@ -23,11 +24,106 @@ import React, { useState, useEffect } from "react";
 
 const page = () => {
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState({
-    status: false,
-    id: "",
-  });
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryName, setCategoryName] = useState("");
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      onOpen();
+    }
+    if (!selectedCategory) {
+      onClose();
+    }
+  }, [selectedCategory]);
+
+  function fetchCategories() {
+    BackendAxios.get("/api/category")
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function createCategory() {
+    if (categoryName === "") {
+      return;
+    }
+    BackendAxios.post("/api/category", {
+      name: categoryName,
+      type: "ecommerce",
+    })
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Category added",
+        });
+        fetchCategories();
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function updateCategory() {
+    if (!selectedCategory) {
+      return;
+    }
+    BackendAxios.put(`/api/category/${selectedCategory}`, {
+      name: categoryName,
+    })
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Category updated",
+        });
+        setSelectedCategory("");
+        fetchCategories();
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function deleteCategory(id) {
+    if (!id) {
+      return;
+    }
+    BackendAxios.delete(`/api/category/${id}`)
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Category deleted",
+        });
+        fetchCategories();
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
 
   return (
     <>
@@ -45,37 +141,41 @@ const page = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {categories?.map((category, key) => (
-              <Tr key={key}>
-                <Td>{category?.id}</Td>
-                <Td>{category?.title}</Td>
-                <Td>
-                  <HStack>
-                    <Button size={"xs"} colorScheme="twitter">
-                      Edit
-                    </Button>
-                    <Button size={"xs"} colorScheme="red">
-                      Delete
-                    </Button>
-                  </HStack>
-                </Td>
-              </Tr>
-            ))}
+            {categories
+              ?.filter((category) => category?.type == "ecommerce")
+              ?.map((category, key) => (
+                <Tr key={key}>
+                  <Td>{category?.id}</Td>
+                  <Td>{category?.name}</Td>
+                  <Td>
+                    <HStack>
+                      <Button
+                        size={"xs"}
+                        colorScheme="twitter"
+                        onClick={() => setSelectedCategory(category?.id)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        size={"xs"}
+                        colorScheme="red"
+                        onClick={() => deleteCategory(category?.id)}
+                      >
+                        Delete
+                      </Button>
+                    </HStack>
+                  </Td>
+                </Tr>
+              ))}
           </Tbody>
         </Table>
       </TableContainer>
 
-      <Modal
-        isCentered
-        isOpen={selectedCategory?.status}
-        onClose={() =>
-          setSelectedCategory({ ...selectedCategory, status: false })
-        }
-      >
+      <Modal isCentered isOpen={isOpen} onClose={() => setSelectedCategory("")}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            {selectedCategory?.id ? "Update Category" : "Add Category"}
+            {selectedCategory ? "Update Category" : "Add Category"}
           </ModalHeader>
           <ModalBody>
             <Input
@@ -86,7 +186,14 @@ const page = () => {
           </ModalBody>
           <ModalFooter>
             <HStack justifyContent={"flex-end"}>
-              <Button colorScheme="yellow">Save</Button>
+              <Button
+                colorScheme="yellow"
+                onClick={() =>
+                  selectedCategory ? updateCategory() : createCategory()
+                }
+              >
+                Save
+              </Button>
             </HStack>
           </ModalFooter>
         </ModalContent>

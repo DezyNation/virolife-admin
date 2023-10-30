@@ -286,11 +286,11 @@ const MenuOptions = () => {
                 w={"full"}
                 py={4}
               >
-                {/* <Link href={"/dashboard/ecommerce/categories"}>
+                <Link href={"/dashboard/ecommerce/categories"}>
                   <HStack gap={4}>
                     <Text>Categories</Text>
                   </HStack>
-                </Link> */}
+                </Link>
 
                 <Link href={"/dashboard/ecommerce/products"}>
                   <HStack gap={4}>

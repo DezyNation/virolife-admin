@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { BsXCircleFill } from "react-icons/bs";
-import { FormAxios } from "@/utils/axios";
+import BackendAxios, { FormAxios } from "@/utils/axios";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 
@@ -34,6 +34,7 @@ const Page = () => {
   const [isClient, setIsClient] = useState(false);
   const Toast = useToast({ position: "top-right" });
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const onDrop = useCallback(async (acceptedFiles) => {
     console.log(acceptedFiles);
@@ -114,7 +115,7 @@ const Page = () => {
             status: "success",
             description: "Product added successfully!",
           });
-          window.location.href("/dashboard/ecommerce/products")
+          window.location.href("/dashboard/ecommerce/products");
         })
         .catch((err) => {
           setLoading(false);
@@ -131,6 +132,20 @@ const Page = () => {
 
   useEffect(() => {
     setIsClient(true);
+    BackendAxios.get("/api/category")
+      .then((res) => {
+        setCategories(
+          res.data?.filter((category) => category?.type == "ecommerce")
+        );
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          title: "Error fetching categories",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
   }, []);
 
   return (
@@ -153,10 +168,10 @@ const Page = () => {
             onChange={(e) => Formik.setFieldValue("categoryId", e.target.value)}
             value={Formik.values.categoryId}
           >
-            <option value="1">Medical</option>
-            <option value="2">Education</option>
-            <option value="3">New Startup</option>
-            <option value="4">Sports Help</option>
+            {categories.map((category) => (
+              <option value={category?.id}>{category?.name}</option>
+              ))
+            }
           </Select>
         </FormControl>
         <FormControl py={4} w={["full", "xs"]}>

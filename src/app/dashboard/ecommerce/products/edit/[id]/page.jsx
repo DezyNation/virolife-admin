@@ -41,6 +41,7 @@ const QuillNoSSRWrapper = dynamic(async () => {
 const Page = ({ params }) => {
   const Toast = useToast({ position: "top-right" });
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([])
   const [campaign, setCampaign] = useState({});
   const [campaignImages, setCampaignImages] = useState(null);
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
@@ -200,6 +201,23 @@ const Page = ({ params }) => {
       });
   }
 
+  useEffect(() => {
+    BackendAxios.get("/api/category")
+      .then((res) => {
+        setCategories(
+          res.data?.filter((category) => category?.type == "ecommerce")
+        );
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          title: "Error fetching categories",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }, []);
+
   return (
     <>
       <Text pb={4} fontSize={"2xl"} className="serif">
@@ -220,10 +238,10 @@ const Page = ({ params }) => {
             onChange={(e) => Formik.setFieldValue("categoryId", e.target.value)}
             value={Formik.values.categoryId}
           >
-            <option value="1">Medical</option>
-            <option value="2">Education</option>
-            <option value="3">New Startup</option>
-            <option value="4">Sports Help</option>
+            {categories.map((category) => (
+              <option value={category?.id}>{category?.name}</option>
+              ))
+            }
           </Select>
         </FormControl>
         <FormControl py={4} w={["full", "xs"]}>
