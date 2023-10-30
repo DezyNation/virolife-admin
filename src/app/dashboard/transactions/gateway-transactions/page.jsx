@@ -76,7 +76,7 @@ const Transactions = () => {
             {data?.map((data, key) => (
               <Tr key={key}>
                 <Td>{data?.payment_id}</Td>
-                <Td>{data?.description}</Td>
+                <Td>{data?.purpose}</Td>
                 <Td>{data?.amount}</Td>
                 <Td>{data?.created_at}</Td>
               </Tr>

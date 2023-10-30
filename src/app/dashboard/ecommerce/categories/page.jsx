@@ -171,6 +171,19 @@ const page = () => {
         </Table>
       </TableContainer>
 
+      <Button
+        rounded={"full"}
+        pos={"fixed"}
+        bottom={4}
+        right={4}
+        colorScheme="twiiter"
+        onClick={() => {
+          onOpen();
+        }}
+      >
+        Add New
+      </Button>
+
       <Modal isCentered isOpen={isOpen} onClose={() => setSelectedCategory("")}>
         <ModalOverlay />
         <ModalContent>
