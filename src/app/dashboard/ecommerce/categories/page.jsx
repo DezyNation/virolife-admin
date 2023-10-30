@@ -134,7 +134,7 @@ const page = () => {
 
         <Button
           rounded={"full"}
-          colorScheme="twiiter"
+          colorScheme="twitter"
           onClick={() => onOpen()}
         >
           Add New
