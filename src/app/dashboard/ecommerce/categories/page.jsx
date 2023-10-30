@@ -19,10 +19,12 @@ import {
   Thead,
   Tr,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 
 const page = () => {
+  const Toast = useToast({position: 'top-right'})
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryName, setCategoryName] = useState("");
