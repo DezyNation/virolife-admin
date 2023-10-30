@@ -173,7 +173,7 @@ const page = () => {
 
       <Button
         rounded={"full"}
-        pos={"fixed"}
+        pos={"absolute"}
         bottom={4}
         right={4}
         colorScheme="twiiter"
