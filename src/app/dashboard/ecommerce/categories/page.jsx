@@ -65,6 +65,7 @@ const page = () => {
     BackendAxios.post("/api/category", {
       name: categoryName,
       type: "ecommerce",
+      status: 1
     })
       .then((res) => {
         Toast({
