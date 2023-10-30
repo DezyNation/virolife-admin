@@ -127,9 +127,20 @@ const page = () => {
 
   return (
     <>
-      <Text fontWeight={"semibold"} fontSize={"lg"}>
-        Ecommerce Categories
-      </Text>
+      <HStack w={'full'} justifyContent={'space-between'}>
+        <Text fontWeight={"semibold"} fontSize={"lg"}>
+          Ecommerce Categories
+        </Text>
+
+        <Button
+          rounded={"full"}
+          colorScheme="twiiter"
+          onClick={() => onOpen()}
+        >
+          Add New
+        </Button>
+      </HStack>
+      <br />
       <br />
       <TableContainer>
         <Table colorScheme="yellow">
@@ -170,19 +181,6 @@ const page = () => {
           </Tbody>
         </Table>
       </TableContainer>
-
-      <Button
-        rounded={"full"}
-        pos={"absolute"}
-        bottom={4}
-        right={4}
-        colorScheme="twiiter"
-        onClick={() => {
-          onOpen();
-        }}
-      >
-        Add New
-      </Button>
 
       <Modal isCentered isOpen={isOpen} onClose={() => setSelectedCategory("")}>
         <ModalOverlay />
