@@ -24,7 +24,7 @@ import {
 import React, { useState, useEffect } from "react";
 
 const page = () => {
-  const Toast = useToast({position: 'top-right'})
+  const Toast = useToast({ position: "top-right" });
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryName, setCategoryName] = useState("");
@@ -65,13 +65,14 @@ const page = () => {
     BackendAxios.post("/api/category", {
       name: categoryName,
       type: "ecommerce",
-      status: 1
+      status: 1,
     })
       .then((res) => {
         Toast({
           status: "success",
           description: "Category added",
         });
+        onClose();
         fetchCategories();
       })
       .catch((err) => {
@@ -130,16 +131,12 @@ const page = () => {
 
   return (
     <>
-      <HStack w={'full'} justifyContent={'space-between'}>
+      <HStack w={"full"} justifyContent={"space-between"}>
         <Text fontWeight={"semibold"} fontSize={"lg"}>
           Ecommerce Categories
         </Text>
 
-        <Button
-          rounded={"full"}
-          colorScheme="twitter"
-          onClick={() => onOpen()}
-        >
+        <Button rounded={"full"} colorScheme="twitter" onClick={() => onOpen()}>
           Add New
         </Button>
       </HStack>
