@@ -48,26 +48,36 @@ const page = () => {
           <Thead>
             <Tr>
               <Th>Order ID</Th>
+              <Th>Trnxn ID</Th>
               <Th>Product</Th>
               <Th>User</Th>
               <Th>Paid Full</Th>
+              <Th>Amount</Th>
+              <Th>Ad Points</Th>
+              <Th>Health Points</Th>
+              <Th>ATP Points</Th>
               <Th>Timestamp</Th>
             </Tr>
           </Thead>
           <Tbody>
             {orders?.map((order, key) => (
               <Tr key={key}>
-                <Td>{order.id}</Td>
+                <Td>{order?.id}</Td>
+                <Td>{order?.razorpay_payment_id}</Td>
                 <Td>({order?.product_id}) - {order?.product_name}</Td>
                 <Td>
-                  {order.user_name} - ({order?.user_id})
+                  {order?.user_name} - ({order?.user_id})
                 </Td>
                 <Td textAlign={'center'}>
                   {order?.intent == "full" ? (
                     <BsCheckCircleFill color={"blue"} />
                   ) : null}
                 </Td>
-                <Td>{order.created_at}</Td>
+                <Td>{order?.amount}</Td>
+                <Td>{order?.ad_points}</Td>
+                <Td>{order?.health_points}</Td>
+                <Td>{order?.atp_stars}</Td>
+                <Td>{order?.created_at}</Td>
               </Tr>
             ))}
           </Tbody>
