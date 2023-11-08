@@ -129,7 +129,7 @@ const Page = ({ params }) => {
     },
     onSubmit: (values) => {
       setLoading(true);
-      BackendAxios.put(`/api/product/${id}`, {
+      FormAxios.put(`/api/product/${id}`, {
         ...values,
         giftCardStatus: values?.giftCardStatus ? 1 : 0,
         status: values?.status ? 1 : 0,
