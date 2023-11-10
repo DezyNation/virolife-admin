@@ -106,7 +106,7 @@ const page = () => {
           </Select>
         </FormControl>
         <Button
-          onClick={() => fetchCategories()}
+          onClick={() => fetchOrders()}
           colorScheme="yellow"
           rounded={"full"}
         >
