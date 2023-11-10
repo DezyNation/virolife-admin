@@ -26,7 +26,7 @@ const page = () => {
   const [orders, setOrders] = useState([]);
   const Toast = useToast({ position: "top-right" });
   const [selectedDates, setSelectedDates] = useState([
-    new Date().setMonth(new Date().getMonth() - 1),
+    new Date(new Date().setMonth(new Date().getMonth() - 1)),
     new Date(),
   ]);
   const [categories, setCategories] = useState([]);
