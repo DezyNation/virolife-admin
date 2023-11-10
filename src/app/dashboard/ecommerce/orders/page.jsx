@@ -39,7 +39,7 @@ const page = () => {
 
   function fetchOrders() {
     BackendAxios.get(
-      `/api/admin/orders?from=${selectedDates[0]?.getUTCSeconds()}&to=${selectedDates[1]?.getUTCSeconds()}&categoryId=${selectedCategory}`
+      `/api/admin/orders?from=${selectedDates[0]?.toISOString()}&to=${selectedDates[1]?.toISOString()}&categoryId=${selectedCategory}`
     )
       .then((res) => {
         setOrders(res.data);
