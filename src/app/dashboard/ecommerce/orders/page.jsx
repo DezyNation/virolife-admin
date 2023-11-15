@@ -6,6 +6,11 @@ import {
   FormControl,
   FormLabel,
   HStack,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   Select,
   Stack,
   Table,
@@ -13,9 +18,11 @@ import {
   Tbody,
   Td,
   Text,
+  Textarea,
   Th,
   Thead,
   Tr,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
@@ -24,6 +31,7 @@ import { RangeDatepicker } from "chakra-dayzed-datepicker";
 
 const page = () => {
   const [orders, setOrders] = useState([]);
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const Toast = useToast({ position: "top-right" });
   const [selectedDates, setSelectedDates] = useState([
     new Date(new Date().setMonth(new Date().getMonth() - 1)),
@@ -32,10 +40,21 @@ const page = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
 
+  const [selectedOrderId, setSelectedOrderId] = useState("");
+  const [status, setStatus] = useState("");
+
   useEffect(() => {
     fetchOrders();
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    if (selectedOrderId) {
+      onOpen();
+    } else {
+      onClose();
+    }
+  }, [selectedOrderId]);
 
   function fetchOrders() {
     BackendAxios.get(
@@ -58,6 +77,26 @@ const page = () => {
     BackendAxios.get("/api/category")
       .then((res) => {
         setCategories(res.data);
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function updateOrderStatus() {
+    if (!selectedOrderId) return;
+    BackendAxios.post(`/api/admin/update/order/${selectedOrderId}`, {
+      status: status,
+    })
+      .then(() => {
+        Toast({
+          status: "success",
+          description: "Status updated successfully!",
+        });
       })
       .catch((err) => {
         Toast({
@@ -123,12 +162,14 @@ const page = () => {
               <Th>Trnxn ID</Th>
               <Th>Product</Th>
               <Th>User</Th>
+              <Th>Status</Th>
               <Th>Paid Full</Th>
               <Th>Amount</Th>
               <Th>Ad Points</Th>
               <Th>Health Points</Th>
               <Th>ATP Points</Th>
               <Th>Timestamp</Th>
+              <Th>Action</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -142,6 +183,7 @@ const page = () => {
                 <Td>
                   {order?.user_name} - ({order?.user_id})
                 </Td>
+                <Td>{order?.status}</Td>
                 <Td textAlign={"center"}>
                   {order?.intent == "full" ? (
                     <BsCheckCircleFill color={"blue"} />
@@ -152,11 +194,48 @@ const page = () => {
                 <Td>{order?.health_points}</Td>
                 <Td>{order?.atp_stars}</Td>
                 <Td>{order?.created_at}</Td>
+                <Td>
+                  <Button
+                    colorScheme="yellow"
+                    size={"sm"}
+                    onClick={() => {
+                      setStatus(order?.status);
+                      setSelectedOrderId(order?.id);
+                    }}
+                  >
+                    Update Status
+                  </Button>
+                </Td>
               </Tr>
             ))}
           </Tbody>
         </Table>
       </TableContainer>
+
+      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+        <ModalContent>
+          <ModalHeader>
+            Update Order Status for order #{selectedOrderId}
+          </ModalHeader>
+          <ModalBody>
+            <FormControl>
+              <FormLabel>Status</FormLabel>
+              <Textarea
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                h={28}
+                w={"full"}
+                resize={"none"}
+              />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <HStack w={"full"} justifyContent={"flex-end"}>
+              <Button onClick={() => setSelectedOrderId(null)}>Close</Button>
+            </HStack>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
