@@ -232,6 +232,9 @@ const page = () => {
           <ModalFooter>
             <HStack w={"full"} justifyContent={"flex-end"}>
               <Button onClick={() => setSelectedOrderId(null)}>Close</Button>
+              <Button colorScheme="yellow" onClick={() => updateOrderStatus()}>
+                Save
+              </Button>
             </HStack>
           </ModalFooter>
         </ModalContent>
