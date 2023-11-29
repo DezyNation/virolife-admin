@@ -18,15 +18,24 @@ import BackendAxios from "@/utils/axios";
 
 const CampaignInfo = ({ params }) => {
   const Toast = useToast({ position: "top-right" });
+
   const [selectedImg, setSelectedImg] = useState(
-    "https://t3.ftcdn.net/jpg/04/19/34/24/360_F_419342418_pBHSf17ZBQn77E7z3OWcXrWfCuxZkc3Q.jpg"
+    "https://idea.batumi.ge/files/default.jpg"
   );
+  const [images, setImages] = useState([]);
+
   const { id } = params;
   const [campaign, setCampaign] = useState({});
   useEffect(() => {
     BackendAxios.get(`/api/campaign/${id}`)
       .then((res) => {
         setCampaign(res.data[0]);
+
+        const campaignImages = JSON.parse(res.data[0]?.file_path)?.map(
+          (img) => `${process.env.NEXT_PUBLIC_BACKEND_URL}/${img}`
+        );
+
+        setImages(campaignImages);
       })
       .catch((err) => {
         Toast({
@@ -51,54 +60,59 @@ const CampaignInfo = ({ params }) => {
           </Text>
           <Text pb={8}>
             Need ₹{Number(campaign?.target_amount)?.toLocaleString("en-IN")}{" "}
-            till &nbsp;
+            till
             {new Date(campaign?.updated_at).toDateString()} - Campaign By{" "}
             {campaign?.user?.name}
+            <br />
+            <br />
+            Received ₹
+            {Number(campaign?.total_donations)?.toLocaleString("en-IN")}
           </Text>
+
           <Stack direction={["column", "row"]} gap={8} mb={16}>
             <Image
-              src={
-                campaign.file_path
-                  ? `https://api.virolife.in/${campaign.file_path}`
-                  : "https://idea.batumi.ge/files/default.jpg"
-              }
+              src={selectedImg}
               w={["100%", "lg", "3xl"]}
               objectFit={"cover"}
-              h={["xs", "lg"]}
+              h={["xs", "sm"]}
               rounded={16}
             />
-            {/* <Stack
-                            direction={['row', 'column']}
-                            w={['full', '48']}
-                            h={['auto', 'lg']} gap={6}
-                            overflowX={['scroll', 'visible']}
-                            overflowY={['visible', 'scroll']}
-                            className='hide-scrollbar'
-                        >
-                            <Image
-                                src={"https://t3.ftcdn.net/jpg/04/19/34/24/360_F_419342418_pBHSf17ZBQn77E7z3OWcXrWfCuxZkc3Q.jpg"}
-                                boxSize={['24']} objectFit={'cover'}
-                                rounded={16} cursor={'pointer'}
-                                onClick={() => setSelectedImg("https://t3.ftcdn.net/jpg/04/19/34/24/360_F_419342418_pBHSf17ZBQn77E7z3OWcXrWfCuxZkc3Q.jpg")}
-                                border={'2px'} borderColor={selectedImg == "https://t3.ftcdn.net/jpg/04/19/34/24/360_F_419342418_pBHSf17ZBQn77E7z3OWcXrWfCuxZkc3Q.jpg" ? "yellow.400" : 'transparent'}
-                            />
-                            <Image
-                                src={"https://imgnew.outlookindia.com/uploadimage/library/16_9/16_9_5/IMAGE_1675431757.jpg"}
-                                boxSize={['24']} objectFit={'cover'}
-                                rounded={16} cursor={'pointer'}
-                                onClick={() => setSelectedImg("https://imgnew.outlookindia.com/uploadimage/library/16_9/16_9_5/IMAGE_1675431757.jpg")}
-                                border={'2px'} borderColor={selectedImg == "https://imgnew.outlookindia.com/uploadimage/library/16_9/16_9_5/IMAGE_1675431757.jpg" ? "yellow.400" : 'transparent'}
-                            />
-                            <Image
-                                src={"https://wellnessworks.in/wp-content/uploads/2019/10/indian-cow.jpg"}
-                                boxSize={['24']} objectFit={'cover'}
-                                rounded={16} cursor={'pointer'}
-                                onClick={() => setSelectedImg("https://wellnessworks.in/wp-content/uploads/2019/10/indian-cow.jpg")}
-                                border={'2px'} borderColor={selectedImg == "https://wellnessworks.in/wp-content/uploads/2019/10/indian-cow.jpg" ? "yellow.400" : 'transparent'}
-                            />
-                        </Stack> */}
+
+            <Stack
+              direction={["row", "column"]}
+              w={["full", "48"]}
+              h={["auto", "lg"]}
+              gap={6}
+              overflowX={["scroll", "visible"]}
+              overflowY={["visible", "scroll"]}
+              className="hide-scrollbar"
+            >
+              {images.map((img, key) => (
+                <Image
+                  key={key}
+                  src={img}
+                  boxSize={["24"]}
+                  objectFit={"cover"}
+                  rounded={16}
+                  cursor={"pointer"}
+                  onClick={() => setSelectedImg(img)}
+                  border={"2px"}
+                  borderColor={
+                    selectedImg == img ? "yellow.400" : "transparent"
+                  }
+                />
+              ))}
+            </Stack>
           </Stack>
-          <Text fontWeight={"semibold"}>
+
+          <Text
+            fontWeight={"medium"}
+            px={3}
+            py={1}
+            bgColor={"facebook.600"}
+            color={"#FFF"}
+            rounded={4}
+          >
             Category: {campaign?.category?.name}
           </Text>
           <br />
@@ -108,7 +122,8 @@ const CampaignInfo = ({ params }) => {
             bgColor={"blue.50"}
             rounded={"12"}
           >
-            {campaign.beneficiary_details != null && campaign.beneficiary_details != "null" ? (
+            {campaign.beneficiary_details != null &&
+            campaign.beneficiary_details != "null" ? (
               <>
                 This campaign will benefit{" "}
                 {JSON.parse(campaign?.beneficiary_details)?.name} of{" "}
