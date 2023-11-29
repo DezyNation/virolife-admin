@@ -203,7 +203,11 @@ const Users = () => {
           </Button>
         </HStack>
       </HStack>
-      <PrintButtons keyword={"users"} bodyParams={{role: "user"}} fileName={"UsersList"} />
+      <PrintButtons
+        keyword={"users"}
+        bodyParams={{ role: "user" }}
+        fileName={"UsersList"}
+      />
       <Stack
         w={"full"}
         direction={["column"]}
@@ -227,7 +231,7 @@ const Users = () => {
                 <Th>Health Points</Th>
                 <Th>Ad Points</Th>
                 <Th>Date of Birth</Th>
-                
+
                 <Th>Registered On</Th>
                 <Th>Action</Th>
               </Tr>
@@ -250,13 +254,15 @@ const Users = () => {
                   <Td>{Number(user?.performance)?.toFixed(2)}</Td>
                   <Td>{Number(user?.primary_sum)}</Td>
                   <Td>{Number(user?.secondary_sum)}</Td>
-                  <Td>{Number(user?.primary_sum)+Number(user?.secondary_sum)}</Td>
-                  <Td>{user?.health_points}</Td>
+                  <Td>
+                    {Number(user?.primary_sum) + Number(user?.secondary_sum)}
+                  </Td>
+                  <Td>{Number(user?.points)?.toFixed(0)}</Td>
                   <Td>{parseInt(user?.ad_points)}</Td>
                   <Td>
                     {user?.dob ? new Date(user?.dob).toDateString() : null}
                   </Td>
-                  
+
                   <Td>{new Date(user?.created_at).toLocaleString()}</Td>
                   <Td>
                     <HStack gap={4} pb={2}>
@@ -264,7 +270,9 @@ const Users = () => {
                         defaultChecked={user?.active === 1}
                         colorScheme="yellow"
                         onChange={(e) =>
-                          updateUser(user?.id, { active: user?.active == 1 ? false : true })
+                          updateUser(user?.id, {
+                            active: user?.active == 1 ? false : true,
+                          })
                         }
                       />
                       <Button
