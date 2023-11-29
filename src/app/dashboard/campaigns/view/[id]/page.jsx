@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import BackendAxios from "@/utils/axios";
+import parse from "html-react-parser";
 
 const CampaignInfo = ({ params }) => {
   const Toast = useToast({ position: "top-right" });
@@ -136,7 +137,7 @@ const CampaignInfo = ({ params }) => {
           <br />
           <br />
           <Text pb={16} maxW={["full", "xl", "4xl"]}>
-            {campaign.full_description}
+            {parse(campaign.full_description)}
           </Text>
         </Box>
       </Stack>
