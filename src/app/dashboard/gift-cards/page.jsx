@@ -234,7 +234,7 @@ const page = () => {
       <br />
       <br />
 
-      <TableContainer>
+      <TableContainer maxH={'80vh'}>
         <Table size={"sm"} variant={"striped"} colorScheme="yellow">
           <Thead>
             <Tr>
