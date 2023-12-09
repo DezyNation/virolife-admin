@@ -230,11 +230,23 @@ const page = () => {
 
   return (
     <>
-      <Text fontSize={"lg"}>Manage Gift Cards</Text>
+      <HStack w={"full"} justifyContent={"space-between"}>
+        <Text fontSize={"xl"} fontWeight={"semibold"}>
+          Manage Gift Cards
+        </Text>
+
+        <Button
+          colorScheme="twitter"
+          leftIcon={<BsPlus size={24} />}
+          onClick={onOpen}
+        >
+          Create New
+        </Button>
+      </HStack>
       <br />
       <br />
 
-      <TableContainer maxH={'80vh'}>
+      <TableContainer maxH={"80vh"} overflowY={"scroll"}>
         <Table size={"sm"} variant={"striped"} colorScheme="yellow">
           <Thead>
             <Tr>
@@ -293,16 +305,6 @@ const page = () => {
           </Tbody>
         </Table>
       </TableContainer>
-
-      <IconButton
-        colorScheme="twitter"
-        rounded={"full"}
-        icon={<BsPlus size={24} />}
-        pos={"fixed"}
-        bottom={8}
-        right={8}
-        onClick={onOpen}
-      />
 
       {/* Gift Card Creation Modal */}
       <Modal isOpen={isOpen} onClose={onClose} size={"sm"}>
