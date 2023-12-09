@@ -23,7 +23,6 @@ const Info = ({ params }) => {
   const Toast = useToast({ position: "top-right" });
   const { id } = params;
   const [gender, setGender] = useState("");
-  const [authUser, setAuthUser] = useState({});
   const [addressObj, setAddressObj] = useState({
     line: "",
     landmark: "",
@@ -39,6 +38,7 @@ const Info = ({ params }) => {
       middleName: "",
       lastName: "",
       gender: gender,
+      pan: "",
       dob: "",
       phone: "",
       email: "",
@@ -92,7 +92,6 @@ const Info = ({ params }) => {
   function fetchInfo() {
     BackendAxios.get(`/api/users/${id}`)
       .then((res) => {
-        setAuthUser(res.data[0]);
         const address = res.data[0].address ? JSON.parse(res.data[0].address) : addressObj;
         Formik.setFieldValue("firstName", res.data[0]?.name?.split(" ")[0]);
         if (res.data[0]?.name?.split(" ")?.length >= 3)
@@ -103,6 +102,7 @@ const Info = ({ params }) => {
           Formik.setFieldValue("lastName", res.data[0]?.name?.split(" ")[1]);
         Formik.setFieldValue("dob", res.data[0]?.dob);
         Formik.setFieldValue("gender", res.data[0]?.gender);
+        Formik.setFieldValue("pan", res.data[0]?.pan);
         Formik.setFieldValue("phone", res.data[0]?.phone_number);
         Formik.setFieldValue("email", res.data[0]?.email);
         Formik.setFieldValue("upi", res.data[0]?.upi_id);
@@ -253,6 +253,25 @@ const Info = ({ params }) => {
                 onChange={Formik.handleChange}
               />
             </Box>
+
+            <Box gap={4} w={["full", "xs"]}>
+              <FormLabel
+                fontWeight={"bold"}
+                textTransform={"uppercase"}
+                fontSize={"lg"}
+              >
+                PAN
+              </FormLabel>
+              <Input
+                bg={"blanchedalmond"}
+                w={["full", "xs"]}
+                pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
+                name="pan"
+                value={Formik.values.pan}
+                onChange={Formik.handleChange}
+              />
+            </Box>
+
           </Stack>
 
           <Stack

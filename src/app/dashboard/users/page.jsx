@@ -385,6 +385,11 @@ const Users = () => {
                   <Text fontWeight={"semibold"}>D.o.B</Text>
                   <Text>{userInfo?.dob}</Text>
                 </HStack>
+
+                <HStack gap={6}>
+                  <Text fontWeight={"semibold"}>PAN</Text>
+                  <Text>{userInfo?.pan}</Text>
+                </HStack>
               </Box>
               <Box flex={1}>
                 <Text fontWeight={"semibold"}>Address</Text>
