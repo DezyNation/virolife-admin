@@ -127,7 +127,7 @@ const Transactions = () => {
               <Tr>
                 <Th>#</Th>
                 <Th>Trnxn ID</Th>
-                <Th>Payee Name</Th>
+                <Th>Campaign</Th>
                 <Th>Ponits</Th>
                 <Th>Beneficiary</Th>
                 <Th>Requested At</Th>
@@ -140,7 +140,7 @@ const Transactions = () => {
                   <Td>{key + 1}</Td>
                   <Td>{item?.id}</Td>
                   <Td>
-                    {item?.user_name}-{item?.user_id}
+                  {item?.transferrable_id}-{item?.title}
                   </Td>
                   <Td>{item?.value}</Td>
                   <Td>
@@ -196,7 +196,7 @@ const Transactions = () => {
             <Tr>
               <Th>#</Th>
               <Th>Trnxn ID</Th>
-              <Th>Payee Name</Th>
+              <Th>Campaign Name</Th>
               <Th>Ponits</Th>
               <Th>Campaign</Th>
               <Th>Updated At</Th>
@@ -208,7 +208,7 @@ const Transactions = () => {
                 <Td>{key + 1}</Td>
                 <Td>{item?.id}</Td>
                 <Td>
-                  {item?.campaign_id}-{item?.title}
+                  {item?.transferrable_id}-{item?.title}
                 </Td>
                 <Td>{item?.value}</Td>
                 <Td>
