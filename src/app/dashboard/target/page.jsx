@@ -171,7 +171,7 @@ const page = () => {
   }
 
   function fetchJuniorsData() {
-    BackendAxios.get(`/api/admin/donations?type=junior&round=${activeRound}&userId=${userId}`)
+    BackendAxios.get(`/api/admin/donations?type=junior-donation&round=${activeRound}&userId=${userId}`)
       .then((res) => {
         setJuniorsData(res.data);
         const prim = res.data?.filter((data) => {
@@ -196,7 +196,7 @@ const page = () => {
   }
 
   function fetchSeniorsData() {
-    BackendAxios.get(`/api/my-senior-donation`)
+    BackendAxios.get(`/api/admin/donations?type=senior-donation&round=${activeRound}&userId=${userId}`)
       .then((res) => {
         setSeniorsData(res.data);
       })
