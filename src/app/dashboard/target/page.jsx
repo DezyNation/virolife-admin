@@ -33,6 +33,7 @@ const page = () => {
   const params = useSearchParams();
   const userId = params.get("user_id");
 
+  const [userFound, setUserFound] = useState(false)
   const [rounds, setRounds] = useState([
     {
       round: 0,
@@ -96,15 +97,16 @@ const page = () => {
   const [virolifeDonationData, setVirolifeDonationData] = useState([]);
 
   useEffect(() => {
-    // if (!myCurrentRound) return;
+    if (!userFound) return;
     setActiveRound(myCurrentRound);
     fetchRounds(myCurrentRound);
-  }, [myCurrentRound]);
+  }, [myCurrentRound, userFound]);
 
   useEffect(() => {
     if (userId) {
       BackendAxios.get(`/api/users/${userId}`)
         .then((res) => {
+          setUserFound(true)
           setMyCurrentRound(res.data[0]?.round);
           setRequirements((prev) => ({
             ...prev,
@@ -119,14 +121,14 @@ const page = () => {
   }, []);
 
   useEffect(() => {
-    // if (!activeRound) return;
+    if (!userFound) return;
     fetchRounds(activeRound);
     fetchJuniorsData();
     fetchSeniorsData();
     fetchCampaignDonations();
     fetchVirolifeDonations();
     fetchMyPreviousDonations(userId);
-  }, [activeRound]);
+  }, [activeRound, userFound]);
 
   function fetchRounds(round = myCurrentRound) {
     BackendAxios.get(`/api/tasks`)
