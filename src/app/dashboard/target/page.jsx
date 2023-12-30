@@ -131,6 +131,7 @@ const page = () => {
   }, [activeRound, userFound]);
 
   function fetchRounds(round = myCurrentRound) {
+    if(!userFound) return
     BackendAxios.get(`/api/tasks`)
       .then((res) => {
         const tasks = res.data;
@@ -172,6 +173,7 @@ const page = () => {
   }
 
   function fetchJuniorsData() {
+    if(!userFound) return
     BackendAxios.get(`/api/admin/donations?donation=junior-donation&round=${activeRound}&userId=${userId}`)
       .then((res) => {
         setJuniorsData(res.data);
@@ -197,6 +199,7 @@ const page = () => {
   }
 
   function fetchSeniorsData() {
+    if(!userFound) return
     BackendAxios.get(`/api/admin/donations?donation=senior-donation&round=${activeRound}&userId=${userId}`)
       .then((res) => {
         setSeniorsData(res.data);
@@ -206,8 +209,8 @@ const page = () => {
       });
   }
 
-
   function fetchCampaignDonations() {
+    if(!userFound) return
     BackendAxios.get(`/api/admin/donations?donation=campaign&round=${activeRound}&userId=${userId}`)
       .then((res) => {
         setCampaignsData(res.data);
@@ -222,6 +225,7 @@ const page = () => {
   }
 
   function fetchVirolifeDonations() {
+    if(!userFound) return
     BackendAxios.get(
       `/api/admin/donations?donation=virolife&round=${activeRound}&purpose=virolife-donation&userId=${userId}`
     )
@@ -253,6 +257,7 @@ const page = () => {
   }
 
   function fetchMyPreviousDonations() {
+    if(!userFound) return
     BackendAxios.get(`/api/admin/donations?donation=senior-donation&round=${activeRound}&userId=${userId}`)
       .then((res) => {
         setDonationData(res.data?.filter((item) => item?.group == "primary"));
