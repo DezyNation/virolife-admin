@@ -123,7 +123,7 @@ const page = () => {
   }, []);
 
   useEffect(() => {
-    if (!userFound) return;
+    if (!userFound || activeRound == null) return;
     fetchRounds(activeRound);
     fetchJuniorsData();
     fetchSeniorsData();
