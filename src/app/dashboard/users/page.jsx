@@ -223,6 +223,7 @@ const Users = () => {
                 <Th>ID</Th>
                 <Th className="sticky-left">User Name</Th>
                 <Th>Contact</Th>
+                <Th>Round</Th>
                 <Th>ATP Stars</Th>
                 <Th>Star Performance</Th>
                 <Th>Primary Collection</Th>
@@ -249,6 +250,14 @@ const Users = () => {
                       <p>{user?.email}</p>
                       <p>+91 {user?.phone_number}</p>
                     </Box>
+                  </Td>
+                  <Td>
+                    <Link
+                      href={`/dashboard/target?user_id=${user?.id}`}
+                      target="_blank"
+                    >
+                      {user?.round}
+                    </Link>
                   </Td>
                   <Td>{user?.stars}</Td>
                   <Td>{Number(user?.performance)?.toFixed(2)}</Td>
