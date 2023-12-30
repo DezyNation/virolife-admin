@@ -15,12 +15,11 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { BiSolidGroup } from "react-icons/bi";
+import { BiGroup } from "react-icons/bi";
 import {
   BsCheckCircleFill,
   BsCurrencyRupee,
-  BsHeartFill,
-  BsXCircleFill,
+  BsHeartFill
 } from "react-icons/bs";
 import { GiChestnutLeaf } from "react-icons/gi";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
@@ -220,22 +219,6 @@ const page = () => {
       });
   }
 
-  // function approveDonation(id, approve) {
-  //   BackendAxios.post(`/api/approve/my-senior-donation/${id}`, {
-  //     ...(approve ? { approved: 1 } : { donated: 0, approved: 0 }),
-  //   })
-  //     .then((res) => {
-  //       Toast({
-  //         status: "success",
-  //         description: "Donation accepted!",
-  //       });
-  //       window.location.reload(true);
-  //     })
-  //     .catch((err) => {
-  //       handleError(err, "Err while accepting donation");
-  //     });
-  // }
-
   function fetchVirolifeDonations() {
     BackendAxios.get(
       `/api/admin/donations?type=virolife&round=${activeRound}&purpose=virolife-donation&userId=${userId}`
@@ -327,7 +310,7 @@ const page = () => {
         >
           <HStack w={"full"}>
             <Box p={4} rounded={4} bgColor={"yellow.600"}>
-              <BiSolidGroup size={48} color="#FFF" />
+              <BiGroup size={48} color="#FFF" />
             </Box>
             <Box w={"full"}>
               <Text fontSize={"sm"}>Junior Donations</Text>
@@ -335,18 +318,12 @@ const page = () => {
                 <Text fontSize={"md"} fontWeight={"semibold"}>
                   {requirements?.primaryJuniorDonationsDone}
                 </Text>
-                {/* <Text fontSize={"md"} fontWeight={"semibold"}>
-                  Sec. {requirements?.secondaryJuniorDonationsDone}
-                </Text> */}
               </HStack>
               <br />
               <HStack w={"full"} justifyContent={"flex-end"}>
                 <Text fontSize={"xs"}>
                   Req.: {requirements?.primaryJuniorDonationsRequired}
                 </Text>
-                {/* <Text fontSize={"xs"}>
-                  Sec. {requirements?.secondaryJuniorDonationsRequired}
-                </Text> */}
               </HStack>
             </Box>
           </HStack>
@@ -444,7 +421,6 @@ const page = () => {
 
       <Tabs>
         <TabList>
-          {/* <Tab>Donate to Seniors</Tab> */}
           <Tab>Donate to Juniors</Tab>
           <Tab>Senior Donation History</Tab>
           <Tab>Approve Donations from Senior</Tab>
@@ -453,7 +429,7 @@ const page = () => {
         </TabList>
 
         <TabPanels>
-          {/* Donate to Juniors */}
+          
           <TabPanel>
             {requirements?.collection >= requirements?.threshold ? (
               <TableContainer my={4}>
@@ -467,7 +443,6 @@ const page = () => {
                       <Th>Donated</Th>
                       <Th>Approved</Th>
                       <Th>Updated On</Th>
-                      {/* <Th>Action</Th> */}
                     </Tr>
                   </Thead>
                   <Tbody>
@@ -490,22 +465,6 @@ const page = () => {
                           ) : null}
                         </Td>
                         <Td>{data?.approved ? data?.updated_at : null}</Td>
-                        {/* <Td>
-                          {data?.donated ? null : (
-                            <DonateButton
-                              userId={data?.receiver_id}
-                              userName={
-                                data?.upi_id
-                                  ? data?.receiver_name
-                                  : "Virolife Foundation"
-                              }
-                              upiId={data?.upi_id ?? "9022853554@okbizaxis"}
-                              amount={data?.amount}
-                              groupType={data?.group}
-                              instanceId={data?.id}
-                            />
-                          )}
-                        </Td> */}
                       </Tr>
                     ))}
                   </Tbody>
@@ -518,7 +477,7 @@ const page = () => {
             )}
           </TabPanel>
 
-          {/* Senior Donation History */}
+
           <TabPanel>
             <TableContainer my={4}>
               <Table>
@@ -552,7 +511,6 @@ const page = () => {
             </TableContainer>
           </TabPanel>
 
-          {/* Approve Donations from Senior */}
           <TabPanel>
             <TableContainer my={4}>
               <Table>
@@ -564,7 +522,6 @@ const page = () => {
                     <Th>Amount</Th>
                     <Th>Approved</Th>
                     <Th>Updated On</Th>
-                    {/* <Th>Action</Th> */}
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -582,30 +539,6 @@ const page = () => {
                         ) : null}
                       </Td>
                       <Td>{data?.updated_at}</Td>
-                      {/* <Td>
-                        <HStack gap={6}>
-                          {data?.approved ? null : data?.donated ? (
-                            <Button
-                              size={"sm"}
-                              rounded={"full"}
-                              colorScheme="yellow"
-                              onClick={() => approveDonation(data?.id, true)}
-                            >
-                              Approve
-                            </Button>
-                          ) : null}
-                          {data?.approved ? null : data?.donated ? (
-                            <Button
-                              size={"sm"}
-                              rounded={"full"}
-                              colorScheme="red"
-                              onClick={() => approveDonation(data?.id, false)}
-                            >
-                              Reject
-                            </Button>
-                          ) : null}
-                        </HStack>
-                      </Td> */}
                     </Tr>
                   ))}
                 </Tbody>
@@ -613,7 +546,6 @@ const page = () => {
             </TableContainer>
           </TabPanel>
 
-          {/* Donate in Medical Campaigns */}
           <TabPanel>
             {requirements?.collection >= requirements?.threshold ? (
               <TableContainer my={4}>
@@ -650,7 +582,6 @@ const page = () => {
             )}
           </TabPanel>
 
-          {/* Donate to Virolife */}
 
           <TabPanel>
             {requirements?.collection >= requirements?.threshold ? (
@@ -682,6 +613,7 @@ const page = () => {
               </Text>
             )}
           </TabPanel>
+
         </TabPanels>
       </Tabs>
     </>
