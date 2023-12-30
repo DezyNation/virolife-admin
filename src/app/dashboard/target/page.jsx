@@ -106,13 +106,13 @@ const page = () => {
     if (userId) {
       BackendAxios.get(`/api/users/${userId}`)
         .then((res) => {
-          setUserFound(true)
           setMyCurrentRound(res.data[0]?.round);
           setRequirements((prev) => ({
             ...prev,
             collection:
-              parseInt(res.data[0]?.primary_sum) + parseInt(res.data[0]?.secondary_sum),
+            parseInt(res.data[0]?.primary_sum) + parseInt(res.data[0]?.secondary_sum),
           }));
+          setUserFound(true)
         })
         .catch((err) => {
           handleError(err, "Err while getting user details");
@@ -172,7 +172,7 @@ const page = () => {
   }
 
   function fetchJuniorsData() {
-    BackendAxios.get(`/api/admin/donations?type=junior-donation&round=${activeRound}&userId=${userId}`)
+    BackendAxios.get(`/api/admin/donations?donation=junior-donation&round=${activeRound}&userId=${userId}`)
       .then((res) => {
         setJuniorsData(res.data);
         const prim = res.data?.filter((data) => {
@@ -197,7 +197,7 @@ const page = () => {
   }
 
   function fetchSeniorsData() {
-    BackendAxios.get(`/api/admin/donations?type=senior-donation&round=${activeRound}&userId=${userId}`)
+    BackendAxios.get(`/api/admin/donations?donation=senior-donation&round=${activeRound}&userId=${userId}`)
       .then((res) => {
         setSeniorsData(res.data);
       })
@@ -208,7 +208,7 @@ const page = () => {
 
 
   function fetchCampaignDonations() {
-    BackendAxios.get(`/api/admin/donations?type=campaign&round=${activeRound}&userId=${userId}`)
+    BackendAxios.get(`/api/admin/donations?donation=campaign&round=${activeRound}&userId=${userId}`)
       .then((res) => {
         setCampaignsData(res.data);
         setRequirements((prev) => ({
@@ -223,7 +223,7 @@ const page = () => {
 
   function fetchVirolifeDonations() {
     BackendAxios.get(
-      `/api/admin/donations?type=virolife&round=${activeRound}&purpose=virolife-donation&userId=${userId}`
+      `/api/admin/donations?donation=virolife&round=${activeRound}&purpose=virolife-donation&userId=${userId}`
     )
       .then((res) => {
         const result = res.data?.filter((data) => data?.round == activeRound);
@@ -253,7 +253,7 @@ const page = () => {
   }
 
   function fetchMyPreviousDonations() {
-    BackendAxios.get(`/api/admin/donations?type=senior-donation&round=${activeRound}&userId=${userId}`)
+    BackendAxios.get(`/api/admin/donations?donation=senior-donation&round=${activeRound}&userId=${userId}`)
       .then((res) => {
         setDonationData(res.data?.filter((item) => item?.group == "primary"));
       })
