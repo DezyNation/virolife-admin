@@ -34,6 +34,7 @@ const page = () => {
   const userId = params.get("user_id");
 
   const [userFound, setUserFound] = useState(false)
+  const [userName, setUserName] = useState("")
   const [rounds, setRounds] = useState([
     {
       round: 0,
@@ -107,6 +108,7 @@ const page = () => {
       BackendAxios.get(`/api/users/${userId}`)
         .then((res) => {
           setMyCurrentRound(res.data[0]?.round);
+          setUserName(res.data[0]?.name)
           setRequirements((prev) => ({
             ...prev,
             collection:
@@ -270,7 +272,7 @@ const page = () => {
   return (
     <>
       <Text mb={4} fontSize={"2xl"} fontWeight={"semibold"} className="messiri">
-        Target List
+        Target List ({userName} - {userId})
       </Text>
 
       <Stack
