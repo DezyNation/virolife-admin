@@ -538,7 +538,7 @@ const page = () => {
                     <Tr key={key}>
                       <Td>{key + 1}</Td>
                       <Td>
-                        ({data?.sender_id}) {data?.sender_name}
+                        ({data?.user_id}) {data?.user_name}
                       </Td>
                       <Td>{data?.group}</Td>
                       <Td>{data?.amount}</Td>
