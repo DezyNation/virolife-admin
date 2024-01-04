@@ -2,7 +2,9 @@
 import PrintButtons from "@/components/dashboard/PrintButtons";
 import BackendAxios from "@/utils/axios";
 import {
+  Box,
   Button,
+  FormLabel,
   HStack,
   Input,
   Table,
@@ -17,10 +19,12 @@ import {
 } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
+import { RangeDatepicker } from "chakra-dayzed-datepicker";
 
 const page = () => {
   const Toast = useToast({ position: "top-right" });
   const [userId, setUserId] = useState("");
+  const [dates, setDates] = useState([new Date(), new Date()]);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -28,7 +32,9 @@ const page = () => {
   }, []);
 
   function fetchData() {
-    BackendAxios.get(`/api/admin/all-team-donations`)
+    BackendAxios.get(
+      `/api/admin/all-team-donations?userId=${userId}&from=${dates[0]}&to=${dates[1]}`
+    )
       .then((res) => {
         setData(res.data);
       })
@@ -74,19 +80,29 @@ const page = () => {
         bodyParams={{ purpose: "all-team" }}
         fileName={"AllTeamDonation"}
       />
-      {/* <HStack py={4} justifyContent={"flex-end"}>
+      <HStack py={4} justifyContent={"flex-end"}>
         <HStack w={["full", "xs"]}>
-          <Input
-            name="userId"
-            onChange={(e) => setUserId(e.target.value)}
-            value={userId}
-            placeholder="Distributor or Agent ID"
-          />
+          <Box>
+            <FormLabel>User ID:</FormLabel>
+            <Input
+              name="userId"
+              onChange={(e) => setUserId(e.target.value)}
+              value={userId}
+              placeholder="Distributor or Agent ID"
+            />
+          </Box>
+          <Box>
+            <FormLabel>Dates:</FormLabel>
+            <RangeDatepicker
+              selectedDates={dates}
+              onDateChange={setDates}
+            />
+          </Box>
           <Button onClick={fetchData} colorScheme="yellow">
             Search
           </Button>
         </HStack>
-      </HStack> */}
+      </HStack>
       <br />
       <TableContainer w={"full"}>
         <Table variant={"striped"} size={"sm"} colorScheme="gray">
@@ -110,13 +126,9 @@ const page = () => {
                 <Td>VCF{user?.user_id}</Td>
                 <Td className="sticky-left">{user?.name}</Td>
                 <Td>{user?.stars}</Td>
-                <Td>
-                  {user?.amount}
-                </Td>
+                <Td>{user?.amount}</Td>
                 <Td>{new Date(user?.created_at).toLocaleString()}</Td>
-                <Td>
-                  {Number(user?.performance)?.toFixed(2)}
-                </Td>
+                <Td>{Number(user?.performance)?.toFixed(2)}</Td>
               </Tr>
             ))}
           </Tbody>

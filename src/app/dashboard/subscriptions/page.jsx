@@ -24,6 +24,7 @@ import React, { useState, useEffect } from "react";
 const page = () => {
   const Toast = useToast({ position: "top-right" });
   const [data, setData] = useState([]);
+  const [dates, setDates] = useState([new Date(), new Date()]);
 
   const [referralData, setReferralData] = useState([]);
 
@@ -43,7 +44,7 @@ const page = () => {
     BackendAxios.get(
       `/api/admin/subscription-info${
         Formik.values.userId ? `/${Formik.values.userId}` : ""
-      }`
+      }?from=${dates[0]}&to=${dates[1]}`
     )
       .then((res) => {
         setData(res.data);
@@ -62,7 +63,7 @@ const page = () => {
     BackendAxios.get(
       `/api/admin/referral-info${
         Formik.values.userId ? `/${Formik.values.userId}` : ""
-      }`
+      }?from=${dates[0]}&to=${dates[1]}`
     )
       .then((res) => {
         setReferralData(res.data);
@@ -97,22 +98,7 @@ const page = () => {
       >
         <FormControl w={["full", "xs"]}>
           <FormLabel>From</FormLabel>
-          <Input
-            bgColor={"white"}
-            type="date"
-            name="from"
-            onChange={Formik.handleChange}
-          />
-        </FormControl>
-
-        <FormControl w={["full", "xs"]}>
-          <FormLabel>To</FormLabel>
-          <Input
-            bgColor={"white"}
-            type="date"
-            name="to"
-            onChange={Formik.handleChange}
-          />
+          <RangeDatepicker selectedDates={dates} onDateChange={setDates} />
         </FormControl>
 
         <FormControl w={["full", "xs"]}>
@@ -145,7 +131,7 @@ const page = () => {
       />
       <br />
       <TableContainer height={"lg"} overflowY={"scroll"}>
-        <Table colorScheme="yellow" size={'sm'}>
+        <Table colorScheme="yellow" size={"sm"}>
           <Thead>
             <Tr>
               <Th>#</Th>
@@ -189,7 +175,7 @@ const page = () => {
       />
       <br />
       <TableContainer height={"lg"} overflowY={"scroll"}>
-        <Table colorScheme="yellow" size={'sm'}>
+        <Table colorScheme="yellow" size={"sm"}>
           <Thead>
             <Tr>
               <Th>#</Th>

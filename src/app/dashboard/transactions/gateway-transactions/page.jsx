@@ -20,17 +20,20 @@ import {
 import Link from "next/link";
 import BackendAxios from "@/utils/axios";
 import useApiHandler from "@/utils/hooks/useApiHandler";
+import { RangeDatepicker } from "chakra-dayzed-datepicker";
 
 const Transactions = () => {
-  const [data, setData] = useState([]);
   const { handleError } = useApiHandler();
+  const [data, setData] = useState([]);
+  const [dates, setDates] = useState([new Date(), new Date()])
+  const [transactionId, setTransactionId] = useState("")
 
   useEffect(() => {
     fetchData();
   }, []);
 
   function fetchData() {
-    BackendAxios.get(`/api/admin/gateway-transaction/all`)
+    BackendAxios.get(`/api/admin/gateway-transaction/all?transactionId=${transactionId}&from=${dates[0]}&to=${dates[1]}`)
       .then((res) => {
         setData(res.data);
       })
@@ -50,17 +53,32 @@ const Transactions = () => {
         Gateway Transactions
       </Text>
 
-      {/* <Stack py={4} gap={4} direction={['column', 'row']} alignItems={'flex-end'}>
-                <FormControl w={['full', 'xs']}>
-                    <FormLabel>From</FormLabel>
-                    <Input type='date' />
-                </FormControl>
-                <FormControl w={['full', 'xs']}>
-                    <FormLabel>To</FormLabel>
-                    <Input type='date' />
-                </FormControl>
-                <Button colorScheme='twitter'>Search</Button>
-            </Stack> */}
+      <Stack
+        py={4}
+        gap={4}
+        direction={["column", "row"]}
+        alignItems={"flex-end"}
+      >
+        <HStack w={["full", "xs"]}>
+          <Box>
+            <FormLabel>User ID:</FormLabel>
+            <Input
+              name="transactionId"
+              onChange={(e) => setTransactionId(e.target.value)}
+              value={transactionId}
+              placeholder="Distributor or Agent ID"
+            />
+          </Box>
+          <Box>
+            <FormLabel>Dates:</FormLabel>
+            <RangeDatepicker selectedDates={dates} onDateChange={setDates} />
+          </Box>
+          <Button onClick={fetchData} colorScheme="yellow">
+            Search
+          </Button>
+        </HStack>
+        <Button colorScheme="twitter">Search</Button>
+      </Stack>
 
       <TableContainer>
         <Table>
