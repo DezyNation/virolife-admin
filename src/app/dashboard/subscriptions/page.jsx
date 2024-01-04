@@ -144,8 +144,8 @@ const page = () => {
         fileName={`SubscriptionsData${Formik.values.userId}`}
       />
       <br />
-      <TableContainer>
-        <Table colorScheme="yellow">
+      <TableContainer height={"lg"} overflowY={"scroll"}>
+        <Table colorScheme="yellow" size={'sm'}>
           <Thead>
             <Tr>
               <Th>#</Th>
@@ -188,8 +188,8 @@ const page = () => {
         fileName={`ReferralsData${Formik.values.userId}`}
       />
       <br />
-      <TableContainer>
-        <Table colorScheme="yellow">
+      <TableContainer height={"lg"} overflowY={"scroll"}>
+        <Table colorScheme="yellow" size={'sm'}>
           <Thead>
             <Tr>
               <Th>#</Th>

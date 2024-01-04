@@ -118,8 +118,8 @@ const Transactions = () => {
         justifyContent={"space-between"}
         gap={8}
       >
-        <TableContainer rounded={"16"} flex={["unset", 3]}>
-          <Table variant={"striped"} colorScheme="gray">
+        <TableContainer rounded={"16"} flex={["unset", 3]} height={"lg"} overflowY={"scroll"}>
+          <Table variant={"striped"} colorScheme="gray" size={'sm'}>
             <TableCaption>
               <Link href={"#"}>Point Transfer Requests (Pending)</Link>
             </TableCaption>
@@ -136,7 +136,7 @@ const Transactions = () => {
             </Thead>
             <Tbody>
               {requests.map((item, key) => (
-                <Tr fontSize={"xs"} key={key}>
+                <Tr key={key}>
                   <Td>{key + 1}</Td>
                   <Td>{item?.id}</Td>
                   <Td>

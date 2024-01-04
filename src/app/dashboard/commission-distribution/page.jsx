@@ -83,8 +83,8 @@ const page = () => {
         <Text>Total Commission: ₹{calculateSum(agentData)}</Text>
       </HStack>
       <br />
-      <TableContainer>
-        <Table>
+      <TableContainer height={"lg"} overflowY={"scroll"}>
+        <Table size={'sm'}>
           <Thead>
             <Tr>
               <Td>#</Td>
@@ -131,8 +131,8 @@ const page = () => {
         <Text>Total Commission: ₹{calculateSum(data)}</Text>
       </HStack>
       <br />
-      <TableContainer>
-        <Table>
+      <TableContainer height={"lg"} overflowY={"scroll"}>
+        <Table size={'sm'}>
           <Thead>
             <Tr>
               <Td>#</Td>
