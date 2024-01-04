@@ -95,7 +95,7 @@ const DonationTable = ({ groupType }) => {
       </HStack>
       <PrintButtons />
       <TableContainer height={"lg"} overflowY={"scroll"}>
-        <Table variant={"striped"} colorScheme="gray">
+        <Table variant={"striped"} colorScheme="gray" size={'sm'}>
           <Thead>
             <Tr>
               <Th>Trnxn ID</Th>
