@@ -1,5 +1,6 @@
 "use client";
 import BackendAxios from "@/utils/axios";
+import useApiHandler from "@/utils/hooks/useApiHandler";
 import {
   Box,
   FormLabel,
@@ -12,7 +13,7 @@ import {
   Th,
   Thead,
   Tr,
-  Button
+  Button,
 } from "@chakra-ui/react";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
 import React, { useEffect, useState } from "react";
@@ -21,6 +22,7 @@ import { BsCheckCircleFill } from "react-icons/bs";
 const page = () => {
   const [data, setData] = useState([]);
   const [dates, setDates] = useState([new Date(), new Date()]);
+  const { handleError } = useApiHandler();
 
   useEffect(() => {
     fetchData();
@@ -30,8 +32,12 @@ const page = () => {
     BackendAxios.get(
       `api/admin/senior-donated-to-juniors?from=${dates[0]}&to=${dates[1]}`
     )
-      .then((res) => {})
-      .catch((err) => {});
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        handleError(err, "Err while fetching Data")
+      });
   }
 
   return (
@@ -71,15 +77,11 @@ const page = () => {
                 <Td>
                   {item?.user_name} ({item?.user_id})
                 </Td>
-                <Td>
-                  {item?.sender_round}
-                </Td>
+                <Td>{item?.sender_round}</Td>
                 <Td>
                   {item?.user_name} ({item?.user_id})
                 </Td>
-                <Td>
-                  {item?.receiver_round}
-                </Td>
+                <Td>{item?.receiver_round}</Td>
                 <Td>₹ {item?.amount}</Td>
                 <Td>
                   {!item?.approved ? <BsCheckCircleFill color="green" /> : null}
