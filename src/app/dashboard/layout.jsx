@@ -37,9 +37,10 @@ import {
   BsWallet,
   BsYoutube,
 } from "react-icons/bs";
-import { MdGroups, MdPersonAdd } from "react-icons/md";
+import { MdPersonAdd } from "react-icons/md";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { HiUserGroup } from "react-icons/hi";
+import { TbBinaryTree } from "react-icons/tb";
 import { BiDonateHeart, BiLogIn, BiMenuAltLeft, BiUser } from "react-icons/bi";
 import {
   FaPercentage,
@@ -167,6 +168,14 @@ const MenuOptions = () => {
             <HStack gap={4}>
               <BsCashCoin size={20} />
               <Text>Group Donations</Text>
+            </HStack>
+          </Link>
+        ) : null}
+        {permissions.includes("donation-view") ? (
+          <Link href={"/dashboard/transactions/senior-junior-donations"}>
+            <HStack gap={4}>
+              <TbBinaryTree size={20} />
+              <Text>Senior-Junior Donations</Text>
             </HStack>
           </Link>
         ) : null}

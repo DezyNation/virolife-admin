@@ -53,12 +53,6 @@ const Transactions = () => {
         Gateway Transactions
       </Text>
 
-      <Stack
-        py={4}
-        gap={4}
-        direction={["column", "row"]}
-        alignItems={"flex-end"}
-      >
         <HStack w={["full", "xs"]}>
           <Box>
             <FormLabel>User ID:</FormLabel>
@@ -77,8 +71,6 @@ const Transactions = () => {
             Search
           </Button>
         </HStack>
-        <Button colorScheme="twitter">Search</Button>
-      </Stack>
 
       <TableContainer>
         <Table>
