@@ -43,7 +43,8 @@ const page = () => {
   return (
     <>
       <Text fontSize={"2xl"}>Senior to Junior Donations</Text>
-      <HStack w={["full", "xs"]}>
+      <br /><br />
+      <HStack w={["full", "xs"]} alignItems={'flex-end'}>
         <Box>
           <FormLabel>Dates:</FormLabel>
           <RangeDatepicker selectedDates={dates} onDateChange={setDates} />
