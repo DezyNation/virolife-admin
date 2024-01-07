@@ -214,7 +214,7 @@ const Users = () => {
         justifyContent={"space-between"}
         gap={8}
       >
-        <TableContainer rounded={"16"} w={"full"}>
+        <TableContainer rounded={"16"} w={"full"} h={'lg'} overflowY={'scroll'}>
           <Table variant={"striped"} colorScheme="gray">
             <TableCaption>Users on Virolife</TableCaption>
             <Thead bgColor={"yellow.400"}>
