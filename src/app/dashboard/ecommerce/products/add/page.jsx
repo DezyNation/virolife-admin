@@ -24,6 +24,7 @@ import { BsXCircleFill } from "react-icons/bs";
 import BackendAxios, { FormAxios } from "@/utils/axios";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
 const QuillNoSSRWrapper = dynamic(async () => {
   const { default: RQ } = await import("react-quill");
@@ -32,6 +33,7 @@ const QuillNoSSRWrapper = dynamic(async () => {
 
 const Page = () => {
   const [isClient, setIsClient] = useState(false);
+  const {push} = useRouter();
   const Toast = useToast({ position: "top-right" });
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -115,7 +117,7 @@ const Page = () => {
             status: "success",
             description: "Product added successfully!",
           });
-          window.location.href("/dashboard/ecommerce/products");
+          push("/dashboard/ecommerce/products");
         })
         .catch((err) => {
           setLoading(false);
@@ -170,8 +172,7 @@ const Page = () => {
           >
             {categories.map((category) => (
               <option value={category?.id}>{category?.name}</option>
-              ))
-            }
+            ))}
           </Select>
         </FormControl>
         <FormControl py={4} w={["full", "xs"]}>
