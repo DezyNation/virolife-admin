@@ -27,6 +27,8 @@ const page = () => {
         Formik.setFieldValue("whatsappLink", parsedData?.whatsappLink)
         Formik.setFieldValue("telegramStatus", parsedData?.telegramStatus)
         Formik.setFieldValue("whatsappStatus", parsedData?.whatsappStatus)
+        Formik.setFieldValue("adminBroadcast", parsedData?.adminBroadcast)
+        Formik.setFieldValue("memberBroadcast", parsedData?.memberBroadcast)
       })
       .catch((err) => {
         Toast({
@@ -43,6 +45,8 @@ const page = () => {
       whatsappLink: "",
       telegramStatus: "",
       whatsappStatus: "",
+      adminBroadcast: "",
+      memberBroadcast: ""
     },
     onSubmit: (values) => {
       BackendAxios.put(`/api/content/1`, {
@@ -108,6 +112,28 @@ const page = () => {
             isChecked={Formik.values.whatsappStatus}
             onChange={(e) => Formik.setFieldValue("whatsappStatus", e.target.checked)}
           />
+        </Box>
+      </HStack>
+      <HStack py={4}>
+        <Text flex={2}>Admin Broadcast</Text>
+        <Box flex={3}>
+        <Input
+          name="adminBroadcast"
+          value={Formik.values.adminBroadcast}
+          flex={3}
+          onChange={Formik.handleChange}
+        />
+        </Box>
+      </HStack>
+      <HStack py={4}>
+        <Text flex={2}>Member Broadcast</Text>
+        <Box flex={3}>
+        <Input
+          name="memberBroadcast"
+          value={Formik.values.memberBroadcast}
+          flex={3}
+          onChange={Formik.handleChange}
+        />
         </Box>
       </HStack>
       <br />
