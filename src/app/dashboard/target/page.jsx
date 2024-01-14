@@ -448,7 +448,7 @@ const page = () => {
 
         <TabPanels>
           <TabPanel>
-            {requirements?.collection >= requirements?.threshold ? (
+            {requirements?.collection >= requirements?.threshold && myCurrentRound >= 1 ? (
               <TableContainer my={4}>
                 <Table>
                   <Thead>
@@ -563,7 +563,7 @@ const page = () => {
           </TabPanel>
 
           <TabPanel>
-            {requirements?.collection >= requirements?.threshold ? (
+            {requirements?.collection >= requirements?.threshold && myCurrentRound >= 1 ? (
               <TableContainer my={4}>
                 <Table>
                   <Thead>
@@ -599,7 +599,7 @@ const page = () => {
           </TabPanel>
 
           <TabPanel>
-            {requirements?.collection >= requirements?.threshold ? (
+            {requirements?.collection >= requirements?.threshold && myCurrentRound >= 1 ? (
               <TableContainer my={4}>
                 <Table>
                   <Thead>
