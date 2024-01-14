@@ -112,8 +112,8 @@ const page = () => {
           setRequirements((prev) => ({
             ...prev,
             collection:
-              Number(res.data[0]?.primary_sum)?.toFixed(0) +
-              Number(res.data[0]?.secondary_sum ?? 0)?.toFixed(0),
+              parseInt(res.data[0]?.primary_sum) +
+              parseInt(res.data[0]?.secondary_sum),
           }));
           setUserFound(true);
         })
@@ -448,7 +448,8 @@ const page = () => {
 
         <TabPanels>
           <TabPanel>
-            {requirements?.collection >= requirements?.threshold && activeRound >= 1 ? (
+            {requirements?.collection >= requirements?.threshold &&
+            activeRound >= 1 ? (
               <TableContainer my={4}>
                 <Table>
                   <Thead>
@@ -563,7 +564,8 @@ const page = () => {
           </TabPanel>
 
           <TabPanel>
-            {requirements?.collection >= requirements?.threshold && activeRound >= 1 ? (
+            {requirements?.collection >= requirements?.threshold &&
+            activeRound >= 1 ? (
               <TableContainer my={4}>
                 <Table>
                   <Thead>
@@ -600,7 +602,8 @@ const page = () => {
           </TabPanel>
 
           <TabPanel>
-            {requirements?.collection >= requirements?.threshold && activeRound >= 1 ? (
+            {requirements?.collection >= requirements?.threshold &&
+            activeRound >= 1 ? (
               <TableContainer my={4}>
                 <Table>
                   <Thead>
