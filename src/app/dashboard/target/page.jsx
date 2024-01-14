@@ -19,7 +19,7 @@ import { BiGroup } from "react-icons/bi";
 import {
   BsCheckCircleFill,
   BsCurrencyRupee,
-  BsHeartFill
+  BsHeartFill,
 } from "react-icons/bs";
 import { GiChestnutLeaf } from "react-icons/gi";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
@@ -33,8 +33,8 @@ const page = () => {
   const params = useSearchParams();
   const userId = params.get("user_id");
 
-  const [userFound, setUserFound] = useState(false)
-  const [userName, setUserName] = useState("")
+  const [userFound, setUserFound] = useState(false);
+  const [userName, setUserName] = useState("");
   const [rounds, setRounds] = useState([
     {
       round: 0,
@@ -108,13 +108,14 @@ const page = () => {
       BackendAxios.get(`/api/users/${userId}`)
         .then((res) => {
           setMyCurrentRound(res.data[0]?.round);
-          setUserName(res.data[0]?.name)
+          setUserName(res.data[0]?.name);
           setRequirements((prev) => ({
             ...prev,
             collection:
-            parseInt(res.data[0]?.primary_sum) + parseInt(res.data[0]?.secondary_sum),
+              Number(res.data[0]?.primary_sum)?.toFixed(0) +
+              Number(res.data[0]?.secondary_sum ?? 0)?.toFixed(0),
           }));
-          setUserFound(true)
+          setUserFound(true);
         })
         .catch((err) => {
           handleError(err, "Err while getting user details");
@@ -133,7 +134,7 @@ const page = () => {
   }, [activeRound, userFound]);
 
   function fetchRounds(round = myCurrentRound) {
-    if(!userFound) return
+    if (!userFound) return;
     BackendAxios.get(`/api/tasks`)
       .then((res) => {
         const tasks = res.data;
@@ -175,8 +176,10 @@ const page = () => {
   }
 
   function fetchJuniorsData() {
-    if(!userFound || myCurrentRound == null) return
-    BackendAxios.get(`/api/admin/donations?donation=junior-donation&round=${activeRound}&userId=${userId}`)
+    if (!userFound || myCurrentRound == null) return;
+    BackendAxios.get(
+      `/api/admin/donations?donation=junior-donation&round=${activeRound}&userId=${userId}`
+    )
       .then((res) => {
         setJuniorsData(res.data);
         const prim = res.data?.filter((data) => {
@@ -201,8 +204,10 @@ const page = () => {
   }
 
   function fetchSeniorsData() {
-    if(!userFound || myCurrentRound == null) return
-    BackendAxios.get(`/api/admin/donations?donation=senior-donation&round=${activeRound}&userId=${userId}`)
+    if (!userFound || myCurrentRound == null) return;
+    BackendAxios.get(
+      `/api/admin/donations?donation=senior-donation&round=${activeRound}&userId=${userId}`
+    )
       .then((res) => {
         setSeniorsData(res.data);
       })
@@ -212,8 +217,10 @@ const page = () => {
   }
 
   function fetchCampaignDonations() {
-    if(!userFound || myCurrentRound == null) return
-    BackendAxios.get(`/api/admin/donations?donation=campaign&round=${activeRound}&userId=${userId}`)
+    if (!userFound || myCurrentRound == null) return;
+    BackendAxios.get(
+      `/api/admin/donations?donation=campaign&round=${activeRound}&userId=${userId}`
+    )
       .then((res) => {
         setCampaignsData(res.data);
         setRequirements((prev) => ({
@@ -227,7 +234,7 @@ const page = () => {
   }
 
   function fetchVirolifeDonations() {
-    if(!userFound || myCurrentRound == null) return
+    if (!userFound || myCurrentRound == null) return;
     BackendAxios.get(
       `/api/admin/donations?donation=virolife&round=${activeRound}&purpose=virolife-donation&userId=${userId}`
     )
@@ -259,8 +266,10 @@ const page = () => {
   }
 
   function fetchMyPreviousDonations() {
-    if(!userFound || myCurrentRound == null) return
-    BackendAxios.get(`/api/admin/donations?donation=senior-donation&round=${activeRound}&userId=${userId}`)
+    if (!userFound || myCurrentRound == null) return;
+    BackendAxios.get(
+      `/api/admin/donations?donation=senior-donation&round=${activeRound}&userId=${userId}`
+    )
       .then((res) => {
         setDonationData(res.data?.filter((item) => item?.group == "primary"));
       })
@@ -438,7 +447,6 @@ const page = () => {
         </TabList>
 
         <TabPanels>
-          
           <TabPanel>
             {requirements?.collection >= requirements?.threshold ? (
               <TableContainer my={4}>
@@ -485,7 +493,6 @@ const page = () => {
               </Text>
             )}
           </TabPanel>
-
 
           <TabPanel>
             <TableContainer my={4}>
@@ -591,7 +598,6 @@ const page = () => {
             )}
           </TabPanel>
 
-
           <TabPanel>
             {requirements?.collection >= requirements?.threshold ? (
               <TableContainer my={4}>
@@ -622,7 +628,6 @@ const page = () => {
               </Text>
             )}
           </TabPanel>
-
         </TabPanels>
       </Tabs>
     </>
