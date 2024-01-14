@@ -113,7 +113,7 @@ const page = () => {
             ...prev,
             collection:
               parseInt(res.data[0]?.primary_sum) +
-              parseInt(res.data[0]?.secondary_sum),
+              parseInt(res.data[0]?.secondary_sum ?? 0),
           }));
           setUserFound(true);
         })
