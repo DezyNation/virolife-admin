@@ -65,6 +65,7 @@ const Users = () => {
     BackendAxios.get("/api/admin/users-list/user")
       .then((res) => {
         setUsers(res.data);
+        setFilteredUsers(res.data);
       })
       .catch((err) => {
         Toast({
@@ -203,12 +204,17 @@ const Users = () => {
         <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
           Users
         </Text>
-        <HStack alignItems={"flex-end"}>
+        <Stack direction={["column", "row"]} alignItems={"flex-end"} gap={4}>
           <Input
             placeholder={"Search Users"}
             onChange={(e) => setQuery(e.target.value)}
+            maxW={["full", "xs"]}
           />
-          <Select onChange={(e) => setRound(e.target.value)} value={round}>
+          <Select
+            onChange={(e) => setRound(e.target.value)}
+            value={round}
+            maxW={["full", "xs"]}
+          >
             <option value="*">All</option>
             <option value="0">Round 0</option>
             <option value="1">Round 1</option>
@@ -224,7 +230,7 @@ const Users = () => {
           <Button colorScheme={"yellow"} onClick={searchUser}>
             Search
           </Button>
-        </HStack>
+        </Stack>
       </HStack>
       <PrintButtons
         keyword={"users"}
