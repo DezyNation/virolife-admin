@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import {
+  Box,
   Button,
   HStack,
   Input,
@@ -171,7 +172,9 @@ const page = () => {
           value={user}
           onChange={(e) => setUser(e.target.value)}
         />
-        <RangeDatepicker onDateChange={setDates} selectedDates={dates} />
+        <Box w={["full", "xs"]}>
+          <RangeDatepicker onDateChange={setDates} selectedDates={dates} />
+        </Box>
         <Button colorScheme="yellow" onClick={fetchMyCollections}>
           Search
         </Button>
