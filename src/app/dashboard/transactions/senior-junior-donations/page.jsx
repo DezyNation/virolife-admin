@@ -64,7 +64,7 @@ const page = () => {
               <Th>Donor</Th>
               <Th>Donor Level</Th>
               <Th>Receiver</Th>
-              <Th>Receiver Level</Th>
+              {/* <Th>Receiver Level</Th> */}
               <Th>Amount</Th>
               <Th>Approved</Th>
               <Th>Timestamp</Th>
@@ -76,13 +76,13 @@ const page = () => {
               <Tr key={key}>
                 <Td>{item?.id}</Td>
                 <Td>
-                  {item?.user_name} ({item?.user_id})
+                  {item?.sender_name} ({item?.sender_id})
                 </Td>
                 <Td>{item?.sender_round}</Td>
                 <Td>
-                  {item?.user_name} ({item?.user_id})
+                  {item?.receiver_name} ({item?.receiver_id})
                 </Td>
-                <Td>{item?.receiver_round}</Td>
+                {/* <Td>{item?.receiver_round}</Td> */}
                 <Td>₹ {item?.amount}</Td>
                 <Td>
                   {!item?.approved ? <BsCheckCircleFill color="green" /> : null}
