@@ -26,15 +26,17 @@ import { RangeDatepicker } from "chakra-dayzed-datepicker";
 const Transactions = () => {
   const { handleError } = useApiHandler();
   const [data, setData] = useState([]);
-  const [dates, setDates] = useState([new Date(), new Date()])
-  const [transactionId, setTransactionId] = useState("")
+  const [dates, setDates] = useState([new Date(), new Date()]);
+  const [transactionId, setTransactionId] = useState("");
 
   useEffect(() => {
     fetchData();
   }, []);
 
   function fetchData() {
-    BackendAxios.get(`/api/admin/gateway-transaction/all?transactionId=${transactionId}&from=${dates[0]}&to=${dates[1]}`)
+    BackendAxios.get(
+      `/api/admin/gateway-transaction/all?transactionId=${transactionId}&from=${dates[0]}&to=${dates[1]}`
+    )
       .then((res) => {
         setData(res.data);
       })
@@ -54,24 +56,24 @@ const Transactions = () => {
         Gateway Transactions
       </Text>
 
-        <HStack w={["full", "xs"]}>
-          <Box>
-            <FormLabel>User ID:</FormLabel>
-            <Input
-              name="transactionId"
-              onChange={(e) => setTransactionId(e.target.value)}
-              value={transactionId}
-              placeholder="Distributor or Agent ID"
-            />
-          </Box>
-          <Box>
-            <FormLabel>Dates:</FormLabel>
-            <RangeDatepicker selectedDates={dates} onDateChange={setDates} />
-          </Box>
-          <Button onClick={fetchData} colorScheme="yellow">
-            Search
-          </Button>
-        </HStack>
+      <HStack w={["full", "lg"]} alignItems={"flex-end"}>
+        <Box>
+          <FormLabel>User ID:</FormLabel>
+          <Input
+            name="transactionId"
+            onChange={(e) => setTransactionId(e.target.value)}
+            value={transactionId}
+            placeholder="Distributor or Agent ID"
+          />
+        </Box>
+        <Box>
+          <FormLabel>Dates:</FormLabel>
+          <RangeDatepicker selectedDates={dates} onDateChange={setDates} />
+        </Box>
+        <Button onClick={fetchData} colorScheme="yellow">
+          Search
+        </Button>
+      </HStack>
 
       <TableContainer>
         <Table>
