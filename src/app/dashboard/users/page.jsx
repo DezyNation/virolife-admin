@@ -226,7 +226,9 @@ const Users = () => {
                 <Th>Round</Th>
                 <Th>ATP Stars</Th>
                 <Th>Star Performance</Th>
+                <Th>Primary Senior</Th>
                 <Th>Primary Collection</Th>
+                <Th>Secondary Senior</Th>
                 <Th>Secondary Collection</Th>
                 <Th>Total Collection</Th>
                 <Th>Health Points</Th>
@@ -261,7 +263,9 @@ const Users = () => {
                   </Td>
                   <Td>{user?.stars}</Td>
                   <Td>{Number(user?.performance)?.toFixed(2)}</Td>
+                  <Td>{Number(user?.parent_id)}</Td>
                   <Td>{Number(user?.primary_sum)}</Td>
+                  <Td>{Number(user?.secondary_parent_id)}</Td>
                   <Td>{Number(user?.secondary_sum)}</Td>
                   <Td>
                     {Number(user?.primary_sum) + Number(user?.secondary_sum)}
