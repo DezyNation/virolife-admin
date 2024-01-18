@@ -21,12 +21,12 @@ import BackendAxios from "@/utils/axios";
 import PrintButtons from "@/components/dashboard/PrintButtons";
 
 const page = () => {
-    
   const Toast = useToast({ position: "top-right" });
   const [videos, setVideos] = useState([]);
+  const [userId, setUserId] = useState("");
 
   function fetchVideos() {
-    BackendAxios.get("/api/admin/video-history")
+    BackendAxios.get(`/api/admin/video-history?userId=${userId}`)
       .then((res) => {
         setVideos(res.data);
       })
@@ -46,9 +46,23 @@ const page = () => {
   return (
     <>
       <HStack justifyContent={["space-between"]} py={8}>
-        <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
-          Videos
-        </Text>
+        <Stack
+          direction={["column", "row"]}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+        >
+          <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
+            Videos
+          </Text>
+          <HStack>
+            <Input
+              w={["full", "xs"]}
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+            />
+            <Button onClick={() => fetchVideos()}>Search</Button>
+          </HStack>
+        </Stack>
       </HStack>
       <PrintButtons />
       <Stack
@@ -63,7 +77,7 @@ const page = () => {
             <Thead bgColor={"yellow.400"}>
               <Tr>
                 <Th>#</Th>
-                <Th>Type</Th>
+                {/* <Th>Type</Th> */}
                 <Th>Title</Th>
                 <Th>User</Th>
                 <Th>Views</Th>
@@ -73,11 +87,13 @@ const page = () => {
               {videos.map((item, key) => (
                 <Tr fontSize={"xs"} key={key}>
                   <Td>{key + 1}</Td>
-                  <Td>{item?.provider}</Td>
+                  {/* <Td>{item?.provider}</Td> */}
                   <Td>{item?.title}</Td>
-                  <Td>{item?.user_unique}-{item?.name}</Td>
+                  <Td>
+                    {item?.user_unique}-{item?.name}
+                  </Td>
                   <Td>{item?.watch_count}</Td>
-                 </Tr>
+                </Tr>
               ))}
             </Tbody>
           </Table>
