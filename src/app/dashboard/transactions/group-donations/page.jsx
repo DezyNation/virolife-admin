@@ -19,6 +19,7 @@ import {
 import BackendAxios from "@/utils/axios";
 import PrintButtons from "@/components/dashboard/PrintButtons";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
+import { format } from "date-fns";
 
 const DonationTable = ({ transactions, groupType }) => {
   const [user, setUser] = useState("");
@@ -134,10 +135,12 @@ const page = () => {
   const [dates, setDates] = useState([new Date(), new Date()]);
 
   function fetchMyCollections() {
+    const from = format(dates[0], "yyyy-MM-dd");
+    const to = format(dates[1], "yyyy-MM-dd");
     BackendAxios.get(
-      `/api/admin/user-collections${user ? `/${user}` : ""}?from=${
-        dates[0]
-      }&to=${dates[1]}`
+      `/api/admin/user-collections${
+        user ? `/${user}` : ""
+      }?from=${from}&to=${to}`
     )
       .then((res) => {
         setData(res.data);
