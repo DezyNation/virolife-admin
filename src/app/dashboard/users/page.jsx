@@ -27,6 +27,7 @@ import {
   ModalFooter,
   Image,
   Avatar,
+  Select,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { BsDownload, BsEye, BsPlus } from "react-icons/bs";
@@ -39,6 +40,7 @@ const Users = () => {
   const arr = [1, 1, 1, 1, 1, 1, 2, 0];
   const Toast = useToast({ position: "top-right" });
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [query, setQuery] = useState("");
 
   const { isOpen, onToggle } = useDisclosure();
@@ -47,6 +49,7 @@ const Users = () => {
 
   const [groupMembers, setGroupMembers] = useState([]);
   const [showTreeModal, setShowTreeModal] = useState(false);
+  const [round, setRound] = useState("");
 
   function showQr(upi) {
     if (!upi) {
@@ -74,6 +77,13 @@ const Users = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    if (round == "*") setFilteredUsers(users);
+    else {
+      setFilteredUsers(users?.filter((data) => data?.round == round));
+    }
+  }, [round]);
 
   function getUserInfo(id) {
     onToggle();
@@ -198,6 +208,19 @@ const Users = () => {
             placeholder={"Search Users"}
             onChange={(e) => setQuery(e.target.value)}
           />
+          <Select onChange={(e) => setRound(e.target.value)} value={round}>
+            <option value="*">All</option>
+            <option value="0">Round 0</option>
+            <option value="1">Round 1</option>
+            <option value="2">Round 2</option>
+            <option value="3">Round 3</option>
+            <option value="4">Round 4</option>
+            <option value="5">Round 5</option>
+            <option value="6">Round 6</option>
+            <option value="7">Round 7</option>
+            <option value="8">Round 8</option>
+            <option value="9">Round 9</option>
+          </Select>
           <Button colorScheme={"yellow"} onClick={searchUser}>
             Search
           </Button>
@@ -214,7 +237,7 @@ const Users = () => {
         justifyContent={"space-between"}
         gap={8}
       >
-        <TableContainer rounded={"16"} w={"full"} h={'lg'} overflowY={'scroll'}>
+        <TableContainer rounded={"16"} w={"full"} h={"lg"} overflowY={"scroll"}>
           <Table variant={"striped"} colorScheme="gray">
             <TableCaption>Users on Virolife</TableCaption>
             <Thead bgColor={"yellow.400"}>
@@ -240,13 +263,11 @@ const Users = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {users.map((user, key) => (
+              {filteredUsers?.map((user, key) => (
                 <Tr fontSize={"xs"} key={key}>
                   <Td>{key + 1}</Td>
                   <Td>VCF{user?.id}</Td>
-                  <Td className="sticky-left">
-                    {user?.name}
-                  </Td>
+                  <Td className="sticky-left">{user?.name}</Td>
                   <Td>
                     <Box>
                       <p>{user?.email}</p>
