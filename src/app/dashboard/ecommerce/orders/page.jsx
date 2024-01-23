@@ -58,8 +58,8 @@ const page = () => {
   }, [selectedOrderId]);
 
   function fetchOrders() {
-    const from = format(dates[0], "yyyy-MM-dd");
-    const to = format(dates[1], "yyyy-MM-dd");
+    const from = format(selectedDates[0], "yyyy-MM-dd");
+    const to = format(selectedDates[1], "yyyy-MM-dd");
     BackendAxios.get(
       `/api/admin/orders?from=${from}&to=${to}&categoryId=${selectedCategory}`
     )
