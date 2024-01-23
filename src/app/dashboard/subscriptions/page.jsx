@@ -43,10 +43,12 @@ const page = () => {
   });
 
   function fetchSubscriptions() {
+    const from = format(dates[0], "yyyy-MM-dd");
+    const to = format(dates[1], "yyyy-MM-dd");
     BackendAxios.get(
       `/api/admin/subscription-info${
         Formik.values.userId ? `/${Formik.values.userId}` : ""
-      }?from=${dates[0]}&to=${dates[1]}`
+      }?from=${from}&to=${to}`
     )
       .then((res) => {
         setData(res.data);
