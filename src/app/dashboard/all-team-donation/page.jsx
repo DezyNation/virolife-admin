@@ -20,6 +20,7 @@ import {
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
+import { format } from "date-fns";
 
 const page = () => {
   const Toast = useToast({ position: "top-right" });
@@ -32,6 +33,8 @@ const page = () => {
   }, []);
 
   function fetchData() {
+    const from = format(dates[0], "yyyy-MM-dd");
+    const to = format(dates[1], "yyyy-MM-dd");
     BackendAxios.get(
       `/api/admin/all-team-donations?userId=${userId}&from=${dates[0]}&to=${dates[1]}`
     )

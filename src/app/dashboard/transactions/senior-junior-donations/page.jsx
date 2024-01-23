@@ -16,6 +16,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
+import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 
@@ -29,8 +30,10 @@ const page = () => {
   }, []);
 
   function fetchData() {
+    const from = format(dates[0], "yyyy-MM-dd");
+    const to = format(dates[1], "yyyy-MM-dd");
     BackendAxios.get(
-      `api/admin/senior-donated-to-juniors?from=${dates[0]}&to=${dates[1]}`
+      `api/admin/senior-donated-to-juniors?from=${from}&to=${to}`
     )
       .then((res) => {
         setData(res.data);

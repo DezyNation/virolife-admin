@@ -2,6 +2,10 @@
 import BackendAxios from "@/utils/axios";
 import useApiHandler from "@/utils/hooks/useApiHandler";
 import {
+  Box,
+  Button,
+  FormLabel,
+  HStack,
   Table,
   TableContainer,
   Tbody,
@@ -11,18 +15,23 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { RangeDatepicker } from "chakra-dayzed-datepicker";
+import { format } from "date-fns";
 import React, { useState, useEffect } from "react";
 
 const page = () => {
-  const [data, setData] = useState([]);
   const { handleError } = useApiHandler();
+  const [data, setData] = useState([]);
+  const [dates, setDates] = useState([new Date(), new Date()]);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   function fetchData() {
-    BackendAxios.get(`/api/admin/campaign-donations`)
+    const from = format(dates[0], "yyyy-MM-dd");
+    const to = format(dates[1], "yyyy-MM-dd");
+    BackendAxios.get(`/api/admin/campaign-donations?from=${from}&to=${to}`)
       .then((res) => {
         setData(res.data);
       })
@@ -34,6 +43,16 @@ const page = () => {
   return (
     <>
       <Text fontSize={"2xl"}>Campaign Donations</Text>
+      <br />
+      <HStack w={["full", "lg"]} alignItems={"flex-end"}>
+        <Box>
+          <FormLabel>Dates:</FormLabel>
+          <RangeDatepicker selectedDates={dates} onDateChange={setDates} />
+        </Box>
+        <Button onClick={fetchData} colorScheme="yellow">
+          Search
+        </Button>
+      </HStack>
       <br />
       <TableContainer>
         <Table>
@@ -51,7 +70,9 @@ const page = () => {
             {data?.map((data, key) => (
               <Tr key={key}>
                 <Td>{data?.transaction_id}</Td>
-                <Td>({data?.campaign_id})-{data?.title}</Td>
+                <Td>
+                  ({data?.campaign_id})-{data?.title}
+                </Td>
                 <Td>{data?.amount}</Td>
                 <Td>{data?.name}</Td>
                 <Td>{data?.phone_number}</Td>

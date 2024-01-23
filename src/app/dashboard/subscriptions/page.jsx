@@ -19,6 +19,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
+import { format } from "date-fns";
 import { useFormik } from "formik";
 import React, { useState, useEffect } from "react";
 
@@ -61,10 +62,12 @@ const page = () => {
   }
 
   function fetchReferrals() {
+    const from = format(dates[0], "yyyy-MM-dd");
+    const to = format(dates[1], "yyyy-MM-dd");
     BackendAxios.get(
       `/api/admin/referral-info${
         Formik.values.userId ? `/${Formik.values.userId}` : ""
-      }?from=${dates[0]}&to=${dates[1]}`
+      }?from=${from}&to=${to}`
     )
       .then((res) => {
         setReferralData(res.data);

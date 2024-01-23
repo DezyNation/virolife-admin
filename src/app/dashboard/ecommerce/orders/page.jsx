@@ -28,6 +28,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
+import { format } from "date-fns";
 
 const page = () => {
   const [orders, setOrders] = useState([]);
@@ -57,8 +58,10 @@ const page = () => {
   }, [selectedOrderId]);
 
   function fetchOrders() {
+    const from = format(dates[0], "yyyy-MM-dd");
+    const to = format(dates[1], "yyyy-MM-dd");
     BackendAxios.get(
-      `/api/admin/orders?from=${selectedDates[0]?.toISOString()}&to=${selectedDates[1]?.toISOString()}&categoryId=${selectedCategory}`
+      `/api/admin/orders?from=${from}&to=${to}&categoryId=${selectedCategory}`
     )
       .then((res) => {
         setOrders(res.data);

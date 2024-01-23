@@ -45,25 +45,25 @@ const page = () => {
 
   return (
     <>
-      <HStack justifyContent={["space-between"]} py={8}>
-        <Stack
-          direction={["column", "row"]}
-          alignItems={"center"}
-          justifyContent={"space-between"}
-        >
-          <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
-            Videos
-          </Text>
-          <HStack>
-            <Input
-              w={["full", "xs"]}
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-            />
-            <Button onClick={() => fetchVideos()}>Search</Button>
-          </HStack>
-        </Stack>
+      <Stack
+        direction={["column", "row"]}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+      >
+        <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
+          Videos
+        </Text>
+      </Stack>
+      <br />
+      <HStack w={'full'} justifyContent={'flex-end'}>
+        <Input
+          w={["full", "xs"]}
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
+        />
+        <Button onClick={() => fetchVideos()}>Search</Button>
       </HStack>
+      <br />
       <PrintButtons />
       <Stack
         w={"full"}

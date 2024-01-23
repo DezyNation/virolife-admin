@@ -22,6 +22,7 @@ import Link from "next/link";
 import BackendAxios from "@/utils/axios";
 import useApiHandler from "@/utils/hooks/useApiHandler";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
+import { format } from "date-fns";
 
 const Transactions = () => {
   const { handleError } = useApiHandler();
@@ -34,8 +35,10 @@ const Transactions = () => {
   }, []);
 
   function fetchData() {
+    const from = format(dates[0], "yyyy-MM-dd");
+    const to = format(dates[1], "yyyy-MM-dd");
     BackendAxios.get(
-      `/api/admin/gateway-transaction/all?transactionId=${transactionId}&from=${dates[0]}&to=${dates[1]}`
+      `/api/admin/gateway-transaction/all?transactionId=${transactionId}&from=${from}&to=${to}`
     )
       .then((res) => {
         setData(res.data);
