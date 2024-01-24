@@ -21,7 +21,7 @@ import PrintButtons from "@/components/dashboard/PrintButtons";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
 import { format } from "date-fns";
 
-const DonationTable = ({ transactions, groupType }) => {
+const DonationTable = ({ transactions, groupType, fetchMyCollections }) => {
   const [user, setUser] = useState("");
   const Toast = useToast({
     position: "top-right",
@@ -185,12 +185,20 @@ const page = () => {
       <br />
       <br />
       <Text fontWeight={"semibold"}>Primary Donations</Text>
-      <DonationTable groupType={"primary"} transactions={data} />
+      <DonationTable
+        groupType={"primary"}
+        transactions={data}
+        fetchMyCollections={() => fetchMyCollections()}
+      />
       <br />
       <br />
       <br />
       <Text fontWeight={"semibold"}>Secondary donation</Text>
-      <DonationTable groupType={"secondary"} transactions={data} />
+      <DonationTable
+        groupType={"secondary"}
+        transactions={data}
+        fetchMyCollections={() => fetchMyCollections()}
+      />
     </>
   );
 };
