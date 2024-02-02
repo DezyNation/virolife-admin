@@ -61,6 +61,7 @@ const page = () => {
               <Th>Trnxn ID</Th>
               <Th>Campaign</Th>
               <Th>Amount</Th>
+              <Th>User</Th>
               <Th>Name</Th>
               <Th>Phone Number</Th>
               <Th>Timestamp</Th>
@@ -73,7 +74,8 @@ const page = () => {
                 <Td>
                   ({data?.campaign_id})-{data?.title}
                 </Td>
-                <Td>{data?.amount}</Td>
+                <Td>₹{data?.amount}</Td>
+                <Td>{data?.user_id ? `VCF${data?.user_id}` : ""}</Td>
                 <Td>{data?.name}</Td>
                 <Td>{data?.phone_number}</Td>
                 <Td>{data?.created_at}</Td>
