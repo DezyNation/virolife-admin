@@ -26,7 +26,7 @@ import React, { useState, useEffect } from "react";
 const page = () => {
   const Toast = useToast({ position: "top-right" });
   const [data, setData] = useState([]);
-  const [dates, setDates] = useState([new Date(), new Date()]);
+  const [dates, setDates] = useState([new Date().setMonth(new Date().getMonth() - 2), new Date()]);
 
   const [referralData, setReferralData] = useState([]);
 

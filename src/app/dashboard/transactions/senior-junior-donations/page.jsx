@@ -24,7 +24,7 @@ import { BsCheckCircleFill } from "react-icons/bs";
 const page = () => {
   const Toast = useToast({ position: "top-right" });
   const [data, setData] = useState([]);
-  const [dates, setDates] = useState([new Date(), new Date()]);
+  const [dates, setDates] = useState([new Date().setMonth(new Date().getMonth() - 2), new Date()]);
   const { handleError } = useApiHandler();
 
   const now = new Date();

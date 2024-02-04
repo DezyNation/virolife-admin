@@ -43,7 +43,7 @@ const Page = ({ params }) => {
   const [loading, setLoading] = useState(false);
   const [campaign, setCampaign] = useState({});
   const [campaignImages, setCampaignImages] = useState(null);
-  const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
+  const [selectedDates, setSelectedDates] = useState([new Date().setMonth(new Date().getMonth() - 2), new Date()]);
   const [imageToDelete, setImageToDelete] = useState("");
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [beneficiaryDetails, setBeneficiaryDetails] = useState({
