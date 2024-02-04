@@ -258,9 +258,9 @@ const Users = () => {
                 <Th>Primary Senior</Th>
                 <Th>Secondary Senior</Th>
                 <Th>Primary Collection (from Jr.)</Th>
-                <Th>Secondary Collection(from Jr.)</Th>
                 <Th>Primary Collection (from Sr.)</Th>
-                <Th>Secondary Collection(from Sr.)</Th>
+                <Th>Secondary Collection(from Jr.)</Th>
+                <Th>Secondary Collection (from Sr.)</Th>
                 <Th>Total Collection</Th>
                 <Th>Health Points</Th>
                 <Th>Ad Points</Th>
@@ -295,8 +295,8 @@ const Users = () => {
                   <Td>{Number(user?.parent_id)}</Td>
                   <Td>{Number(user?.secondary_parent_id)}</Td>
                   <Td>{Number(user?.primary_sum)}</Td>
-                  <Td>{Number(user?.secondary_sum)}</Td>
                   <Td>{Number(user?.senior_primary)}</Td>
+                  <Td>{Number(user?.secondary_sum)}</Td>
                   <Td>{Number(user?.senior_secondary)}</Td>
                   <Td>
                     {Number(user?.primary_sum) +
