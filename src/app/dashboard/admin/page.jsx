@@ -38,7 +38,7 @@ import {
   DrawerCloseButton,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { BsDownload, BsEye } from "react-icons/bs";
+import { BsDownload, BsEye, BsPlus } from "react-icons/bs";
 import BackendAxios from "@/utils/axios";
 import QRCode from "react-qr-code";
 import TreeModal from "@/components/dashboard/users/TreeModal";
@@ -325,6 +325,20 @@ const Users = () => {
         </TableContainer>
       </Stack>
 
+      <Link href={"/dashboard/users/create"}>
+        <Button
+          position={"fixed"}
+          bottom={4}
+          right={4}
+          colorScheme="twitter"
+          zIndex={9999}
+          rounded={"full"}
+          leftIcon={<BsPlus size={24} />}
+        >
+          Create New
+        </Button>
+      </Link>
+
       {/* User Info Modal */}
       <Modal
         isCentered
@@ -506,72 +520,22 @@ const Users = () => {
               defaultValue={selectedUserPermissions}
             >
               <FormLabel>Users Related Permissions</FormLabel>
-              <Checkbox
-                value={"user-view"}
-              >
-                View
-              </Checkbox>{" "}
-              <br />
-              <Checkbox
-                value={"user-edit"}
-              >
-                Edit
-              </Checkbox>{" "}
-              <br />
+              <Checkbox value={"user-view"}>View</Checkbox> <br />
+              <Checkbox value={"user-edit"}>Edit</Checkbox> <br />
               <br />
               <FormLabel>Campaigns Related Permissions</FormLabel>
-              <Checkbox
-                value={"campaign-view"}
-              >
-                View
-              </Checkbox>{" "}
-              <br />
-              <Checkbox
-                value={"campaign-edit"}
-              >
-                Edit
-              </Checkbox>{" "}
-              <br />
-              <Checkbox
-                value={"campaign-delete"}
-              >
-                Delete
-              </Checkbox>{" "}
-              <br />
+              <Checkbox value={"campaign-view"}>View</Checkbox> <br />
+              <Checkbox value={"campaign-edit"}>Edit</Checkbox> <br />
+              <Checkbox value={"campaign-delete"}>Delete</Checkbox> <br />
               <br />
               <FormLabel>Donations Related Permissions</FormLabel>
-              <Checkbox
-                value={"donation-view"}
-              >
-                View
-              </Checkbox>{" "}
-              <br />
-              <Checkbox
-                value={"donation-edit"}
-              >
-                Update
-              </Checkbox>{" "}
-              <br />
+              <Checkbox value={"donation-view"}>View</Checkbox> <br />
+              <Checkbox value={"donation-edit"}>Update</Checkbox> <br />
               <br />
               <FormLabel>Plans Related Permissions</FormLabel>
-              <Checkbox
-                value={"plan-create"}
-              >
-                View
-              </Checkbox>{" "}
-              <br />
-              <Checkbox
-                value={"plan-view"}
-              >
-                View
-              </Checkbox>{" "}
-              <br />
-              <Checkbox
-                value={"plan-edit"}
-              >
-                Update
-              </Checkbox>{" "}
-              <br />
+              <Checkbox value={"plan-create"}>View</Checkbox> <br />
+              <Checkbox value={"plan-view"}>View</Checkbox> <br />
+              <Checkbox value={"plan-edit"}>Update</Checkbox> <br />
             </CheckboxGroup>
           </DrawerBody>
           <DrawerFooter gap={4} justifyContent={"flex-end"}>
