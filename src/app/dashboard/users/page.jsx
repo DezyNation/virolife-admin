@@ -135,11 +135,11 @@ const Users = () => {
   }
 
   function viewSecondaryTree(id, name, secondary_sum, senior_secondary) {
-    function buildHierarchy(items, parentId) {
+    function buildHierarchy(items, parentId, secondary_sum, senior_secondary) {
       const nestedArray = [];
       for (const item of items) {
         if (parseInt(item.secondary_parent_id) == parseInt(parentId)) {
-          const children = buildHierarchy(items, item.id);
+          const children = buildHierarchy(items, item.id, secondary_sum, senior_secondary);
           if (children.length > 0) {
             item.children = children;
           }
@@ -151,7 +151,7 @@ const Users = () => {
 
     BackendAxios.get(`/api/admin/my-group/secondary/${id}`)
       .then((res) => {
-        const hierarchyArray = buildHierarchy(res.data, id);
+        const hierarchyArray = buildHierarchy(res.data, id, secondary_sum, senior_secondary);
         setGroupMembers([
           {
             id: id,
@@ -173,11 +173,16 @@ const Users = () => {
   }
 
   function viewPrimaryTree(id, name, primary_sum, senior_primary) {
-    function buildHierarchy(items, parentId) {
+    function buildHierarchy(items, parentId, primary_sum, senior_primary) {
       const nestedArray = [];
       for (const item of items) {
         if (parseInt(item.parent_id) == parseInt(parentId)) {
-          const children = buildHierarchy(items, item.id);
+          const children = buildHierarchy(
+            items,
+            item.id,
+            primary_sum,
+            senior_primary
+          );
           if (children.length > 0) {
             item.children = children;
           }
@@ -189,7 +194,12 @@ const Users = () => {
 
     BackendAxios.get(`/api/admin/my-group/${id}`)
       .then((res) => {
-        const hierarchyArray = buildHierarchy(res.data, id);
+        const hierarchyArray = buildHierarchy(
+          res.data,
+          id,
+          primary_sum,
+          senior_primary
+        );
         setGroupMembers([
           {
             name: name,
