@@ -54,7 +54,11 @@ const TreeModal = ({ status, groupMembers, onClose }) => {
                   setShowTooltip({
                     status: true,
                     id: `VCF${data?.data?.id}`,
-                    donation: 0,
+                    donation:
+                      Number(data?.data?.primary_sum) +
+                      Number(data?.data?.secondary_sum) +
+                      Number(data?.data?.senior_primary) +
+                      Number(data?.data?.senior_secondary),
                   });
                 }}
                 onNodeMouseOut={() => setShowTooltip({ status: false })}

@@ -134,7 +134,14 @@ const Users = () => {
       });
   }
 
-  function viewSecondaryTree(id, name) {
+  function viewSecondaryTree(
+    id,
+    name,
+    primary_sum,
+    secondary_sum,
+    senior_primary,
+    senior_secondary
+  ) {
     function buildHierarchy(items, parentId) {
       const nestedArray = [];
       for (const item of items) {
@@ -153,7 +160,15 @@ const Users = () => {
       .then((res) => {
         const hierarchyArray = buildHierarchy(res.data, id);
         setGroupMembers([
-          { name: name, children: hierarchyArray, id: id, donation: 0 },
+          {
+            id: id,
+            name: name,
+            children: hierarchyArray,
+            primary_sum: primary_sum,
+            secondary_sum: secondary_sum,
+            senior_primary: senior_primary,
+            senior_secondary: senior_secondary,
+          },
         ]);
         setShowTreeModal(true);
       })
@@ -302,16 +317,15 @@ const Users = () => {
                   <Td>{Number(user?.secondary_parent_id)}</Td>
                   <Td>
                     ₹{Number(user?.primary_sum)}
-                    <br />
-                    ₹{Number(user?.senior_primary)}
+                    <br />₹{Number(user?.senior_primary)}
                   </Td>
                   <Td>
                     ₹{Number(user?.secondary_sum)}
-                    <br />
-                    ₹{Number(user?.senior_secondary)}
+                    <br />₹{Number(user?.senior_secondary)}
                   </Td>
                   <Td>
-                    ₹{Number(user?.primary_sum) +
+                    ₹
+                    {Number(user?.primary_sum) +
                       Number(user?.senior_primary ?? 0) +
                       Number(user?.senior_secondary ?? 0) +
                       Number(user?.secondary_sum)}
@@ -355,14 +369,32 @@ const Users = () => {
                       <Button
                         size={"xs"}
                         colorScheme={"yellow"}
-                        onClick={() => viewPrimaryTree(user?.id, user?.name)}
+                        onClick={() =>
+                          viewPrimaryTree(
+                            user?.id,
+                            user?.name,
+                            user?.primary_sum,
+                            user?.secondary_sum,
+                            user?.senior_primary,
+                            user?.senior_secondary
+                          )
+                        }
                       >
                         Prim. Tree
                       </Button>
                       <Button
                         size={"xs"}
                         colorScheme={"orange"}
-                        onClick={() => viewSecondaryTree(user?.id, user?.name)}
+                        onClick={() =>
+                          viewSecondaryTree(
+                            user?.id,
+                            user?.name,
+                            user?.primary_sum,
+                            user?.secondary_sum,
+                            user?.senior_primary,
+                            user?.senior_secondary
+                          )
+                        }
                       >
                         Sec. Tree
                       </Button>
