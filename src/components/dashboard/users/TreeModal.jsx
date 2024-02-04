@@ -51,6 +51,8 @@ const TreeModal = ({ status, groupMembers, onClose }) => {
                 translate={{ x: 300, y: 200 }}
                 separation={{ siblings: 1, nonSiblings: 2 }}
                 onNodeMouseOver={(data) => {
+                  console.log("User ", data?.data?.id)
+                  console.log(data)
                   setShowTooltip({
                     status: true,
                     id: `VCF${data?.data?.id}`,

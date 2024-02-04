@@ -134,14 +134,7 @@ const Users = () => {
       });
   }
 
-  function viewSecondaryTree(
-    id,
-    name,
-    primary_sum,
-    secondary_sum,
-    senior_primary,
-    senior_secondary
-  ) {
+  function viewSecondaryTree(id, name, secondary_sum, senior_secondary) {
     function buildHierarchy(items, parentId) {
       const nestedArray = [];
       for (const item of items) {
@@ -164,9 +157,7 @@ const Users = () => {
             id: id,
             name: name,
             children: hierarchyArray,
-            primary_sum: primary_sum,
             secondary_sum: secondary_sum,
-            senior_primary: senior_primary,
             senior_secondary: senior_secondary,
           },
         ]);
@@ -181,7 +172,7 @@ const Users = () => {
       });
   }
 
-  function viewPrimaryTree(id, name) {
+  function viewPrimaryTree(id, name, primary_sum, senior_primary) {
     function buildHierarchy(items, parentId) {
       const nestedArray = [];
       for (const item of items) {
@@ -200,7 +191,13 @@ const Users = () => {
       .then((res) => {
         const hierarchyArray = buildHierarchy(res.data, id);
         setGroupMembers([
-          { name: name, children: hierarchyArray, id: id, donation: 0 },
+          {
+            name: name,
+            children: hierarchyArray,
+            id: id,
+            primary_sum: primary_sum,
+            senior_primary: senior_primary,
+          },
         ]);
         setShowTreeModal(true);
       })
@@ -374,9 +371,7 @@ const Users = () => {
                             user?.id,
                             user?.name,
                             user?.primary_sum,
-                            user?.secondary_sum,
-                            user?.senior_primary,
-                            user?.senior_secondary
+                            user?.senior_primary
                           )
                         }
                       >
@@ -389,9 +384,7 @@ const Users = () => {
                           viewSecondaryTree(
                             user?.id,
                             user?.name,
-                            user?.primary_sum,
                             user?.secondary_sum,
-                            user?.senior_primary,
                             user?.senior_secondary
                           )
                         }
