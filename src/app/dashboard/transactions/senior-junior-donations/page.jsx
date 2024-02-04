@@ -110,7 +110,7 @@ const page = () => {
                 {/* <Td>{item?.receiver_round}</Td> */}
                 <Td>₹ {item?.amount}</Td>
                 <Td>
-                  {!item?.approved ? <BsCheckCircleFill color="green" /> : null}
+                  {item?.approved ? <BsCheckCircleFill color="green" /> : null}
                 </Td>
                 <Td>{new Date(item?.created_at).toLocaleString()}</Td>
                 <Td>{new Date(item?.updated_at).toLocaleString()}</Td>
@@ -118,22 +118,22 @@ const page = () => {
                   {
                     now - new Date(item?.created_at) >= 86400000 ? (
                       <HStack gap={6}>
-                        {data?.approved ? null : data?.donated ? (
+                        {item?.approved ? null : item?.donated ? (
                           <Button
                             size={"sm"}
                             rounded={"full"}
                             colorScheme="yellow"
-                            onClick={() => approveDonation(data?.id, true)}
+                            onClick={() => approveDonation(item?.id, true)}
                           >
                             Approve
                           </Button>
                         ) : null}
-                        {data?.approved ? null : data?.donated ? (
+                        {item?.approved ? null : item?.donated ? (
                           <Button
                             size={"sm"}
                             rounded={"full"}
                             colorScheme="red"
-                            onClick={() => approveDonation(data?.id, false)}
+                            onClick={() => approveDonation(item?.id, false)}
                           >
                             Reject
                           </Button>
