@@ -301,17 +301,17 @@ const Users = () => {
                   <Td>{Number(user?.parent_id)}</Td>
                   <Td>{Number(user?.secondary_parent_id)}</Td>
                   <Td>
-                    {Number(user?.primary_sum)}
+                    ₹{Number(user?.primary_sum)}
                     <br />
-                    {Number(user?.senior_primary)}
+                    ₹{Number(user?.senior_primary)}
                   </Td>
                   <Td>
-                    {Number(user?.secondary_sum)}
+                    ₹{Number(user?.secondary_sum)}
                     <br />
-                    {Number(user?.senior_secondary)}
+                    ₹{Number(user?.senior_secondary)}
                   </Td>
                   <Td>
-                    {Number(user?.primary_sum) +
+                    ₹{Number(user?.primary_sum) +
                       Number(user?.senior_primary ?? 0) +
                       Number(user?.senior_secondary ?? 0) +
                       Number(user?.secondary_sum)}
