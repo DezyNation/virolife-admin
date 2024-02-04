@@ -14,6 +14,7 @@ import {
   Thead,
   Tr,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
 import { format } from "date-fns";
@@ -21,10 +22,13 @@ import React, { useEffect, useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 
 const page = () => {
+  const Toast = useToast({ position: "top-right" });
   const [data, setData] = useState([]);
   const [dates, setDates] = useState([new Date(), new Date()]);
   const { handleError } = useApiHandler();
 
+  const now = new Date();
+  
   useEffect(() => {
     fetchData();
   }, []);
@@ -39,15 +43,32 @@ const page = () => {
         setData(res.data);
       })
       .catch((err) => {
-        handleError(err, "Err while fetching Data")
+        handleError(err, "Err while fetching Data");
+      });
+  }
+
+  function approveDonation(id, approve) {
+    BackendAxios.post(`/api/admin/approve/my-senior-donation/${id}`, {
+      ...(approve ? { approved: 1 } : { donated: 0, approved: 0 }),
+    })
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Donation accepted!",
+        });
+        window.location.reload(true);
+      })
+      .catch((err) => {
+        handleError(err, "Err while accepting donation");
       });
   }
 
   return (
     <>
       <Text fontSize={"2xl"}>Senior to Junior Donations</Text>
-      <br /><br />
-      <HStack w={["full", "xs"]} alignItems={'flex-end'}>
+      <br />
+      <br />
+      <HStack w={["full", "xs"]} alignItems={"flex-end"}>
         <Box>
           <FormLabel>Dates:</FormLabel>
           <RangeDatepicker selectedDates={dates} onDateChange={setDates} />
@@ -72,6 +93,7 @@ const page = () => {
               <Th>Approved</Th>
               <Th>Timestamp</Th>
               <Th>Updated At</Th>
+              <Th>Action</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -92,6 +114,34 @@ const page = () => {
                 </Td>
                 <Td>{new Date(item?.created_at).toLocaleString()}</Td>
                 <Td>{new Date(item?.updated_at).toLocaleString()}</Td>
+                <Td>
+                  {
+                    now - new Date(item?.created_at) >= 86400000 ? (
+                      <HStack gap={6}>
+                        {data?.approved ? null : data?.donated ? (
+                          <Button
+                            size={"sm"}
+                            rounded={"full"}
+                            colorScheme="yellow"
+                            onClick={() => approveDonation(data?.id, true)}
+                          >
+                            Approve
+                          </Button>
+                        ) : null}
+                        {data?.approved ? null : data?.donated ? (
+                          <Button
+                            size={"sm"}
+                            rounded={"full"}
+                            colorScheme="red"
+                            onClick={() => approveDonation(data?.id, false)}
+                          >
+                            Reject
+                          </Button>
+                        ) : null}
+                      </HStack>
+                    ) : null
+                  }
+                </Td>
               </Tr>
             ))}
           </Tbody>
