@@ -132,7 +132,7 @@ const DonationTable = ({ transactions, groupType, fetchMyCollections }) => {
 const page = () => {
   const [data, setData] = useState([]);
   const [user, setUser] = useState("");
-  const [dates, setDates] = useState([new Date().setMonth(new Date().getMonth() - 2), new Date()]);
+  const [dates, setDates] = useState([new Date().setMonth(new Date().getMonth() - 2), new Date().setDate(new Date().getDate()+1)]);
 
   function fetchMyCollections() {
     const from = format(dates[0], "yyyy-MM-dd");

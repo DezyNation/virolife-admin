@@ -27,7 +27,7 @@ import { format } from "date-fns";
 const Transactions = () => {
   const { handleError } = useApiHandler();
   const [data, setData] = useState([]);
-  const [dates, setDates] = useState([new Date().setMonth(new Date().getMonth() - 2), new Date()]);
+  const [dates, setDates] = useState([new Date().setMonth(new Date().getMonth() - 2), new Date().setDate(new Date().getDate()+1)]);
   const [transactionId, setTransactionId] = useState("");
 
   useEffect(() => {
