@@ -71,7 +71,7 @@ const TreeModal = ({ status, groupMembers, onClose }) => {
               flexDirection={"column"}
               pos={"absolute"}
               top={coords.y - 100}
-              left={coords.x - 450}
+              left={coords.x - 410}
               p={3}
               rounded={4}
               boxShadow={"sm"}
