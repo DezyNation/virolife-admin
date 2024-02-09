@@ -135,20 +135,21 @@ const Users = () => {
   }
 
   function viewSecondaryTree(id, name) {
-    function buildHierarchy(items, parentId, secondary_sum, senior_secondary) {
+    function buildHierarchy(items, parentId) {
       const nestedArray = [];
       for (const item of items) {
         if (parseInt(item.secondary_parent_id) == parseInt(parentId)) {
-          const children = buildHierarchy(
-            items,
-            item.id,
-            secondary_sum,
-            senior_secondary
-          );
+          const children = buildHierarchy(items, item.id);
           if (children.length > 0) {
             item.children = children;
           }
-          nestedArray.push(item);
+          nestedArray.push({
+            ...item,
+            secondary_sum: filteredUsers?.find((u) => u.id === item.id)
+              .secondary_sum,
+            senior_secondary: filteredUsers?.find((u) => u.id === item.id)
+              .senior_secondary,
+          });
         }
       }
       return nestedArray;
@@ -156,12 +157,7 @@ const Users = () => {
 
     BackendAxios.get(`/api/admin/my-group/secondary/${id}`)
       .then((res) => {
-        const hierarchyArray = buildHierarchy(
-          res.data,
-          id,
-          filteredUsers?.find((user) => user?.id == id)?.secondary_sum,
-          filteredUsers?.find((user) => user?.id == id)?.senior_secondary
-        );
+        const hierarchyArray = buildHierarchy(res.data, id);
         setGroupMembers([
           {
             id: id,
@@ -185,20 +181,21 @@ const Users = () => {
   }
 
   function viewPrimaryTree(id, name) {
-    function buildHierarchy(items, parentId, primary_sum, senior_primary) {
+    function buildHierarchy(items, parentId) {
       const nestedArray = [];
       for (const item of items) {
         if (parseInt(item.parent_id) == parseInt(parentId)) {
-          const children = buildHierarchy(
-            items,
-            item.id,
-            primary_sum,
-            senior_primary
-          );
+          const children = buildHierarchy(items, item.id);
           if (children.length > 0) {
             item.children = children;
           }
-          nestedArray.push(item);
+          nestedArray.push({
+            ...item,
+            primary_sum: filteredUsers?.find((u) => u.id === item.id)
+              .primary_sum,
+            senior_primary: filteredUsers?.find((u) => u.id === item.id)
+              .senior_primary,
+          });
         }
       }
       return nestedArray;
@@ -206,12 +203,7 @@ const Users = () => {
 
     BackendAxios.get(`/api/admin/my-group/${id}`)
       .then((res) => {
-        const hierarchyArray = buildHierarchy(
-          res.data,
-          id,
-          filteredUsers?.find((user) => user?.id == id)?.primary_sum,
-          filteredUsers?.find((user) => user?.id == id)?.senior_primary
-        );
+        const hierarchyArray = buildHierarchy(res.data, id);
         setGroupMembers([
           {
             name: name,
@@ -390,24 +382,14 @@ const Users = () => {
                       <Button
                         size={"xs"}
                         colorScheme={"yellow"}
-                        onClick={() =>
-                          viewPrimaryTree(
-                            user?.id,
-                            user?.name
-                          )
-                        }
+                        onClick={() => viewPrimaryTree(user?.id, user?.name)}
                       >
                         Prim. Tree
                       </Button>
                       <Button
                         size={"xs"}
                         colorScheme={"orange"}
-                        onClick={() =>
-                          viewSecondaryTree(
-                            user?.id,
-                            user?.name
-                          )
-                        }
+                        onClick={() => viewSecondaryTree(user?.id, user?.name)}
                       >
                         Sec. Tree
                       </Button>

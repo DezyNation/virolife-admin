@@ -26,8 +26,8 @@ const TreeModal = ({ status, groupMembers, onClose }) => {
   useEffect(() => {
     const handleWindowMouseMove = (event) => {
       setCoords({
-        x: event.clientX + 16,
-        y: event.clientY + 16,
+        x: event.clientX,
+        y: event.clientY,
       });
     };
     window.addEventListener("mousemove", handleWindowMouseMove);
@@ -71,7 +71,7 @@ const TreeModal = ({ status, groupMembers, onClose }) => {
               flexDirection={"column"}
               pos={"absolute"}
               top={coords.y - 100}
-              left={coords.x - 400}
+              left={coords.x - 600}
               p={3}
               rounded={4}
               boxShadow={"sm"}
