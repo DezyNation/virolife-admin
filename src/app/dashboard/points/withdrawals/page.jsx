@@ -22,6 +22,7 @@ import PrintButtons from "@/components/dashboard/PrintButtons";
 const Transactions = () => {
   const [requests, setRequests] = useState([]);
   const [transfers, setTransfers] = useState([]);
+  const [dates, setDates] = useState([new Date().setMonth(new Date().getMonth() - 2), new Date().setDate(new Date().getDate()+1)]);
   const Toast = useToast({
     position: "top-right",
   });
@@ -52,7 +53,9 @@ const Transactions = () => {
   }
 
   function fetchTransfers() {
-    BackendAxios.get("/api/admin/campaign/requests/all")
+    const from = format(dates[0], "yyyy-MM-dd");
+    const to = format(dates[1], "yyyy-MM-dd");
+    BackendAxios.get(`/api/admin/campaign/requests/all?from=${from}&to=${to}`)
       .then((res) => {
         setTransfers(res.data);
       })
