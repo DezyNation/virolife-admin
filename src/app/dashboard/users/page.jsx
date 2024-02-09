@@ -142,8 +142,8 @@ const Users = () => {
           const children = buildHierarchy(
             items,
             item.id,
-            filteredUsers?.find((user) => user?.id == item.id)?.secondary_sum,
-            filteredUsers?.find((user) => user?.id == item.id)?.senior_secondary
+            secondary_sum,
+            senior_secondary
           );
           if (children.length > 0) {
             item.children = children;
@@ -192,8 +192,8 @@ const Users = () => {
           const children = buildHierarchy(
             items,
             item.id,
-            filteredUsers?.find((user) => user?.id == item.id)?.primary_sum,
-            filteredUsers?.find((user) => user?.id == item.id)?.senior_primary
+            primary_sum,
+            senior_primary
           );
           if (children.length > 0) {
             item.children = children;
