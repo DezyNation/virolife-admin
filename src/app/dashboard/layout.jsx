@@ -157,12 +157,14 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null} */}
-        <Link href={"/dashboard/subscriptions"}>
-          <HStack gap={4}>
-            <BsCalendarCheck size={20} />
-            <Text>Subscriptions</Text>
-          </HStack>
-        </Link>
+        {permissions.includes("plan-view") ? (
+          <Link href={"/dashboard/subscriptions"}>
+            <HStack gap={4}>
+              <BsCalendarCheck size={20} />
+              <Text>Subscriptions</Text>
+            </HStack>
+          </Link>
+        ) : null}
         {permissions.includes("donation-view") ? (
           <Link href={"/dashboard/transactions/group-donations"}>
             <HStack gap={4}>
@@ -187,57 +189,70 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
+
         <Link href={"/dashboard/points/transfers"}>
           <HStack gap={4}>
             <HiArrowsRightLeft size={20} />
             <Text>Transfer Requests</Text>
           </HStack>
         </Link>
+
         <Link href={"/dashboard/points/withdrawals"}>
           <HStack gap={4}>
             <GiTakeMyMoney size={20} />
             <Text>Withdrawals Requests</Text>
           </HStack>
         </Link>
+
         <br />
+
         <Link href={"/dashboard/commission-distribution"}>
           <HStack gap={4}>
             <FaPercentage size={20} />
             <Text>Commission Data</Text>
           </HStack>
         </Link>
+
         <Link href={"/dashboard/payouts"}>
           <HStack gap={4}>
             <BsWallet size={20} />
             <Text>Payouts</Text>
           </HStack>
         </Link>
+
         <br />
-        <Link href={"/dashboard/transactions/campaign-donations"}>
-          <HStack gap={4}>
-            <BiDonateHeart size={20} />
-            <Text>Campaign Donations</Text>
-          </HStack>
-        </Link>
+        {permissions.includes("donation-view") ? (
+          <Link href={"/dashboard/transactions/campaign-donations"}>
+            <HStack gap={4}>
+              <BiDonateHeart size={20} />
+              <Text>Campaign Donations</Text>
+            </HStack>
+          </Link>
+        ) : null}
+
         <Link href={"/dashboard/transactions/gateway-transactions"}>
           <HStack gap={4}>
             <BsClipboardDataFill size={20} />
             <Text>Gateway Transactions</Text>
           </HStack>
         </Link>
+
         <Link href={"/dashboard/gift-cards"}>
           <HStack gap={4}>
             <FaRegCreditCard size={20} />
             <Text>Gift Cards</Text>
           </HStack>
         </Link>
+
         <Link href={"/dashboard/invitations"}>
           <HStack gap={4}>
             <MdPersonAdd size={20} />
             <Text>Invitations</Text>
           </HStack>
         </Link>
+
         <br />
+
         <Accordion allowToggle w={"full"}>
           <AccordionItem w={"full"}>
             <AccordionButton w={"full"} px={0}>
@@ -336,6 +351,7 @@ const MenuOptions = () => {
             <Text>Website Controls</Text>
           </HStack>
         </Link>
+        
         <br />
         {/* <Link href={"/dashboard"}>
                 <HStack gap={4}>
