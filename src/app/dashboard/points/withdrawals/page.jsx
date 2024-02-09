@@ -18,11 +18,15 @@ import {
 import Link from "next/link";
 import BackendAxios from "@/utils/axios";
 import PrintButtons from "@/components/dashboard/PrintButtons";
+import { RangeDatepicker } from "chakra-dayzed-datepicker";
 
 const Transactions = () => {
   const [requests, setRequests] = useState([]);
   const [transfers, setTransfers] = useState([]);
-  const [dates, setDates] = useState([new Date().setMonth(new Date().getMonth() - 2), new Date().setDate(new Date().getDate()+1)]);
+  const [dates, setDates] = useState([
+    new Date().setMonth(new Date().getMonth() - 2),
+    new Date().setDate(new Date().getDate() + 1),
+  ]);
   const Toast = useToast({
     position: "top-right",
   });
@@ -41,7 +45,7 @@ const Transactions = () => {
         if (err?.response?.status == 401) {
           localStorage.clear();
           window.location.assign("/");
-          return
+          return;
         }
         Toast({
           status: "error",
@@ -63,7 +67,7 @@ const Transactions = () => {
         if (err?.response?.status == 401) {
           localStorage.clear();
           window.location.assign("/");
-          return
+          return;
         }
         Toast({
           status: "error",
@@ -114,7 +118,11 @@ const Transactions = () => {
       <HStack justifyContent={"flex-end"} py={4}>
         <Button onClick={fetchRequests}>Reload Data</Button>
       </HStack>
-      <PrintButtons keyword={"withdrawal-request"} bodyParams={{status: "approved"}} fileName={"PointsWithdrawals(Approved)"} />
+      <PrintButtons
+        keyword={"withdrawal-request"}
+        bodyParams={{ status: "approved" }}
+        fileName={"PointsWithdrawals(Approved)"}
+      />
       <Stack
         w={"full"}
         direction={["column", "row"]}
@@ -143,7 +151,7 @@ const Transactions = () => {
                   <Td>{key + 1}</Td>
                   <Td>{item?.id}</Td>
                   <Td>
-                  {item?.transferrable_id}-{item?.title}
+                    {item?.transferrable_id}-{item?.title}
                   </Td>
                   <Td>{item?.value}</Td>
                   <Td>
@@ -189,7 +197,11 @@ const Transactions = () => {
       <br />
       <br />
       <br />
-      <HStack justifyContent={"flex-end"} py={4}>
+      <HStack justifyContent={"flex-end"} alignItems={'flex-end'} py={4}>
+        <Box>
+          <FormLabel>Dates:</FormLabel>
+          <RangeDatepicker selectedDates={dates} onDateChange={setDates} />
+        </Box>
         <Button onClick={fetchTransfers}>Reload Data</Button>
       </HStack>
       <TableContainer rounded={"16"} py={6}>
