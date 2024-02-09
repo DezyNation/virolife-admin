@@ -134,12 +134,17 @@ const Users = () => {
       });
   }
 
-  function viewSecondaryTree(id, name, secondary_sum, senior_secondary) {
+  function viewSecondaryTree(id, name) {
     function buildHierarchy(items, parentId, secondary_sum, senior_secondary) {
       const nestedArray = [];
       for (const item of items) {
         if (parseInt(item.secondary_parent_id) == parseInt(parentId)) {
-          const children = buildHierarchy(items, item.id, secondary_sum, senior_secondary);
+          const children = buildHierarchy(
+            items,
+            item.id,
+            filteredUsers?.find((user) => user?.id == item.id)?.secondary_sum,
+            filteredUsers?.find((user) => user?.id == item.id)?.senior_secondary
+          );
           if (children.length > 0) {
             item.children = children;
           }
@@ -151,14 +156,21 @@ const Users = () => {
 
     BackendAxios.get(`/api/admin/my-group/secondary/${id}`)
       .then((res) => {
-        const hierarchyArray = buildHierarchy(res.data, id, secondary_sum, senior_secondary);
+        const hierarchyArray = buildHierarchy(
+          res.data,
+          id,
+          filteredUsers?.find((user) => user?.id == id)?.secondary_sum,
+          filteredUsers?.find((user) => user?.id == id)?.senior_secondary
+        );
         setGroupMembers([
           {
             id: id,
             name: name,
             children: hierarchyArray,
-            secondary_sum: secondary_sum,
-            senior_secondary: senior_secondary,
+            secondary_sum: filteredUsers?.find((user) => user?.id == id)
+              ?.secondary_sum,
+            senior_secondary: filteredUsers?.find((user) => user?.id == id)
+              ?.senior_secondary,
           },
         ]);
         setShowTreeModal(true);
@@ -172,7 +184,7 @@ const Users = () => {
       });
   }
 
-  function viewPrimaryTree(id, name, primary_sum, senior_primary) {
+  function viewPrimaryTree(id, name) {
     function buildHierarchy(items, parentId, primary_sum, senior_primary) {
       const nestedArray = [];
       for (const item of items) {
@@ -180,8 +192,8 @@ const Users = () => {
           const children = buildHierarchy(
             items,
             item.id,
-            primary_sum,
-            senior_primary
+            filteredUsers?.find((user) => user?.id == item.id)?.primary_sum,
+            filteredUsers?.find((user) => user?.id == item.id)?.senior_primary
           );
           if (children.length > 0) {
             item.children = children;
@@ -197,16 +209,18 @@ const Users = () => {
         const hierarchyArray = buildHierarchy(
           res.data,
           id,
-          primary_sum,
-          senior_primary
+          filteredUsers?.find((user) => user?.id == id)?.primary_sum,
+          filteredUsers?.find((user) => user?.id == id)?.senior_primary
         );
         setGroupMembers([
           {
             name: name,
             children: hierarchyArray,
             id: id,
-            primary_sum: primary_sum,
-            senior_primary: senior_primary,
+            primary_sum: filteredUsers?.find((user) => user?.id == id)
+              ?.primary_sum,
+            senior_primary: filteredUsers?.find((user) => user?.id == id)
+              ?.senior_primary,
           },
         ]);
         setShowTreeModal(true);
@@ -379,9 +393,7 @@ const Users = () => {
                         onClick={() =>
                           viewPrimaryTree(
                             user?.id,
-                            user?.name,
-                            user?.primary_sum,
-                            user?.senior_primary
+                            user?.name
                           )
                         }
                       >
@@ -393,9 +405,7 @@ const Users = () => {
                         onClick={() =>
                           viewSecondaryTree(
                             user?.id,
-                            user?.name,
-                            user?.secondary_sum,
-                            user?.senior_secondary
+                            user?.name
                           )
                         }
                       >
