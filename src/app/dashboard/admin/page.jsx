@@ -493,18 +493,12 @@ const Users = () => {
         </ModalContent>
       </Modal>
 
-      {/* Tree Modal */}
-      <TreeModal
-        status={showTreeModal}
-        onClose={() => setShowTreeModal(false)}
-        groupMembers={groupMembers}
-      />
-
       <Drawer
         isOpen={permissionsDrawer.status}
-        onClose={() =>
-          setPermissionsDrawer({ ...permissionsDrawer, status: false })
-        }
+        onClose={() => {
+          setPermissionsDrawer({ ...permissionsDrawer, status: false });
+          setSelectedUserPermissions([]);
+        }}
         placement="right"
         size={"md"}
       >
@@ -515,28 +509,32 @@ const Users = () => {
           </DrawerHeader>
           <DrawerCloseButton />
           <DrawerBody>
-            <CheckboxGroup
-              onChange={(values) => setSelectedUserPermissions(values)}
-              defaultValue={selectedUserPermissions}
-            >
-              <FormLabel>Users Related Permissions</FormLabel>
-              <Checkbox value={"user-view"}>View</Checkbox> <br />
-              <Checkbox value={"user-edit"}>Edit</Checkbox> <br />
-              <br />
-              <FormLabel>Campaigns Related Permissions</FormLabel>
-              <Checkbox value={"campaign-view"}>View</Checkbox> <br />
-              <Checkbox value={"campaign-edit"}>Edit</Checkbox> <br />
-              <Checkbox value={"campaign-delete"}>Delete</Checkbox> <br />
-              <br />
-              <FormLabel>Donations Related Permissions</FormLabel>
-              <Checkbox value={"donation-view"}>View</Checkbox> <br />
-              <Checkbox value={"donation-edit"}>Update</Checkbox> <br />
-              <br />
-              <FormLabel>Plans Related Permissions</FormLabel>
-              <Checkbox value={"plan-create"}>View</Checkbox> <br />
-              <Checkbox value={"plan-view"}>View</Checkbox> <br />
-              <Checkbox value={"plan-edit"}>Update</Checkbox> <br />
-            </CheckboxGroup>
+            {selectedUserPermissions ? (
+              <CheckboxGroup
+                onChange={(values) => setSelectedUserPermissions(values)}
+                defaultValue={selectedUserPermissions}
+              >
+                <FormLabel>Users Related Permissions</FormLabel>
+                <Checkbox value={"user-view"}>View</Checkbox> <br />
+                <Checkbox value={"user-edit"}>Edit</Checkbox> <br />
+                <br />
+                <FormLabel>Campaigns Related Permissions</FormLabel>
+                <Checkbox value={"campaign-view"}>View</Checkbox> <br />
+                <Checkbox value={"campaign-edit"}>Edit</Checkbox> <br />
+                <Checkbox value={"campaign-delete"}>Delete</Checkbox> <br />
+                <br />
+                <FormLabel>Donations Related Permissions</FormLabel>
+                <Checkbox value={"donation-view"}>View</Checkbox> <br />
+                <Checkbox value={"donation-edit"}>Update</Checkbox> <br />
+                <br />
+                <FormLabel>Plans Related Permissions</FormLabel>
+                <Checkbox value={"plan-create"}>View</Checkbox> <br />
+                <Checkbox value={"plan-view"}>View</Checkbox> <br />
+                <Checkbox value={"plan-edit"}>Update</Checkbox> <br />
+              </CheckboxGroup>
+            ) : (
+              <Text>Please wait...</Text>
+            )}
           </DrawerBody>
           <DrawerFooter gap={4} justifyContent={"flex-end"}>
             <Button
