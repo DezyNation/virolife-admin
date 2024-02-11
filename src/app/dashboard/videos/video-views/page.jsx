@@ -63,7 +63,7 @@ const Views = () => {
           Videos
         </Text>
       </HStack>
-      <PrintButtons />
+      <PrintButtons fileName={'VideoViews'} keyword={'video-views'} />
       <Stack
         w={"full"}
         direction={["column"]}

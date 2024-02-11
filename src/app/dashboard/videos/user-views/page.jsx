@@ -55,7 +55,7 @@ const page = () => {
         </Text>
       </Stack>
       <br />
-      <HStack w={'full'} justifyContent={'flex-end'}>
+      <HStack w={"full"} justifyContent={"flex-end"}>
         <Input
           w={["full", "xs"]}
           value={userId}
@@ -64,7 +64,11 @@ const page = () => {
         <Button onClick={() => fetchVideos()}>Search</Button>
       </HStack>
       <br />
-      <PrintButtons />
+      <PrintButtons
+        fileName={"UserViews"}
+        keyword={"video-history"}
+        queryParams={`userId=${userId}`}
+      />
       <Stack
         w={"full"}
         direction={["column"]}

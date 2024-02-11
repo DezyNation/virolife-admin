@@ -115,8 +115,8 @@ const page = () => {
                 <Td>₹ {item?.amount}</Td>
                 <Td align="center">
                   {item?.donated ? <BsCheckCircleFill color="green" /> : null}
-                </Td align="center">
-                <Td>
+                </Td>
+                <Td align="center">
                   {item?.approved ? <BsCheckCircleFill color="green" /> : null}
                 </Td>
                 <Td>{new Date(item?.created_at).toLocaleString()}</Td>

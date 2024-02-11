@@ -137,7 +137,7 @@ const Users = () => {
           <Button colorScheme={"yellow"}>Search</Button>
         </HStack>
       </HStack>
-      <PrintButtons />
+      {/* <PrintButtons /> */}
       <Stack
         w={"full"}
         direction={["column"]}
