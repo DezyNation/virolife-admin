@@ -24,11 +24,14 @@ import { BsCheckCircleFill } from "react-icons/bs";
 const page = () => {
   const Toast = useToast({ position: "top-right" });
   const [data, setData] = useState([]);
-  const [dates, setDates] = useState([new Date().setMonth(new Date().getMonth() - 2), new Date().setDate(new Date().getDate()+1)]);
+  const [dates, setDates] = useState([
+    new Date().setMonth(new Date().getMonth() - 2),
+    new Date().setDate(new Date().getDate() + 1),
+  ]);
   const { handleError } = useApiHandler();
 
   const now = new Date();
-  
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -90,6 +93,7 @@ const page = () => {
               <Th>Receiver</Th>
               {/* <Th>Receiver Level</Th> */}
               <Th>Amount</Th>
+              <Th>Donated</Th>
               <Th>Approved</Th>
               <Th>Timestamp</Th>
               <Th>Updated At</Th>
@@ -109,38 +113,39 @@ const page = () => {
                 </Td>
                 {/* <Td>{item?.receiver_round}</Td> */}
                 <Td>₹ {item?.amount}</Td>
+                <Td align="center">
+                  {item?.donated ? <BsCheckCircleFill color="green" /> : null}
+                </Td align="center">
                 <Td>
                   {item?.approved ? <BsCheckCircleFill color="green" /> : null}
                 </Td>
                 <Td>{new Date(item?.created_at).toLocaleString()}</Td>
                 <Td>{new Date(item?.updated_at).toLocaleString()}</Td>
                 <Td>
-                  {
-                    now - new Date(item?.created_at) >= 86400000 ? (
-                      <HStack gap={6}>
-                        {item?.approved ? null : item?.donated ? (
-                          <Button
-                            size={"sm"}
-                            rounded={"full"}
-                            colorScheme="yellow"
-                            onClick={() => approveDonation(item?.id, true)}
-                          >
-                            Approve
-                          </Button>
-                        ) : null}
-                        {item?.approved ? null : item?.donated ? (
-                          <Button
-                            size={"sm"}
-                            rounded={"full"}
-                            colorScheme="red"
-                            onClick={() => approveDonation(item?.id, false)}
-                          >
-                            Reject
-                          </Button>
-                        ) : null}
-                      </HStack>
-                    ) : null
-                  }
+                  {now - new Date(item?.created_at) >= 86400000 ? (
+                    <HStack gap={6}>
+                      {item?.approved ? null : item?.donated ? (
+                        <Button
+                          size={"sm"}
+                          rounded={"full"}
+                          colorScheme="yellow"
+                          onClick={() => approveDonation(item?.id, true)}
+                        >
+                          Approve
+                        </Button>
+                      ) : null}
+                      {item?.approved ? null : item?.donated ? (
+                        <Button
+                          size={"sm"}
+                          rounded={"full"}
+                          colorScheme="red"
+                          onClick={() => approveDonation(item?.id, false)}
+                        >
+                          Reject
+                        </Button>
+                      ) : null}
+                    </HStack>
+                  ) : null}
                 </Td>
               </Tr>
             ))}
