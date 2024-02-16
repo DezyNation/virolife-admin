@@ -31,13 +31,12 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { BsDownload, BsEye, BsPlus } from "react-icons/bs";
-import BackendAxios from "@/utils/axios";
+import BackendAxios, { FormAxios } from "@/utils/axios";
 import QRCode from "react-qr-code";
 import TreeModal from "@/components/dashboard/users/TreeModal";
 import PrintButtons from "@/components/dashboard/PrintButtons";
 
 const Users = () => {
-  const arr = [1, 1, 1, 1, 1, 1, 2, 0];
   const Toast = useToast({ position: "top-right" });
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -326,8 +325,26 @@ const Users = () => {
                   </Td>
                   <Td>{user?.stars}</Td>
                   <Td>{Number(user?.performance)?.toFixed(2)}</Td>
-                  <Td>{Number(user?.parent_id)}</Td>
-                  <Td>{Number(user?.secondary_parent_id)}</Td>
+                  <Td>
+                    <Text>{Number(user?.parent_id)}</Text>
+                    <Switch
+                      onChange={(e) =>
+                        updateUser(user?.id, {
+                          primary_activated: e.target.checked,
+                        })
+                      }
+                    />
+                  </Td>
+                  <Td>
+                    <Text>{Number(user?.secondary_parent_id)}</Text>
+                    <Switch
+                      onChange={(e) =>
+                        updateUser(user?.id, {
+                          secondary_activated: e.target.checked,
+                        })
+                      }
+                    />
+                  </Td>
                   <Td>
                     ₹{Number(user?.primary_sum)}
                     <br />₹{Number(user?.senior_primary)}
