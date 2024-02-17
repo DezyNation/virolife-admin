@@ -331,7 +331,7 @@ const Users = () => {
                       isChecked={user?.primary_activated ? true : false}
                       onChange={(e) =>
                         updateUser(user?.id, {
-                          primary_activated: e.target.checked,
+                          primary_activated: e.target.checked ? 1 : 0,
                         })
                       }
                     />
