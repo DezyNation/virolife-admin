@@ -328,6 +328,7 @@ const Users = () => {
                   <Td>
                     <Text>{Number(user?.parent_id)}</Text>
                     <Switch
+                      isChecked={user?.primary_activated ? true : false}
                       onChange={(e) =>
                         updateUser(user?.id, {
                           primary_activated: e.target.checked,
@@ -338,6 +339,7 @@ const Users = () => {
                   <Td>
                     <Text>{Number(user?.secondary_parent_id)}</Text>
                     <Switch
+                      isChecked={user?.secondary_activated ? true : false}
                       onChange={(e) =>
                         updateUser(user?.id, {
                           secondary_activated: e.target.checked,
