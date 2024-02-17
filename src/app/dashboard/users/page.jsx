@@ -108,6 +108,7 @@ const Users = () => {
           status: "success",
           description: "User updated successfully!",
         });
+        fetchUsers();
       })
       .catch((err) => {
         Toast({
