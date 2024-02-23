@@ -60,7 +60,7 @@ const Page = ({ params }) => {
   }, []);
 
   function fetchCampaignInfo() {
-    BackendAxios.get(`/api/campaign/${id}`)
+    BackendAxios.get(`/api/admin/campaign/${id}`)
       .then((res) => {
         setCampaign(res.data[0]);
         if (res?.data[0]?.file_path) {
