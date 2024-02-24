@@ -120,7 +120,7 @@ const Page = ({ params }) => {
     },
     onSubmit: (values) => {
       setLoading(true);
-      BackendAxios.post(`/api/update-campaign/${id}`, {
+      FormAxios.post(`/api/update-campaign/${id}`, {
         ...values,
         beneficiaryDetails: JSON.stringify(beneficiaryDetails),
         from: new Date(selectedDates[0]).getUTCSeconds(),
