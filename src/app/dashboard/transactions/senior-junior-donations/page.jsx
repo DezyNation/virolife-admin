@@ -101,54 +101,62 @@ const page = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {data.map((item, key) => (
-              <Tr key={key}>
-                <Td>{item?.id}</Td>
-                <Td>
-                  {item?.sender_name} ({item?.sender_id})
-                </Td>
-                <Td>{item?.sender_round}</Td>
-                <Td>
-                  {item?.receiver_name} ({item?.receiver_id})
-                </Td>
-                {/* <Td>{item?.receiver_round}</Td> */}
-                <Td>₹ {item?.amount}</Td>
-                <Td align="center">
-                  {item?.donated ? <BsCheckCircleFill color="green" /> : null}
-                </Td>
-                <Td align="center">
-                  {item?.approved ? <BsCheckCircleFill color="green" /> : null}
-                </Td>
-                <Td>{new Date(item?.created_at).toLocaleString()}</Td>
-                <Td>{new Date(item?.updated_at).toLocaleString()}</Td>
-                <Td>
-                  {now - new Date(item?.created_at) >= 86400000 ? (
-                    <HStack gap={6}>
-                      {item?.approved ? null : item?.donated ? (
-                        <Button
-                          size={"sm"}
-                          rounded={"full"}
-                          colorScheme="yellow"
-                          onClick={() => approveDonation(item?.id, true)}
-                        >
-                          Approve
-                        </Button>
+            {data.map((item, key) => {
+              if (item?.donated) {
+                return (
+                  <Tr key={key}>
+                    <Td>{item?.id}</Td>
+                    <Td>
+                      {item?.sender_name} ({item?.sender_id})
+                    </Td>
+                    <Td>{item?.sender_round}</Td>
+                    <Td>
+                      {item?.receiver_name} ({item?.receiver_id})
+                    </Td>
+                    {/* <Td>{item?.receiver_round}</Td> */}
+                    <Td>₹ {item?.amount}</Td>
+                    <Td align="center">
+                      {item?.donated ? (
+                        <BsCheckCircleFill color="green" />
                       ) : null}
-                      {item?.approved ? null : item?.donated ? (
-                        <Button
-                          size={"sm"}
-                          rounded={"full"}
-                          colorScheme="red"
-                          onClick={() => approveDonation(item?.id, false)}
-                        >
-                          Reject
-                        </Button>
+                    </Td>
+                    <Td align="center">
+                      {item?.approved ? (
+                        <BsCheckCircleFill color="green" />
                       ) : null}
-                    </HStack>
-                  ) : null}
-                </Td>
-              </Tr>
-            ))}
+                    </Td>
+                    <Td>{new Date(item?.created_at).toLocaleString()}</Td>
+                    <Td>{new Date(item?.updated_at).toLocaleString()}</Td>
+                    <Td>
+                      {now - new Date(item?.created_at) >= 86400000 ? (
+                        <HStack gap={6}>
+                          {item?.approved ? null : item?.donated ? (
+                            <Button
+                              size={"sm"}
+                              rounded={"full"}
+                              colorScheme="yellow"
+                              onClick={() => approveDonation(item?.id, true)}
+                            >
+                              Approve
+                            </Button>
+                          ) : null}
+                          {item?.approved ? null : item?.donated ? (
+                            <Button
+                              size={"sm"}
+                              rounded={"full"}
+                              colorScheme="red"
+                              onClick={() => approveDonation(item?.id, false)}
+                            >
+                              Reject
+                            </Button>
+                          ) : null}
+                        </HStack>
+                      ) : null}
+                    </Td>
+                  </Tr>
+                );
+              }
+            })}
           </Tbody>
         </Table>
       </TableContainer>
