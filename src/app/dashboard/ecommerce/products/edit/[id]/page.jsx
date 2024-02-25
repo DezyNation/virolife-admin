@@ -78,7 +78,7 @@ const Page = ({ params }) => {
   }
 
   const onDrop = useCallback(async (acceptedFiles) => {
-    Formik.setFieldValue("files", acceptedFiles);
+    Formik.setFieldValue("files", [...acceptedFiles, ...Formik.values.files]);
     const newImages = acceptedFiles.map((file) => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
