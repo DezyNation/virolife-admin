@@ -43,6 +43,7 @@ import { HiUserGroup } from "react-icons/hi";
 import { TbBinaryTree } from "react-icons/tb";
 import { BiDonateHeart, BiLogIn, BiMenuAltLeft, BiUser } from "react-icons/bi";
 import {
+  FaMoneyBill,
   FaPercentage,
   FaRegCreditCard,
   FaUserShield,
@@ -226,6 +227,15 @@ const MenuOptions = () => {
             <HStack gap={4}>
               <BiDonateHeart size={20} />
               <Text>Campaign Donations</Text>
+            </HStack>
+          </Link>
+        ) : null}
+
+        {permissions.includes("donation-view") ? (
+          <Link href={"/dashboard/withdrawal-requests"}>
+            <HStack gap={4}>
+              <FaMoneyBill size={20} />
+              <Text>Campaign Withdrawals</Text>
             </HStack>
           </Link>
         ) : null}
