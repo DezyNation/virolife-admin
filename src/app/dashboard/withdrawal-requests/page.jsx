@@ -196,7 +196,7 @@ const page = () => {
               </Select>
             </FormControl>
 
-            {updateData?.status == "approved" ? (
+            {updatedData?.status == "approved" ? (
               <FormControl w={["full", "xs"]} mt={4}>
                 <FormLabel>Enter Trnxn ID</FormLabel>
                 <Input
@@ -211,7 +211,7 @@ const page = () => {
               </FormControl>
             ) : null}
 
-            {updateData?.status == "approved" ? (
+            {updatedData?.status == "approved" ? (
               <FormControl w={["full", "xs"]} mt={4}>
                 <FormLabel>Enter Trnxn Channel</FormLabel>
                 <Input
@@ -227,7 +227,7 @@ const page = () => {
               </FormControl>
             ) : null}
 
-            {updateData?.status == "approved" ? (
+            {updatedData?.status == "approved" ? (
               <FormControl w={["full", "xs"]} mt={4}>
                 <FormLabel>Enter Trnxn Date</FormLabel>
                 <Input
