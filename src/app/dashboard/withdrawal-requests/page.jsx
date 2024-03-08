@@ -81,7 +81,7 @@ const page = () => {
       </Text>
       <br />
       <br />
-      <HStack mb={4} justifyContent={'flex-end'}>
+      <HStack mb={4} justifyContent={"flex-end"}>
         <Button
           size={"sm"}
           onClick={() => setStatus("")}
@@ -125,6 +125,7 @@ const page = () => {
             <Tr>
               <Th>#</Th>
               <Th>Campaign</Th>
+              <Th>User</Th>
               <Th>Amount</Th>
               <Th>Requested At</Th>
               <Th>Status</Th>
@@ -138,8 +139,13 @@ const page = () => {
             {data?.map((item, key) => (
               <Tr>
                 <Td>{key + 1}</Td>
-                <Td>{item?.campaign_title}</Td>
-                <Td>{item?.amount}</Td>
+                <Td>
+                  ({item?.campaign_id}) - {item?.campaign_title}
+                </Td>
+                <Td>
+                  ({item?.user_id}) - {item?.user_name}
+                </Td>
+                <Td>₹{item?.amount}</Td>
                 <Td>{item?.created_at}</Td>
                 <Td>{item?.status}</Td>
                 <Td>{item?.transaction_id}</Td>
@@ -178,7 +184,10 @@ const page = () => {
                 placeholder="Choose Status"
                 value={updatedData?.status}
                 onChange={(e) =>
-                  setUpdatedData((prev) => ({ ...prev, status: e.target.value }))
+                  setUpdatedData((prev) => ({
+                    ...prev,
+                    status: e.target.value,
+                  }))
                 }
               >
                 <option value="pending">Pending</option>
@@ -233,12 +242,13 @@ const page = () => {
                 />
               </FormControl>
             ) : null}
-
           </ModalBody>
           <ModalFooter>
             <HStack w={"full"} justifyContent={"flex-end"}>
               <Button onClick={() => setCampaignId(null)}>Cancel</Button>
-              <Button colorScheme="whatsapp" onClick={() => updateData()}>Submit</Button>
+              <Button colorScheme="whatsapp" onClick={() => updateData()}>
+                Submit
+              </Button>
             </HStack>
           </ModalFooter>
         </ModalContent>
