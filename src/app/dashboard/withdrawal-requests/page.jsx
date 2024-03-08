@@ -156,7 +156,7 @@ const page = () => {
                     <Button
                       size={"sm"}
                       onClick={() => {
-                        setUpdateData((prev) => ({
+                        setUpdatedData((prev) => ({
                           ...prev,
                           status: item?.status,
                         }));
