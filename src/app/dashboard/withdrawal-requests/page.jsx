@@ -49,7 +49,7 @@ const page = () => {
   }, [status]);
 
   function fetchData() {
-    BackendAxios.get(`/api/campaign-withdrawal-request?status=${status}`)
+    BackendAxios.get(`/api/admin/campaign-withdrawal-request?status=${status}`)
       .then((res) => {
         setData(res?.data);
       })
