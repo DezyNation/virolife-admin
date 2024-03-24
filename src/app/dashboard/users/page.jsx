@@ -422,7 +422,7 @@ const Users = () => {
                       </Button>
                       <Button
                         size={"xs"}
-                        colorScheme={"orange"}
+                        colorScheme={"facebook"}
                         onClick={() =>
                           setPlanTree((prev) => ({
                             ...prev,
@@ -624,12 +624,12 @@ const Users = () => {
       />
 
       <PlanTree
-        status={planTree.status}
+        status={planTree?.status}
         onClose={() => {
           setPlanTree({ status: false });
         }}
-        userId={planTree.userId}
-        userName={planTree.userName}
+        userId={planTree?.userId}
+        userName={planTree?.userName}
       />
     </>
   );

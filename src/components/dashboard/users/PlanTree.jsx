@@ -88,7 +88,7 @@ const PlanTree = ({ status, userId, userName, onClose }) => {
           <ModalHeader>Juniors Tree - User {userId}</ModalHeader>
           <ModalBody>
             <Box w={"full"} h={"80vh"} pos={"relative"}>
-              {groupMembers ? (
+              {groupMembers?.length ? (
                 <Tree
                   data={groupMembers}
                   orientation="vertical"
