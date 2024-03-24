@@ -35,6 +35,7 @@ import BackendAxios, { FormAxios } from "@/utils/axios";
 import QRCode from "react-qr-code";
 import TreeModal from "@/components/dashboard/users/TreeModal";
 import PrintButtons from "@/components/dashboard/PrintButtons";
+import PlanTree from "@/components/dashboard/users/PlanTree";
 
 const Users = () => {
   const Toast = useToast({ position: "top-right" });
@@ -49,6 +50,12 @@ const Users = () => {
   const [groupMembers, setGroupMembers] = useState([]);
   const [showTreeModal, setShowTreeModal] = useState(false);
   const [round, setRound] = useState("");
+
+  const [planTree, setPlanTree] = useState({
+    status: false,
+    userId: "",
+    userName: "",
+  });
 
   function showQr(upi) {
     if (!upi) {
@@ -413,6 +420,20 @@ const Users = () => {
                       >
                         Sec. Tree
                       </Button>
+                      <Button
+                        size={"xs"}
+                        colorScheme={"orange"}
+                        onClick={() =>
+                          setPlanTree((prev) => ({
+                            ...prev,
+                            userId: user?.id,
+                            userName: user?.name,
+                            status: true,
+                          }))
+                        }
+                      >
+                        Viro Team Tree
+                      </Button>
                     </HStack>
                   </Td>
                 </Tr>
@@ -600,6 +621,15 @@ const Users = () => {
         status={showTreeModal}
         onClose={() => setShowTreeModal(false)}
         groupMembers={groupMembers}
+      />
+
+      <PlanTree
+        status={planTree.status}
+        onClose={() => {
+          setPlanTree({ status: false });
+        }}
+        userId={planTree.userId}
+        userName={planTree.userName}
       />
     </>
   );
