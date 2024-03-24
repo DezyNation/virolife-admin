@@ -31,7 +31,7 @@ const PlanTree = ({ status, userId, userName, onClose }) => {
     if (userId) {
       fetchJuniors();
     }
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     const handleWindowMouseMove = (event) => {
