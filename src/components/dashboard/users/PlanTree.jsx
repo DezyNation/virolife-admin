@@ -97,7 +97,7 @@ const PlanTree = ({ status, userId, userName, onClose }) => {
                   onNodeMouseOver={(data) => {
                     setShowTooltip({
                       status: true,
-                      id: `VCF${data?.data?.user_id}`,
+                      id: `VCF${data?.data?.user_id || userId}`,
                       planName: data?.data?.plan_name,
                     });
                   }}
