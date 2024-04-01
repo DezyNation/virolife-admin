@@ -20,6 +20,7 @@ import BackendAxios from "@/utils/axios";
 import PrintButtons from "@/components/dashboard/PrintButtons";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
 import { format } from "date-fns";
+import { FaUser } from "react-icons/fa";
 
 const DonationTable = ({ transactions, groupType, fetchMyCollections }) => {
   const [user, setUser] = useState("");
@@ -91,7 +92,7 @@ const DonationTable = ({ transactions, groupType, fetchMyCollections }) => {
                     {item?.user?.name} ({item?.user?.id})
                   </Td>
                   <Td>{item?.remarks}</Td>
-                  <Td>₹ {item?.amount}</Td>
+                  <Td>₹ {item?.amount} {item?.donated_to_admin ? <FaUser /> : null} </Td>
                   <Td>{new Date(item?.created_at).toLocaleString()}</Td>
                   <Td>
                     {item?.updated_by} {item?.updated_user}

@@ -77,8 +77,13 @@ const DashboardHome = () => {
         <StatsCard
           icon={<BsCurrencyRupee size={28} />}
           title={"total collected"}
+          quantity={overviewData?.collection}
         />
-        <StatsCard icon={<BsCashCoin size={28} />} title={"amount settled"} />
+        <StatsCard
+          icon={<BsCashCoin size={28} />}
+          title={"pending payouts"}
+          quantity={overviewData?.pending_amount}
+        />
       </Stack>
       {msg ? (
         <Box
