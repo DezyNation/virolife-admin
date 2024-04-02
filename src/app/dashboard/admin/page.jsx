@@ -517,6 +517,7 @@ const Users = () => {
                 <FormLabel>Users Related Permissions</FormLabel>
                 <Checkbox value={"user-view"}>View</Checkbox> <br />
                 <Checkbox value={"user-edit"}>Edit</Checkbox> <br />
+                <Checkbox value={"employees-manage"}>Manage Admin Employees</Checkbox> <br />
                 <br />
                 <FormLabel>Campaigns Related Permissions</FormLabel>
                 <Checkbox value={"campaign-view"}>View</Checkbox> <br />
@@ -531,6 +532,20 @@ const Users = () => {
                 <Checkbox value={"plan-create"}>View</Checkbox> <br />
                 <Checkbox value={"plan-view"}>View</Checkbox> <br />
                 <Checkbox value={"plan-edit"}>Update</Checkbox> <br />
+                <br />
+                <FormLabel>Withdrawal Related Permissions</FormLabel>
+                <Checkbox value={"points-withdrawals"}>Health Points Withdrawal</Checkbox> <br />
+                <Checkbox value={"points-transfers"}>Health Points Transfer Requests</Checkbox> <br />
+                <Checkbox value={"payouts-manage"}>Agents & Distributors Payouts</Checkbox> <br />
+                <Checkbox value={"campaign-withdrawals"}>Manage Campaign Withdrawals</Checkbox> <br />
+                <br />
+                <FormLabel>Other Permissions</FormLabel>
+                <Checkbox value={"partner-commission-view"}>View Commission</Checkbox> <br />
+                <Checkbox value={"gateway-transactions-view"}>View Gateway Transactions</Checkbox> <br />
+                <Checkbox value={"gift-cards-manage"}>Manage Gift Cards</Checkbox> <br />
+                <Checkbox value={"videos-manage"}>Manage Videos</Checkbox> <br />
+                <Checkbox value={"ecommerce-manage"}>Manage Ecommerce</Checkbox> <br />
+                <Checkbox value={"website-controls"}>Website Controls</Checkbox> <br />
               </CheckboxGroup>
             ) : (
               <Text>Please wait...</Text>

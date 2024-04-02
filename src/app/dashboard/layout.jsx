@@ -31,6 +31,7 @@ import {
   BsClipboardDataFill,
   BsCurrencyRupee,
   BsGearFill,
+  BsHeartFill,
   BsMegaphoneFill,
   BsPower,
   BsStarFill,
@@ -111,6 +112,7 @@ const MenuOptions = () => {
           </HStack>
         </Link>
         <br />
+        
         {permissions.includes("user-view") ? (
           <Link href={"/dashboard/users"}>
             <HStack gap={4}>
@@ -119,6 +121,7 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
+
         {permissions.includes("user-view") ? (
           <Link href={"/dashboard/distributors"}>
             <HStack gap={4}>
@@ -127,6 +130,7 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
+
         {permissions.includes("user-view") ? (
           <Link href={"/dashboard/agents"}>
             <HStack gap={4}>
@@ -135,12 +139,16 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
-        <Link href={"/dashboard/admin"}>
-          <HStack gap={4}>
-            <FaUserShield size={20} />
-            <Text>Admin Employees</Text>
-          </HStack>
-        </Link>
+
+        {permissions.includes("employees-manage") ? (
+          <Link href={"/dashboard/admin"}>
+            <HStack gap={4}>
+              <FaUserShield size={20} />
+              <Text>Admin Employees</Text>
+            </HStack>
+          </Link>
+        ) : null}
+
         <br />
         {permissions.includes("campaign-view") ? (
           <Link href={"/dashboard/campaigns"}>
@@ -150,6 +158,7 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
+
         {/* {permissions.includes("donation-view") ? (
           <Link href={"/dashboard/transactions"}>
             <HStack gap={4}>
@@ -191,35 +200,42 @@ const MenuOptions = () => {
           </Link>
         ) : null}
 
-        <Link href={"/dashboard/points/transfers"}>
-          <HStack gap={4}>
-            <HiArrowsRightLeft size={20} />
-            <Text>Transfer Requests</Text>
-          </HStack>
-        </Link>
+        {permissions.includes("points-transfers") ? (
+          <Link href={"/dashboard/points/transfers"}>
+            <HStack gap={4}>
+              <HiArrowsRightLeft size={20} />
+              <Text>Transfer Requests</Text>
+            </HStack>
+          </Link>
+        ) : null}
 
-        <Link href={"/dashboard/points/withdrawals"}>
-          <HStack gap={4}>
-            <GiTakeMyMoney size={20} />
-            <Text>Withdrawals Requests</Text>
-          </HStack>
-        </Link>
-
+        {permissions.includes("points-withdrawals") ? (
+          <Link href={"/dashboard/points/withdrawals"}>
+            <HStack gap={4}>
+              <BsHeartFill size={20} />
+              <Text>Withdrawals Requests</Text>
+            </HStack>
+          </Link>
+        ) : null}
         <br />
 
-        <Link href={"/dashboard/commission-distribution"}>
-          <HStack gap={4}>
-            <FaPercentage size={20} />
-            <Text>Commission Data</Text>
-          </HStack>
-        </Link>
+        {permissions.includes("partner-commission-view") ? (
+          <Link href={"/dashboard/commission-distribution"}>
+            <HStack gap={4}>
+              <FaPercentage size={20} />
+              <Text>Commission Data</Text>
+            </HStack>
+          </Link>
+        ) : null}
 
-        <Link href={"/dashboard/payouts"}>
-          <HStack gap={4}>
-            <BsWallet size={20} />
-            <Text>Payouts</Text>
-          </HStack>
-        </Link>
+        {permissions.includes("payouts-manage") ? (
+          <Link href={"/dashboard/payouts"}>
+            <HStack gap={4}>
+              <BsWallet size={20} />
+              <Text>Payouts</Text>
+            </HStack>
+          </Link>
+        ) : null}
 
         <br />
         {permissions.includes("donation-view") ? (
@@ -231,7 +247,7 @@ const MenuOptions = () => {
           </Link>
         ) : null}
 
-        {permissions.includes("donation-view") ? (
+        {permissions.includes("campaign-withdrawals") ? (
           <Link href={"/dashboard/withdrawal-requests"}>
             <HStack gap={4}>
               <FaMoneyBill size={20} />
@@ -240,19 +256,23 @@ const MenuOptions = () => {
           </Link>
         ) : null}
 
-        <Link href={"/dashboard/transactions/gateway-transactions"}>
-          <HStack gap={4}>
-            <BsClipboardDataFill size={20} />
-            <Text>Gateway Transactions</Text>
-          </HStack>
-        </Link>
+        {permissions.includes("gateway-transactions-view") ? (
+          <Link href={"/dashboard/transactions/gateway-transactions"}>
+            <HStack gap={4}>
+              <BsClipboardDataFill size={20} />
+              <Text>Gateway Transactions</Text>
+            </HStack>
+          </Link>
+        ) : null}
 
-        <Link href={"/dashboard/gift-cards"}>
-          <HStack gap={4}>
-            <FaRegCreditCard size={20} />
-            <Text>Gift Cards</Text>
-          </HStack>
-        </Link>
+        {permissions.includes("gift-cards-manage") ? (
+          <Link href={"/dashboard/gift-cards"}>
+            <HStack gap={4}>
+              <FaRegCreditCard size={20} />
+              <Text>Gift Cards</Text>
+            </HStack>
+          </Link>
+        ) : null}
 
         <Link href={"/dashboard/invitations"}>
           <HStack gap={4}>
@@ -263,90 +283,94 @@ const MenuOptions = () => {
 
         <br />
 
-        <Accordion allowToggle w={"full"}>
-          <AccordionItem w={"full"}>
-            <AccordionButton w={"full"} px={0}>
-              <HStack w={"full"}>
-                <BsYoutube size={20} />
-                <Text>Videos</Text>
-                <Spacer />
-                <AccordionIcon />
-              </HStack>
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <VStack
-                alignItems={"flex-start"}
-                justifyContent={"center"}
-                gap={6}
-                w={"full"}
-              >
-                <Link href={"/dashboard/videos"}>
-                  <HStack gap={4}>
-                    <Text>All Videos</Text>
-                  </HStack>
-                </Link>
+        {permissions.includes("videos-manage") ? (
+          <Accordion allowToggle w={"full"}>
+            <AccordionItem w={"full"}>
+              <AccordionButton w={"full"} px={0}>
+                <HStack w={"full"}>
+                  <BsYoutube size={20} />
+                  <Text>Videos</Text>
+                  <Spacer />
+                  <AccordionIcon />
+                </HStack>
+              </AccordionButton>
+              <AccordionPanel pb={4}>
+                <VStack
+                  alignItems={"flex-start"}
+                  justifyContent={"center"}
+                  gap={6}
+                  w={"full"}
+                >
+                  <Link href={"/dashboard/videos"}>
+                    <HStack gap={4}>
+                      <Text>All Videos</Text>
+                    </HStack>
+                  </Link>
 
-                <Link href={"/dashboard/videos/video-views"}>
-                  <HStack gap={4}>
-                    <Text>Video Views</Text>
-                  </HStack>
-                </Link>
+                  <Link href={"/dashboard/videos/video-views"}>
+                    <HStack gap={4}>
+                      <Text>Video Views</Text>
+                    </HStack>
+                  </Link>
 
-                <Link href={"/dashboard/videos/user-views"}>
-                  <HStack gap={4}>
-                    <Text>Users Data</Text>
-                  </HStack>
-                </Link>
-              </VStack>
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
+                  <Link href={"/dashboard/videos/user-views"}>
+                    <HStack gap={4}>
+                      <Text>Users Data</Text>
+                    </HStack>
+                  </Link>
+                </VStack>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        ) : null}
 
-        <Accordion allowToggle w={"full"}>
-          <AccordionItem w={"full"}>
-            <AccordionButton w={"full"} px={0}>
-              <HStack w={"full"}>
-                <BsCartCheckFill size={20} />
-                <Text>Ecommerce</Text>
-                <Spacer />
-                <AccordionIcon />
-              </HStack>
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <VStack
-                alignItems={"flex-start"}
-                justifyContent={"center"}
-                gap={6}
-                w={"full"}
-                py={4}
-              >
-                <Link href={"/dashboard/ecommerce/categories"}>
-                  <HStack gap={4}>
-                    <Text>Categories</Text>
-                  </HStack>
-                </Link>
+        {permissions.includes("ecommerce-manage") ? (
+          <Accordion allowToggle w={"full"}>
+            <AccordionItem w={"full"}>
+              <AccordionButton w={"full"} px={0}>
+                <HStack w={"full"}>
+                  <BsCartCheckFill size={20} />
+                  <Text>Ecommerce</Text>
+                  <Spacer />
+                  <AccordionIcon />
+                </HStack>
+              </AccordionButton>
+              <AccordionPanel pb={4}>
+                <VStack
+                  alignItems={"flex-start"}
+                  justifyContent={"center"}
+                  gap={6}
+                  w={"full"}
+                  py={4}
+                >
+                  <Link href={"/dashboard/ecommerce/categories"}>
+                    <HStack gap={4}>
+                      <Text>Categories</Text>
+                    </HStack>
+                  </Link>
 
-                <Link href={"/dashboard/ecommerce/products"}>
-                  <HStack gap={4}>
-                    <Text>Products</Text>
-                  </HStack>
-                </Link>
+                  <Link href={"/dashboard/ecommerce/products"}>
+                    <HStack gap={4}>
+                      <Text>Products</Text>
+                    </HStack>
+                  </Link>
 
-                <Link href={"/dashboard/ecommerce/orders"}>
-                  <HStack gap={4}>
-                    <Text>Orders</Text>
-                  </HStack>
-                </Link>
+                  <Link href={"/dashboard/ecommerce/orders"}>
+                    <HStack gap={4}>
+                      <Text>Orders</Text>
+                    </HStack>
+                  </Link>
 
-                <Link href={"/dashboard/ecommerce/gift-cards"}>
-                  <HStack gap={4}>
-                    <Text>Discount Code</Text>
-                  </HStack>
-                </Link>
-              </VStack>
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
+                  <Link href={"/dashboard/ecommerce/gift-cards"}>
+                    <HStack gap={4}>
+                      <Text>Discount Code</Text>
+                    </HStack>
+                  </Link>
+                </VStack>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        ) : null}
 
         <Link href={"/dashboard/logins"}>
           <HStack gap={4}>
@@ -355,13 +379,15 @@ const MenuOptions = () => {
           </HStack>
         </Link>
 
-        <Link href={"/dashboard/controls"}>
-          <HStack gap={4}>
-            <BsGearFill size={20} />
-            <Text>Website Controls</Text>
-          </HStack>
-        </Link>
-        
+        {permissions.includes("website-controls") ? (
+          <Link href={"/dashboard/controls"}>
+            <HStack gap={4}>
+              <BsGearFill size={20} />
+              <Text>Website Controls</Text>
+            </HStack>
+          </Link>
+        ) : null}
+
         <br />
         {/* <Link href={"/dashboard"}>
                 <HStack gap={4}>
