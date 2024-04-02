@@ -331,7 +331,7 @@ const Users = () => {
           bottom={4}
           right={4}
           colorScheme="twitter"
-          zIndex={9999}
+          zIndex={9}
           rounded={"full"}
           leftIcon={<BsPlus size={24} />}
         >
