@@ -512,7 +512,7 @@ const Users = () => {
             {selectedUserPermissions ? (
               <CheckboxGroup
                 onChange={(values) => setSelectedUserPermissions(values)}
-                defaultValue={selectedUserPermissions}
+                value={selectedUserPermissions}
               >
                 <FormLabel>Users Related Permissions</FormLabel>
                 <Checkbox value={"user-view"}>View</Checkbox> <br />
