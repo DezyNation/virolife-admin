@@ -529,7 +529,7 @@ const Users = () => {
                 <Checkbox value={"donation-edit"}>Update</Checkbox> <br />
                 <br />
                 <FormLabel>Plans Related Permissions</FormLabel>
-                <Checkbox value={"plan-create"}>View</Checkbox> <br />
+                <Checkbox value={"plan-create"}>Create</Checkbox> <br />
                 <Checkbox value={"plan-view"}>View</Checkbox> <br />
                 <Checkbox value={"plan-edit"}>Update</Checkbox> <br />
                 <br />
