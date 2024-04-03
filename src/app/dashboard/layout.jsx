@@ -60,12 +60,15 @@ const MenuOptions = () => {
     await BackendAxios.post("/logout")
       .then(() => {
         Cookies.remove("jwt");
+        localStorage.clear();
       })
       .catch((err) => {
         Cookies.remove("jwt");
+        localStorage.clear();
       })
       .finally(() => {
         Cookies.remove("jwt");
+        localStorage.clear();
       });
     window.location.replace("/");
   }
@@ -112,7 +115,7 @@ const MenuOptions = () => {
           </HStack>
         </Link>
         <br />
-        
+
         {permissions.includes("user-view") ? (
           <Link href={"/dashboard/users"}>
             <HStack gap={4}>
