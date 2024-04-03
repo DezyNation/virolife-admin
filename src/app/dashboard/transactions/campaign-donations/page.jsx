@@ -6,6 +6,7 @@ import {
   Button,
   FormLabel,
   HStack,
+  Select,
   Table,
   TableContainer,
   Tbody,
@@ -22,16 +23,24 @@ import React, { useState, useEffect } from "react";
 const page = () => {
   const { handleError } = useApiHandler();
   const [data, setData] = useState([]);
-  const [dates, setDates] = useState([new Date().setMonth(new Date().getMonth() - 2), new Date().setDate(new Date().getDate()+1)]);
+  const [dates, setDates] = useState([
+    new Date().setMonth(new Date().getMonth() - 2),
+    new Date().setDate(new Date().getDate() + 1),
+  ]);
+  const [campaignId, setCampaignId] = useState("");
+  const [campaigns, setCampaigns] = useState([]);
 
   useEffect(() => {
     fetchData();
+    fetchCampaigns();
   }, []);
 
   function fetchData() {
     const from = format(dates[0], "yyyy-MM-dd");
     const to = format(dates[1], "yyyy-MM-dd");
-    BackendAxios.get(`/api/admin/campaign-donations?from=${from}&to=${to}`)
+    BackendAxios.get(
+      `/api/admin/campaign-donations?from=${from}&to=${to}&campaignId=${campaignId}`
+    )
       .then((res) => {
         setData(res.data);
       })
@@ -40,14 +49,34 @@ const page = () => {
       });
   }
 
+  function fetchCampaigns() {
+    BackendAxios.get("/api/campaign")
+      .then((res) => {
+        setCampaigns(res.data);
+      })
+      .catch((err) => {
+        handleError(err, "Error while getting list of campaigns");
+      });
+  }
+
   return (
     <>
       <Text fontSize={"2xl"}>Campaign Donations</Text>
       <br />
-      <HStack w={["full", "lg"]} alignItems={"flex-end"}>
-        <Box>
+      <HStack w={["full", "max-content"]} alignItems={"flex-end"}>
+        <Box w={["full", "xs"]}>
           <FormLabel>Dates:</FormLabel>
           <RangeDatepicker selectedDates={dates} onDateChange={setDates} />
+        </Box>
+        <Box w={["full", "xs"]}>
+          <FormLabel>Campaign</FormLabel>
+          <Select onChange={(e) => setCampaignId(e.target.value)}>
+            {campaigns?.map((item, key) => (
+              <option key={key} value={item?.id}>
+                {item?.title}
+              </option>
+            ))}
+          </Select>
         </Box>
         <Button onClick={fetchData} colorScheme="yellow">
           Search
