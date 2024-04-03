@@ -71,6 +71,7 @@ const page = () => {
         <Box w={["full", "xs"]}>
           <FormLabel>Campaign</FormLabel>
           <Select onChange={(e) => setCampaignId(e.target.value)}>
+            <option value="">All Campaigns</option>
             {campaigns?.map((item, key) => (
               <option key={key} value={item?.id}>
                 {item?.title}
