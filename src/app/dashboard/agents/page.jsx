@@ -128,7 +128,7 @@ const Users = () => {
     <>
       <HStack justifyContent={["space-between"]} py={8}>
         <Text className="serif" fontSize={"2xl"} textTransform={"capitalize"}>
-          Agents
+          Volunteers
         </Text>
         <HStack alignItems={"flex-end"}>
           <Input

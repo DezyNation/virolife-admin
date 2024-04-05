@@ -138,7 +138,7 @@ const MenuOptions = () => {
           <Link href={"/dashboard/agents"}>
             <HStack gap={4}>
               <FaUserTie size={20} />
-              <Text>Agents</Text>
+              <Text>Volunteers</Text>
             </HStack>
           </Link>
         ) : null}
