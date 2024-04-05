@@ -92,14 +92,18 @@ const DonationTable = ({ transactions, groupType, fetchMyCollections }) => {
                     {item?.user?.name} ({item?.user?.id})
                   </Td>
                   <Td>{item?.remarks}</Td>
-                  <Td>₹ {item?.amount} {item?.donated_to_admin ? <FaUser /> : null} </Td>
+                  <Td>
+                    ₹ {item?.amount}{" "}
+                    {item?.donated_to_admin ? <FaUser /> : null}{" "}
+                  </Td>
                   <Td>{new Date(item?.created_at).toLocaleString()}</Td>
                   <Td>
                     {item?.updated_by} {item?.updated_user}
                   </Td>
                   <Td>
                     {!item?.approved && !item?.deleted_at ? (
-                      now - new Date(item?.created_at) >= 86400000 ? (
+                      now - new Date(item?.created_at) >= 43200000 &&
+                      !item?.donated_to_admin ? (
                         <HStack>
                           <Button
                             size={"sm"}
@@ -133,7 +137,10 @@ const DonationTable = ({ transactions, groupType, fetchMyCollections }) => {
 const page = () => {
   const [data, setData] = useState([]);
   const [user, setUser] = useState("");
-  const [dates, setDates] = useState([new Date().setMonth(new Date().getMonth() - 2), new Date().setDate(new Date().getDate()+1)]);
+  const [dates, setDates] = useState([
+    new Date().setMonth(new Date().getMonth() - 2),
+    new Date().setDate(new Date().getDate() + 1),
+  ]);
 
   function fetchMyCollections() {
     const from = format(dates[0], "yyyy-MM-dd");
