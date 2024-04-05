@@ -20,6 +20,7 @@ import { RangeDatepicker } from "chakra-dayzed-datepicker";
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
+import { FaUser } from "react-icons/fa";
 
 const page = () => {
   const Toast = useToast({ position: "top-right" });
@@ -114,7 +115,10 @@ const page = () => {
                       {item?.receiver_name} ({item?.receiver_id})
                     </Td>
                     {/* <Td>{item?.receiver_round}</Td> */}
-                    <Td>₹ {item?.amount}</Td>
+                    <Td>
+                      ₹ {item?.amount}{" "}
+                      {item?.donated_to_admin ? <FaUser /> : null}
+                    </Td>
                     <Td align="center">
                       {item?.donated ? (
                         <BsCheckCircleFill color="green" />
