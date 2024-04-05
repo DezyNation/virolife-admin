@@ -102,8 +102,8 @@ const DonationTable = ({ transactions, groupType, fetchMyCollections }) => {
                   </Td>
                   <Td>
                     {!item?.approved && !item?.deleted_at ? (
-                      now - new Date(item?.created_at) >= 43200000 &&
-                      !item?.donated_to_admin ? (
+                      now - new Date(item?.created_at) >= 43200000 ||
+                      item?.donated_to_admin ? (
                         <HStack>
                           <Button
                             size={"sm"}

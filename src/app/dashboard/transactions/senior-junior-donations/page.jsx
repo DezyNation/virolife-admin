@@ -132,7 +132,7 @@ const page = () => {
                     <Td>{new Date(item?.created_at).toLocaleString()}</Td>
                     <Td>{new Date(item?.updated_at).toLocaleString()}</Td>
                     <Td>
-                      {now - new Date(item?.created_at) >= 43200000 &&  !item?.donated_to_admin ? (
+                      {now - new Date(item?.created_at) >= 43200000 || item?.donated_to_admin ? (
                         <HStack gap={6}>
                           {item?.approved ? null : item?.donated ? (
                             <Button
