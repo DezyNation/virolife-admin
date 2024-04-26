@@ -34,7 +34,7 @@ const Earnings = () => {
   }, []);
 
   function fetchData() {
-    BackendAxios.get(`api/my-campaign-commission`)
+    BackendAxios.get(`api/admin/campaign-commission`)
       .then((res) => {
         setData(res.data);
       })
@@ -83,7 +83,7 @@ const Withdrawals = () => {
   }, []);
 
   function fetchData() {
-    BackendAxios.get(`api/campaign-commission-withdrawal`)
+    BackendAxios.get(`api/admin/campaign-commission-withdrawal`)
       .then((res) => {
         setData(res.data);
       })
