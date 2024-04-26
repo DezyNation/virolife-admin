@@ -33,6 +33,7 @@ import {
   BsGearFill,
   BsHeartFill,
   BsMegaphoneFill,
+  BsPercent,
   BsPower,
   BsStarFill,
   BsWallet,
@@ -162,14 +163,14 @@ const MenuOptions = () => {
           </Link>
         ) : null}
 
-        {/* {permissions.includes("donation-view") ? (
-          <Link href={"/dashboard/transactions"}>
+        {permissions.includes("donation-view") ? (
+          <Link href={"/dashboard/campaign-commission"}>
             <HStack gap={4}>
-              <BsCurrencyRupee size={20} />
-              <Text>Campaign Donation</Text>
+              <BsPercent size={20} />
+              <Text>Campaign Commission</Text>
             </HStack>
           </Link>
-        ) : null} */}
+        ) : null}
         {permissions.includes("plan-view") ? (
           <Link href={"/dashboard/subscriptions"}>
             <HStack gap={4}>
