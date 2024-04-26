@@ -25,6 +25,7 @@ import Link from "next/link";
 import { AiFillDashboard, AiFillYoutube } from "react-icons/ai";
 import { HiArrowsRightLeft } from "react-icons/hi2";
 import {
+  BsAlexa,
   BsCalendarCheck,
   BsCartCheckFill,
   BsCashCoin,
@@ -152,6 +153,15 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
+
+        {
+          <Link href={"/dashboard/grades"}>
+            <HStack gap={4}>
+              <BsAlexa size={20} />
+              <Text>Grades</Text>
+            </HStack>
+          </Link>
+        }
 
         <br />
         {permissions.includes("campaign-view") ? (

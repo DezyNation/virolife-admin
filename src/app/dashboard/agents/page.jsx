@@ -27,6 +27,7 @@ import {
   ModalFooter,
   Image,
   Avatar,
+  Select,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { BsDownload, BsEye, BsPlus } from "react-icons/bs";
@@ -47,6 +48,7 @@ const Users = () => {
 
   const [groupMembers, setGroupMembers] = useState([]);
   const [showTreeModal, setShowTreeModal] = useState(false);
+  const [grades, setGrades] = useState([]);
 
   function showQr(upi) {
     if (!upi) {
@@ -61,7 +63,10 @@ const Users = () => {
   function fetchUsers() {
     BackendAxios.get("/api/admin/all-payouts/agent")
       .then((res) => {
-        const data = Object.entries(res.data)?.map(item => ({...item[1], id: item[0]}))
+        const data = Object.entries(res.data)?.map((item) => ({
+          ...item[1],
+          id: item[0],
+        }));
         setUsers(data);
       })
       .catch((err) => {
@@ -74,6 +79,7 @@ const Users = () => {
   }
   useEffect(() => {
     fetchUsers();
+    fetchGrades();
   }, []);
 
   function getUserInfo(id) {
@@ -124,6 +130,38 @@ const Users = () => {
       });
   }
 
+  function fetchGrades() {
+    BackendAxios.get(`/api/grades`)
+      .then((res) => {
+        setGrades(res?.data);
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
+  function updateGrade(userId, gradeId) {
+    BackendAxios.put(`/api/admin/assign-grade/${userId}`, { grade_id: gradeId })
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Grade updated",
+        });
+        fetchUsers();
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
   return (
     <>
       <HStack justifyContent={["space-between"]} py={8}>
@@ -140,7 +178,11 @@ const Users = () => {
           </Button>
         </HStack>
       </HStack>
-      <PrintButtons keyword={"users"} bodyParams={{role: "distributor"}} fileName={"DistributorsList"} />
+      <PrintButtons
+        keyword={"users"}
+        bodyParams={{ role: "distributor" }}
+        fileName={"DistributorsList"}
+      />
       <Stack
         w={"full"}
         direction={["column"]}
@@ -156,6 +198,7 @@ const Users = () => {
                 <Th>ID</Th>
                 <Th>User Name</Th>
                 <Th>Contact</Th>
+                <Th>Grade</Th>
                 <Th>Distributor</Th>
                 <Th>Commission Earned</Th>
                 <Th>Payout Received</Th>
@@ -169,14 +212,23 @@ const Users = () => {
                 <Tr fontSize={"xs"} key={key}>
                   <Td>{key + 1}</Td>
                   <Td>VCF{user?.id}</Td>
-                  <Td className="sticky-left">
-                    {user?.name}
-                  </Td>
+                  <Td className="sticky-left">{user?.name}</Td>
                   <Td>
                     <Box>
                       <p>{user?.email}</p>
                       <p>+91 {user?.phone_number}</p>
                     </Box>
+                  </Td>
+                  <Td>
+                    <Select
+                      value={user?.grade}
+                      placeholder="Select Grade"
+                      onChange={(e) => updateGrade(user?.id, e.target.value)}
+                    >
+                      {grades?.map((item) => (
+                        <option value={item?.id}>{item?.grade}</option>
+                      ))}
+                    </Select>
                   </Td>
                   <Td>
                     {user?.parent_id}-{user?.parent_name}
