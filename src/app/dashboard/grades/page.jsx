@@ -4,6 +4,7 @@ import {
   Button,
   Editable,
   EditableInput,
+  EditablePreview,
   HStack,
   Table,
   TableContainer,
@@ -122,6 +123,7 @@ const page = () => {
                       updateGrade(item?.id, { grade: value })
                     }
                   >
+                    <EditablePreview />
                     <EditableInput />
                   </Editable>
                 </Td>
@@ -132,6 +134,7 @@ const page = () => {
                       updateGrade(item?.id, { commission: value })
                     }
                   >
+                    <EditablePreview />
                     <EditableInput />
                   </Editable>
                   %
