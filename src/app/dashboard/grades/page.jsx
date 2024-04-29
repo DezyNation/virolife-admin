@@ -128,16 +128,18 @@ const page = () => {
                   </Editable>
                 </Td>
                 <Td>
+                  <HStack>
                   <Editable
                     defaultValue={item?.commission}
                     onSubmit={(value) =>
                       updateGrade(item?.id, { commission: value })
                     }
-                  >
+                    >
                     <EditablePreview />
                     <EditableInput />
                   </Editable>
                   %
+                    </HStack>
                 </Td>
                 <Td textAlign={"center"}>
                   <Button
