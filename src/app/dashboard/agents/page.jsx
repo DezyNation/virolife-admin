@@ -221,7 +221,9 @@ const Users = () => {
                   </Td>
                   <Td>
                     <Select
-                      value={user?.grade}
+                      value={
+                        grades?.find((item) => item?.grade == user?.grade)?.id
+                      }
                       placeholder="Select Grade"
                       onChange={(e) => updateGrade(user?.id, e.target.value)}
                     >
