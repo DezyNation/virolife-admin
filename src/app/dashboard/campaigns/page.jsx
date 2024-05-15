@@ -43,7 +43,7 @@ const Page = () => {
   const [filter, setFilter] = useState("all");
 
   function fetchData() {
-    BackendAxios.get(`/api/admin/campaigns/${status}`)
+    BackendAxios.get(`/api/admin/campaigns/${filter}`)
       .then((res) => {
         setCampaigns(res.data);
       })
@@ -57,7 +57,7 @@ const Page = () => {
   }
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [filter]);
 
   function handleCampaignSelection(id, status) {
     setSelectedCampaign(id);
