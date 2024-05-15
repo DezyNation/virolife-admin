@@ -43,7 +43,7 @@ const Page = () => {
   const [filter, setFilter] = useState("all");
 
   function fetchData() {
-    BackendAxios.get("/api/campaign")
+    BackendAxios.get(`/api/admin/campaigns/${status}`)
       .then((res) => {
         setCampaigns(res.data);
       })
@@ -73,8 +73,8 @@ const Page = () => {
             status: "success",
             description: "Campaign deleted successfully!",
           });
-          onToggle()
-          fetchData()
+          onToggle();
+          fetchData();
         })
         .catch((err) => {
           Toast({
@@ -201,61 +201,53 @@ const Page = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {campaigns
-              .filter((item) => {
-                if (filter == "all") return item;
-                else return item?.status?.toLowerCase() == filter;
-              })
-              .map((campaign, key) => (
-                <Tr key={key}>
-                  <Td>{campaign?.id}</Td>
-                  <Td>{campaign?.title}</Td>
-                  <Td>{campaign?.user_id}</Td>
-                  <Td>{campaign?.status}</Td>
-                  <Td>{new Date(campaign?.created_at).toLocaleDateString()}</Td>
-                  <Td>
-                    <HStack>
+            {campaigns.map((campaign, key) => (
+              <Tr key={key}>
+                <Td>{campaign?.id}</Td>
+                <Td>{campaign?.title}</Td>
+                <Td>{campaign?.user_id}</Td>
+                <Td>{campaign?.status}</Td>
+                <Td>{new Date(campaign?.created_at).toLocaleDateString()}</Td>
+                <Td>
+                  <HStack>
+                    <Button
+                      size={"sm"}
+                      rounded={"full"}
+                      colorScheme="yellow"
+                      onClick={() =>
+                        handleCampaignSelection(campaign?.id, campaign?.status)
+                      }
+                    >
+                      Update
+                    </Button>
+                    <Link
+                      href={`/dashboard/campaigns/view/${campaign?.id}`}
+                      target="_blank"
+                    >
                       <Button
                         size={"sm"}
                         rounded={"full"}
-                        colorScheme="yellow"
-                        onClick={() =>
-                          handleCampaignSelection(
-                            campaign?.id,
-                            campaign?.status
-                          )
-                        }
+                        colorScheme="twitter"
                       >
-                        Update
+                        View
                       </Button>
-                      <Link
-                        href={`/dashboard/campaigns/view/${campaign?.id}`}
-                        target="_blank"
+                    </Link>
+                    <Link
+                      href={`/dashboard/campaigns/edit/${campaign?.id}`}
+                      target="_blank"
+                    >
+                      <Button
+                        size={"sm"}
+                        rounded={"full"}
+                        colorScheme="whatsapp"
                       >
-                        <Button
-                          size={"sm"}
-                          rounded={"full"}
-                          colorScheme="twitter"
-                        >
-                          View
-                        </Button>
-                      </Link>
-                      <Link
-                        href={`/dashboard/campaigns/edit/${campaign?.id}`}
-                        target="_blank"
-                      >
-                        <Button
-                          size={"sm"}
-                          rounded={"full"}
-                          colorScheme="whatsapp"
-                        >
-                          Edit
-                        </Button>
-                      </Link>
-                    </HStack>
-                  </Td>
-                </Tr>
-              ))}
+                        Edit
+                      </Button>
+                    </Link>
+                  </HStack>
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
