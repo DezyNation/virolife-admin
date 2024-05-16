@@ -60,9 +60,9 @@ const Earnings = () => {
               <Tr key={key}>
                 <Td>{item?.id}</Td>
                 <Td>
-                  {item?.volunteer_name} - ({item?.volunteer_id})
+                  {item?.user_name} - ({item?.user_id})
                 </Td>
-                <Td>{item?.campaign_name}</Td>
+                <Td>{item?.campaign_title}</Td>
                 <Td>{item?.commission}</Td>
                 <Td>{item?.created_at}</Td>
               </Tr>
