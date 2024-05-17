@@ -220,21 +220,32 @@ const Users = () => {
                     </Box>
                   </Td>
                   <Td>
-                    {grades?.length > 0 ? (
-                      <Select
-                        value={
+                    <HStack>
+                      <Text>
+                        {
                           grades?.find(
                             (item) => `${item?.grade}` == `${user?.grade}`
-                          )?.id
+                          )?.grade
                         }
-                        placeholder="Select Grade"
-                        onChange={(e) => updateGrade(user?.id, e.target.value)}
-                      >
-                        {grades?.map((item) => (
-                          <option value={item?.id}>{item?.grade}</option>
-                        ))}
-                      </Select>
-                    ) : null}
+                      </Text>
+                      {grades?.length > 0 ? (
+                        <Select
+                          value={
+                            grades?.find(
+                              (item) => `${item?.grade}` == `${user?.grade}`
+                            )?.id
+                          }
+                          placeholder="Select Grade"
+                          onChange={(e) =>
+                            updateGrade(user?.id, e.target.value)
+                          }
+                        >
+                          {grades?.map((item) => (
+                            <option value={item?.id}>{item?.grade}</option>
+                          ))}
+                        </Select>
+                      ) : null}
+                    </HStack>
                   </Td>
                   <Td>
                     {user?.parent_id}-{user?.parent_name}
