@@ -220,7 +220,7 @@ const Users = () => {
                     </Box>
                   </Td>
                   <Td>
-                    <Select
+                    {grades?.length ? <Select
                       value={
                         grades?.find((item) => item?.grade == user?.grade)?.id
                       }
@@ -230,7 +230,7 @@ const Users = () => {
                       {grades?.map((item) => (
                         <option value={item?.id}>{item?.grade}</option>
                       ))}
-                    </Select>
+                    </Select> : null}
                   </Td>
                   <Td>
                     {user?.parent_id}-{user?.parent_name}
