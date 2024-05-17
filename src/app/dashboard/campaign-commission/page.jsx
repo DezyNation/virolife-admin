@@ -198,17 +198,6 @@ const page = () => {
       <Text>Withdrawals</Text>
       <Withdrawals />
 
-      <Button
-        colorScheme="twitter"
-        rounded={"full"}
-        pos={"fixed"}
-        bottom={4}
-        right={4}
-        onClick={onOpen}
-      >
-        Withdraw Amount
-      </Button>
-
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
