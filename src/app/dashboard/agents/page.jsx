@@ -229,7 +229,7 @@ const Users = () => {
                         }
                       </Text>
                       {grades?.length > 0 ? (
-                        <Select
+                        <select
                           value={
                             grades?.find(
                               (item) => `${item?.grade}` == `${user?.grade}`
@@ -243,7 +243,7 @@ const Users = () => {
                           {grades?.map((item) => (
                             <option value={item?.id}>{item?.grade}</option>
                           ))}
-                        </Select>
+                        </select>
                       ) : null}
                     </HStack>
                   </Td>
