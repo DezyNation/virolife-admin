@@ -368,7 +368,7 @@ const Users = () => {
                       w={20}
                       border={"1px solid #666"}
                     >
-                      <EditablePreview />
+                      <EditablePreview w={20} border={"1px solid #666"} />
                       <EditableInput w={20} border={"1px solid #666"} />
                     </Editable>
                     <Switch
@@ -393,7 +393,7 @@ const Users = () => {
                       w={20}
                       border={"1px solid #666"}
                     >
-                      <EditablePreview />
+                      <EditablePreview w={20} border={"1px solid #666"} />
                       <EditableInput w={20} border={"1px solid #666"} />
                     </Editable>
                     <Switch
