@@ -358,7 +358,7 @@ const Users = () => {
                   <Td>
                     <Editable
                       defaultValue={user?.parent_id}
-                      onBlur={(value) =>
+                      onSubmit={(value) =>
                         updateParentId({
                           group: "primary",
                           parentId: value,
@@ -383,7 +383,7 @@ const Users = () => {
                   <Td>
                     <Editable
                       defaultValue={user?.secondary_parent_id}
-                      onBlur={(value) =>
+                      onSubmit={(value) =>
                         updateParentId({
                           group: "secondary",
                           parentId: value,
