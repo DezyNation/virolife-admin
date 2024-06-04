@@ -365,9 +365,11 @@ const Users = () => {
                           userId: user?.id,
                         })
                       }
+                      w={20}
+                      border={"1px solid #666"}
                     >
                       <EditablePreview />
-                      <EditableInput />
+                      <EditableInput w={20} border={"1px solid #666"} />
                     </Editable>
                     <Switch
                       isChecked={user?.primary_activated ? true : false}
@@ -388,9 +390,11 @@ const Users = () => {
                           userId: user?.id,
                         })
                       }
+                      w={20}
+                      border={"1px solid #666"}
                     >
                       <EditablePreview />
-                      <EditableInput />
+                      <EditableInput w={20} border={"1px solid #666"} />
                     </Editable>
                     <Switch
                       isChecked={user?.secondary_activated ? true : false}
