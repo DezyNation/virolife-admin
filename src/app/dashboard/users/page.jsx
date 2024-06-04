@@ -357,7 +357,7 @@ const Users = () => {
                   <Td>{user?.stars}</Td>
                   <Td>
                     <Editable
-                      defaultValue={user?.parent_id}
+                      defaultValue={user?.parent_id || "NA"}
                       onSubmit={(value) =>
                         updateParentId({
                           group: "primary",
@@ -365,11 +365,9 @@ const Users = () => {
                           userId: user?.id,
                         })
                       }
-                      w={20}
-                      border={"1px solid #666"}
                     >
                       <EditablePreview w={20} border={"1px solid #666"} />
-                      <EditableInput w={20} border={"1px solid #666"} />
+                      <EditableInput />
                     </Editable>
                     <Switch
                       isChecked={user?.primary_activated ? true : false}
@@ -382,7 +380,7 @@ const Users = () => {
                   </Td>
                   <Td>
                     <Editable
-                      defaultValue={user?.secondary_parent_id}
+                      defaultValue={user?.secondary_parent_id || "NA"}
                       onSubmit={(value) =>
                         updateParentId({
                           group: "secondary",
@@ -390,11 +388,9 @@ const Users = () => {
                           userId: user?.id,
                         })
                       }
-                      w={20}
-                      border={"1px solid #666"}
                     >
                       <EditablePreview w={20} border={"1px solid #666"} />
-                      <EditableInput w={20} border={"1px solid #666"} />
+                      <EditableInput />
                     </Editable>
                     <Switch
                       isChecked={user?.secondary_activated ? true : false}
