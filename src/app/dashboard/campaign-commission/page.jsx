@@ -94,7 +94,7 @@ const Withdrawals = () => {
   }
 
   function updateRequest(id, data) {
-    BackendAxios.put(`/api/admin/update-campaign-commission`, {
+    BackendAxios.put(`/api/admin/update-campaign-commission/${id}`, {
       ...data,
       id: id,
     })
@@ -125,7 +125,7 @@ const Withdrawals = () => {
               <Tr key={key}>
                 <Td>{item?.id}</Td>
                 <Td>
-                  {item?.volunteer_name} - ({item?.volunteer_id})
+                  {item?.user_name} - ({item?.user_id})
                 </Td>
                 <Td>{item?.commission}</Td>
                 <Td>{item?.status}</Td>
