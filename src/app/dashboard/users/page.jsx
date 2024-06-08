@@ -28,6 +28,9 @@ import {
   Image,
   Avatar,
   Select,
+  Editable,
+  EditablePreview,
+  EditableInput,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { BsDownload, BsEye, BsPlus } from "react-icons/bs";
@@ -233,6 +236,26 @@ const Users = () => {
       });
   }
 
+  function updateParentId({ group, userId, parentId }) {
+    BackendAxios.put(`/api/admin/update-id/${group}`, {
+      user_id: userId,
+      parent_id: parentId,
+    })
+      .then((res) => {
+        Toast({
+          status: "success",
+          description: "Senior ID updated successfully",
+        });
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
   return (
     <>
       <HStack justifyContent={["space-between"]} py={8}>
@@ -332,9 +355,20 @@ const Users = () => {
                     </Link>
                   </Td>
                   <Td>{user?.stars}</Td>
-                  <Td>{Number(user?.performance)?.toFixed(2)}</Td>
                   <Td>
-                    <Text>{Number(user?.parent_id)}</Text>
+                    <Editable
+                      defaultValue={user?.parent_id || "NA"}
+                      onSubmit={(value) =>
+                        updateParentId({
+                          group: "primary",
+                          parentId: value,
+                          userId: user?.id,
+                        })
+                      }
+                    >
+                      <EditablePreview w={20} border={"1px solid #666"} />
+                      <EditableInput />
+                    </Editable>
                     <Switch
                       isChecked={user?.primary_activated ? true : false}
                       onChange={(e) =>
@@ -345,7 +379,19 @@ const Users = () => {
                     />
                   </Td>
                   <Td>
-                    <Text>{Number(user?.secondary_parent_id)}</Text>
+                    <Editable
+                      defaultValue={user?.secondary_parent_id || "NA"}
+                      onSubmit={(value) =>
+                        updateParentId({
+                          group: "secondary",
+                          parentId: value,
+                          userId: user?.id,
+                        })
+                      }
+                    >
+                      <EditablePreview w={20} border={"1px solid #666"} />
+                      <EditableInput />
+                    </Editable>
                     <Switch
                       isChecked={user?.secondary_activated ? true : false}
                       onChange={(e) =>

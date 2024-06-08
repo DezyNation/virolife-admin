@@ -49,7 +49,7 @@ const TreeModal = ({ status, groupMembers, onClose }) => {
                 data={groupMembers}
                 orientation="vertical"
                 translate={{ x: 300, y: 200 }}
-                separation={{ siblings: 1, nonSiblings: 2 }}
+                separation={{ siblings: 2, nonSiblings: 2 }}
                 onNodeMouseOver={(data) => {
                   console.log("User ", data?.data?.id)
                   console.log(data)
