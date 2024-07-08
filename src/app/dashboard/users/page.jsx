@@ -338,7 +338,7 @@ const Users = () => {
               {filteredUsers?.map((user, key) => (
                 <Tr fontSize={"xs"} key={key}>
                   <Td>{key + 1}</Td>
-                  <Td>VCF{user?.id}</Td>
+                  <Td>{user?.primary_plan_name || "VCF"}{user?.id}</Td>
                   <Td className="sticky-left">{user?.name}</Td>
                   <Td>
                     <Box>
