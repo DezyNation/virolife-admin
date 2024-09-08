@@ -28,6 +28,7 @@ import {
   Image,
   Avatar,
   Select,
+  IconButton,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { BsDownload, BsEye, BsPlus } from "react-icons/bs";
@@ -220,24 +221,21 @@ const Users = () => {
                     </Box>
                   </Td>
                   <Td>
-                      {grades?.length > 0 ? (
-                        <select
-                          value={
-                            grades?.find(
-                              (item) => `${item?.grade}` == `${user?.grade}`
-                            )?.id
+                    <HStack>
+                      {grades?.map((item) => (
+                        <Button
+                          size={"xs"}
+                          rounded={"full"}
+                          colorScheme="whatsapp"
+                          variant={
+                            user?.grade == item?.grade ? "solid" : "outline"
                           }
-                          placeholder="Select Grade"
-                          onChange={(e) =>
-                            updateGrade(user?.id, e.target.value)
-                          }
-                          style={{padding: '4px'}}
+                          onClick={() => updateGrade(user?.id, item?.id)}
                         >
-                          {grades?.map((item) => (
-                            <option value={item?.id}>{item?.grade}</option>
-                          ))}
-                        </select>
-                      ) : null}
+                          {item?.grade}
+                        </Button>
+                      ))}
+                    </HStack>
                   </Td>
                   <Td>
                     {user?.parent_id}-{user?.parent_name}
