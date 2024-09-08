@@ -220,15 +220,22 @@ const Users = () => {
                     </Box>
                   </Td>
                   <Td>
-                    <Select
-                      value={grades?.find(item => item?.grade == user?.grade)?.id}
-                      placeholder="Select Grade"
-                      onChange={(e) => updateGrade(user?.id, e.target.value)}
-                    >
+                    
+                  <HStack>
                       {grades?.map((item) => (
-                        <option value={item?.id}>{item?.grade}</option>
+                        <Button
+                          size={"xs"}
+                          rounded={"full"}
+                          colorScheme="whatsapp"
+                          variant={
+                            user?.grade == item?.grade ? "solid" : "outline"
+                          }
+                          onClick={() => updateGrade(user?.id, item?.id)}
+                        >
+                          {item?.grade}
+                        </Button>
                       ))}
-                    </Select>
+                    </HStack>
                   </Td>
                   <Td>{Number(user?.wallet) + Number(user?.payout)}</Td>
                   <Td>{user?.payout}</Td>
