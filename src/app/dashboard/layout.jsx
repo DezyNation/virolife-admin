@@ -231,6 +231,12 @@ const MenuOptions = () => {
             </HStack>
           </Link>
         ) : null}
+        <Link href={"/dashboard/cash-points/withdrawals"}>
+            <HStack gap={4}>
+              <BsCurrencyRupee size={20} />
+              <Text>Cash Points Withdrawal</Text>
+            </HStack>
+          </Link>
         <br />
 
         {permissions.includes("partner-commission-view") ? (
