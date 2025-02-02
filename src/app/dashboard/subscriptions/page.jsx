@@ -145,7 +145,8 @@ const page = () => {
               <Th>User Name</Th>
               <Th>Senior ID</Th>
               <Th>Plan Purchased</Th>
-              <Th>Points Received</Th>
+              <Th>Health Points</Th>
+              <Th>Cash Points</Th>
               <Th>Timestamp</Th>
             </Tr>
           </Thead>
@@ -158,6 +159,7 @@ const page = () => {
                 <Td>{data?.parent_id}</Td>
                 <Td>{data?.plan_name}</Td>
                 <Td>{data?.health_points}</Td>
+                <Td>{data?.cash_points}</Td>
                 <Td>{data?.created_at}</Td>
               </Tr>
             ))}
