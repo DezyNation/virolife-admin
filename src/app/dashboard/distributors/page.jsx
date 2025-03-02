@@ -337,8 +337,8 @@ const Users = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {userHealthPoints.map((healthPoint, key) => (
-                    <Tr key={healthPoint?.id}>
+                  {userHealthPoints.map((data, key) => (
+                    <Tr key={data?.id}>
                       <Td>{key + 1}</Td>
                       <Td>
                         {data?.user_name} ({data?.user_id})
