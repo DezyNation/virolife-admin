@@ -335,22 +335,22 @@ const Users = () => {
                     <Th>#</Th>
                     <Th>User Name</Th>
                     <Th>Parent ID</Th>
-                    <Th>Plan Purchased</Th>
+                    {/* <Th>Plan Purchased</Th> */}
                     <Th>Points Received</Th>
                     <Th>Reward Type</Th>
                     <Th>Timestamp</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {userHealthPoints.map((healthPoint) => (
+                  {userHealthPoints.map((healthPoint, key) => (
                     <Tr key={healthPoint?.id}>
                       <Td>{key + 1}</Td>
                       <Td>
                         {data?.user_name} ({data?.user_id})
                       </Td>
                       <Td>{data?.parent_id}</Td>
-                      <Td>{data?.name}</Td>
-                      <Td>{data?.points}</Td>
+                      {/* <Td>{data?.name}</Td> */}
+                      <Td>{data?.cash_points}</Td>
                       <Td>
                         {data?.purpose == "parent"
                           ? "Direct"
