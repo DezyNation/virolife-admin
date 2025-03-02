@@ -260,7 +260,7 @@ const Users = () => {
   }
 
   async function getUserHealthPoints(userId) {
-    BackendAxios.get(`/api/admin/user-health-points/${userId}`)
+    BackendAxios.get(`/api/admin/health-points/${userId}`)
       .then((res) => {
         setUserHealthPoints(res.data);
         setHealthPointsModal(true);

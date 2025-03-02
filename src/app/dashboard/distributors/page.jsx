@@ -37,7 +37,6 @@ import TreeModal from "@/components/dashboard/users/TreeModal";
 import PrintButtons from "@/components/dashboard/PrintButtons";
 
 const Users = () => {
-  const arr = [1, 1, 1, 1, 1, 1, 2, 0];
   const Toast = useToast({ position: "top-right" });
   const [users, setUsers] = useState([]);
   const [query, setQuery] = useState("");
@@ -45,6 +44,9 @@ const Users = () => {
   const { isOpen, onToggle } = useDisclosure();
   const [userInfo, setUserInfo] = useState({});
   const [qrVisible, setQrVisible] = useState({ status: false, upi: "" });
+
+  const [userHealthPoints, setUserHealthPoints] = useState([]);
+  const [healthPointsModal, setHealthPointsModal] = useState(false);
 
   const [groupMembers, setGroupMembers] = useState([]);
   const [showTreeModal, setShowTreeModal] = useState(false);
@@ -163,6 +165,21 @@ const Users = () => {
       });
   }
 
+  async function getUserHealthPoints(userId) {
+    BackendAxios.get(`/api/admin/health-points/${userId}`)
+      .then((res) => {
+        setUserHealthPoints(res.data);
+        setHealthPointsModal(true);
+      })
+      .catch((err) => {
+        Toast({
+          status: "error",
+          description:
+            err?.response?.data?.message || err?.response?.data || err?.message,
+        });
+      });
+  }
+
   return (
     <>
       <HStack justifyContent={["space-between"]} py={8}>
@@ -220,8 +237,7 @@ const Users = () => {
                     </Box>
                   </Td>
                   <Td>
-                    
-                  <HStack>
+                    <HStack>
                       {grades?.map((item) => (
                         <Button
                           size={"xs"}
@@ -250,6 +266,14 @@ const Users = () => {
                           updateUser(user?.id, { active: e.target.checked })
                         }
                       />
+                      <Button
+                        size={"xs"}
+                        colorScheme={"orange"}
+                        leftIcon={<BsEye />}
+                        onClick={() => getUserHealthPoints(user?.id)}
+                      >
+                        Cash Points
+                      </Button>
                       <Button
                         size={"xs"}
                         colorScheme={"teal"}
@@ -288,6 +312,55 @@ const Users = () => {
           Create New
         </Button>
       </Link>
+
+      {/* Health Points Modal */}
+      <Modal
+        isOpen={healthPointsModal}
+        onClose={() => setHealthPointsModal(false)}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader p={8}>Health Points</ModalHeader>
+          <ModalBody p={8}>
+            <TableContainer>
+              <Table>
+                <Thead>
+                  <Tr>
+                    <Th>#</Th>
+                    <Th>User Name</Th>
+                    <Th>Parent ID</Th>
+                    <Th>Plan Purchased</Th>
+                    <Th>Points Received</Th>
+                    <Th>Reward Type</Th>
+                    <Th>Timestamp</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {userHealthPoints.map((healthPoint) => (
+                    <Tr key={healthPoint?.id}>
+                      <Td>{key + 1}</Td>
+                      <Td>
+                        {data?.user_name} ({data?.user_id})
+                      </Td>
+                      <Td>{data?.parent_id}</Td>
+                      <Td>{data?.name}</Td>
+                      <Td>{data?.points}</Td>
+                      <Td>
+                        {data?.purpose == "parent"
+                          ? "Direct"
+                          : data?.purpose == "chain"
+                          ? "level"
+                          : data?.purpose}
+                      </Td>
+                      <Td>{data?.created_at}</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
 
       {/* User Info Modal */}
       <Modal
