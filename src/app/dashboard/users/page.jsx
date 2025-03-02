@@ -525,7 +525,11 @@ const Users = () => {
       </Link>
 
       {/* Health Points Modal */}
-      <Modal isOpen={healthPointsModal} onClose={() => setHealthPointsModal(false)}>
+      <Modal
+        isOpen={healthPointsModal}
+        onClose={() => setHealthPointsModal(false)}
+        size={"4xl"}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader p={8}>Health Points</ModalHeader>

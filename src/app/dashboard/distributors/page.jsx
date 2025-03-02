@@ -317,6 +317,7 @@ const Users = () => {
       <Modal
         isOpen={healthPointsModal}
         onClose={() => setHealthPointsModal(false)}
+        size={"4xl"}
       >
         <ModalOverlay />
         <ModalContent>
