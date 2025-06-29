@@ -271,7 +271,18 @@ const page = () => {
                   <Td>{key + 1}</Td>
                   <Td>{item?.code}</Td>
                   {/* <Td>{item?.amount}</Td> */}
-                  <Td>{item?.purpose}</Td>
+                  <Td>
+                    {item?.purpose == "viroteam-funding"
+                      ? [
+                          "Plan A",
+                          "Plan B",
+                          "Plan C",
+                          "Plan D",
+                          "Plan E",
+                          "Plan F",
+                        ][item?.plan_id - 1]
+                      : item?.purpose}
+                  </Td>
                   <Td>{item?.redeemed ? "USED" : "PENDING"}</Td>
                   <Td>{item?.distributor_id}</Td>
                   <Td>{item?.agent_id}</Td>
